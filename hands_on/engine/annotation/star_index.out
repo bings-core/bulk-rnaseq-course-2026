@@ -1,0 +1,78 @@
+Sender: LSF System <lsfadmin@lc01c07>
+Subject: Job 141040925: <star_index_2.7.5b_chr5> in cluster <chimera> Done
+
+Job <star_index_2.7.5b_chr5> was submitted from host <li03c04.chimera.hpc.mssm.edu> by user <demird01> in cluster <chimera> at Wed Oct  9 17:28:55 2024
+Job was executed on host(s) <8*lc01c07>, in queue <premium>, as user <demird01> in cluster <chimera> at Wed Oct  9 17:28:58 2024
+</hpc/users/demird01> was used as the home directory.
+</sc/arion/projects/BiNGS/bings_omics/data/bings/2023/bings_teaching_material/analysis_package/analysis/rnaseq/demird01/annotation/data> was used as the working directory.
+Started at Wed Oct  9 17:28:58 2024
+Terminated at Wed Oct  9 17:30:06 2024
+Results reported at Wed Oct  9 17:30:06 2024
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+#BSUB -J star_index_2.7.5b_chr5
+#BSUB -P acc_BiNGS
+#BSUB -q premium
+#BSUB -n 8
+#BSUB -W 03:00
+#BSUB -R rusage[mem=5000]
+#BSUB -R span[hosts=1]
+#BSUB -oo /sc/arion/projects/BiNGS/bings_omics/data/bings/2023/bings_teaching_material/analysis_package/analysis/rnaseq/demird01/annotation/star_index.out
+#BSUB -eo /sc/arion/projects/BiNGS/bings_omics/data/bings/2023/bings_teaching_material/analysis_package/analysis/rnaseq/demird01/annotation/star_index.err
+#BSUB -L /bin/bash
+
+module load star/2.7.5b
+
+STAR \
+    --runMode genomeGenerate \
+    --genomeDir /sc/arion/projects/BiNGS/bings_omics/data/bings/2023/bings_teaching_material/analysis_package/analysis/rnaseq/demird01/annotation/star/2.7.5b/chr5_index \
+    --genomeFastaFiles /sc/arion/projects/BiNGS/bings_omics/data/bings/2023/bings_teaching_material/analysis_package/analysis/rnaseq/demird01/annotation/data/GRCh38.p13.chr5.genome.fa \
+    --sjdbGTFfile /sc/arion/projects/BiNGS/bings_omics/data/bings/2023/bings_teaching_material/analysis_package/analysis/rnaseq/demird01/annotation/data/gencode.v36.annotation_chr5.gtf \
+    --genomeSAindexNbases 12 \
+    --runThreadN 8
+
+module unload star/2.7.5b
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   266.28 sec.
+    Max Memory :                                 4979 MB
+    Average Memory :                             2609.64 MB
+    Total Requested Memory :                     40000.00 MB
+    Delta Memory :                               35021.00 MB
+    Max Swap :                                   -
+    Max Processes :                              4
+    Max Threads :                                12
+    Run time :                                   68 sec.
+    Turnaround time :                            71 sec.
+
+The output (if any) follows:
+
+Oct 09 17:29:00 ..... started STAR run
+Oct 09 17:29:00 ... starting to generate Genome files
+Oct 09 17:29:03 ..... processing annotations GTF
+Oct 09 17:29:05 ... starting to sort Suffix Array. This may take a long time...
+Oct 09 17:29:06 ... sorting Suffix Array chunks and saving them to disk...
+Oct 09 17:29:38 ... loading chunks from disk, packing SA...
+Oct 09 17:29:42 ... finished generating suffix array
+Oct 09 17:29:42 ... generating Suffix Array index
+Oct 09 17:29:56 ... completed Suffix Array index
+Oct 09 17:29:56 ..... inserting junctions into the genome indices
+Oct 09 17:30:05 ... writing Genome to disk ...
+Oct 09 17:30:05 ... writing Suffix Array to disk ...
+Oct 09 17:30:06 ... writing SAindex to disk
+Oct 09 17:30:06 ..... finished successfully
+
+
+PS:
+
+Read file </sc/arion/projects/BiNGS/bings_omics/data/bings/2023/bings_teaching_material/analysis_package/analysis/rnaseq/demird01/annotation/star_index.err> for stderr output of this job.
+

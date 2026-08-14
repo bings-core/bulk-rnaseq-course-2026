@@ -1,0 +1,5 @@
+Sample	Total	Assigned	Unassigned_Unmapped	Unassigned_Read_Type	Unassigned_Singleton	Unassigned_MappingQuality	Unassigned_Chimera	Unassigned_FragmentLength	Unassigned_Duplicate	Unassigned_MultiMapping	Unassigned_Secondary	Unassigned_NonSplit	Unassigned_NoFeatures	Unassigned_Overlapping_Length	Unassigned_Ambiguity	percent_assigned
+SKMel147_ARID2KO_R1_RNA_chr5_R1	1128459	874773	287	0	0	0	0	0	0	81249	0	0	107507	0	64643	77.5192541332915
+SKMel147_ARID2KO_R2_RNA_chr5_R1	1582375	1252230	503	0	0	0	0	0	0	114566	0	0	120423	0	94653	79.13610869736945
+SKMel147_ARID2WT_R1_RNA_chr5_R1	1679783	1320202	1352	0	0	0	0	0	0	124861	0	0	134023	0	99345	78.59360405480946
+SKMel147_ARID2WT_R2_RNA_chr5_R1	1467271	1131217	361	0	0	0	0	0	0	108005	0	0	141643	0	86045	77.09666448801892

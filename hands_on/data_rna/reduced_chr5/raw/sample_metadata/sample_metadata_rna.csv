@@ -1,0 +1,5 @@
+sample_id,file_name,replicate,genotype,cellline,species
+ARID2_WT_Rep1,SKMel147_ARID2WT_R1_RNA_chr5_R1.fastq,rep1,ARID2_WT,SKmel147 (Melanoma),homo_sapiens
+ARID2_WT_Rep2,SKMel147_ARID2WT_R2_RNA_chr5_R1.fastq,rep2,ARID2_WT,SKmel147 (Melanoma),homo_sapiens
+ARID2_KO_Rep1,SKMel147_ARID2KO_R1_RNA_chr5_R1.fastq,rep1,ARID2_KO,SKmel147 (Melanoma),homo_sapiens
+ARID2_KO_Rep2,SKMel147_ARID2KO_R2_RNA_chr5_R1.fastq,rep2,ARID2_KO,SKmel147 (Melanoma),homo_sapiens

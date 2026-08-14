@@ -1,0 +1,22 @@
+# Data & pipeline outputs — do not commit large/generated files
+*.bam
+*.bai
+*.fastq
+*.fastq.gz
+*.fq.gz
+aligned/
+trimmed/
+qc/
+*.rds
+counts.csv
+de_results.csv
+go_enrichment.csv
+gsea_go.csv
+
+# R / RStudio
+.Rhistory
+.RData
+.Rproj.user/
+
+# OS
+.DS_Store

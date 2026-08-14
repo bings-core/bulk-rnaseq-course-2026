@@ -1,0 +1,11 @@
+PASS	Basic Statistics	SKMel147_ARID2WT_R1_RNA_chr5_R1.fastq
+PASS	Per base sequence quality	SKMel147_ARID2WT_R1_RNA_chr5_R1.fastq
+PASS	Per tile sequence quality	SKMel147_ARID2WT_R1_RNA_chr5_R1.fastq
+PASS	Per sequence quality scores	SKMel147_ARID2WT_R1_RNA_chr5_R1.fastq
+FAIL	Per base sequence content	SKMel147_ARID2WT_R1_RNA_chr5_R1.fastq
+PASS	Per sequence GC content	SKMel147_ARID2WT_R1_RNA_chr5_R1.fastq
+PASS	Per base N content	SKMel147_ARID2WT_R1_RNA_chr5_R1.fastq
+PASS	Sequence Length Distribution	SKMel147_ARID2WT_R1_RNA_chr5_R1.fastq
+WARN	Sequence Duplication Levels	SKMel147_ARID2WT_R1_RNA_chr5_R1.fastq
+PASS	Overrepresented sequences	SKMel147_ARID2WT_R1_RNA_chr5_R1.fastq
+PASS	Adapter Content	SKMel147_ARID2WT_R1_RNA_chr5_R1.fastq

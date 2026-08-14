@@ -1,0 +1,5 @@
+Sample	Cutadapt	Samtools	RNASeq	Salmon
+Cutadapt	4.9			
+QualiMap			2.2.1	
+Salmon				1.2.1
+Samtools		1.11		

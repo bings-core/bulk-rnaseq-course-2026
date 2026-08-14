@@ -1,0 +1,23 @@
+#!/bin/bash
+#BSUB -J star_index_2.7.5b_chr5
+#BSUB -P acc_BiNGS
+#BSUB -q premium
+#BSUB -n 8
+#BSUB -W 03:00
+#BSUB -R rusage[mem=5000]
+#BSUB -R span[hosts=1]
+#BSUB -oo /sc/arion/projects/BiNGS/bings_omics/data/bings/2023/bings_teaching_material/analysis_package/analysis/rnaseq/demird01/annotation/star_index.out
+#BSUB -eo /sc/arion/projects/BiNGS/bings_omics/data/bings/2023/bings_teaching_material/analysis_package/analysis/rnaseq/demird01/annotation/star_index.err
+#BSUB -L /bin/bash
+
+module load star/2.7.5b
+
+STAR \
+    --runMode genomeGenerate \
+    --genomeDir /sc/arion/projects/BiNGS/bings_omics/data/bings/2023/bings_teaching_material/analysis_package/analysis/rnaseq/demird01/annotation/star/2.7.5b/chr5_index \
+    --genomeFastaFiles /sc/arion/projects/BiNGS/bings_omics/data/bings/2023/bings_teaching_material/analysis_package/analysis/rnaseq/demird01/annotation/data/GRCh38.p13.chr5.genome.fa \
+    --sjdbGTFfile /sc/arion/projects/BiNGS/bings_omics/data/bings/2023/bings_teaching_material/analysis_package/analysis/rnaseq/demird01/annotation/data/gencode.v36.annotation_chr5.gtf \
+    --genomeSAindexNbases 12 \
+    --runThreadN 8
+
+module unload star/2.7.5b

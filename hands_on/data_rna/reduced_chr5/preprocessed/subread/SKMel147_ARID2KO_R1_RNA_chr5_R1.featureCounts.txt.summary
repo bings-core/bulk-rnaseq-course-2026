@@ -1,0 +1,15 @@
+Status	/sc/arion/projects/BiNGS/bings_omics/data/bings/2026/bulk_course_data/hands_on/data_rna/reduced_chr5/preprocessed/star/SKMel147_ARID2KO_R1_RNA_chr5_R1_Aligned.sortedByCoord.out.bam
+Assigned	874773
+Unassigned_Unmapped	287
+Unassigned_Read_Type	0
+Unassigned_Singleton	0
+Unassigned_MappingQuality	0
+Unassigned_Chimera	0
+Unassigned_FragmentLength	0
+Unassigned_Duplicate	0
+Unassigned_MultiMapping	81249
+Unassigned_Secondary	0
+Unassigned_NonSplit	0
+Unassigned_NoFeatures	107507
+Unassigned_Overlapping_Length	0
+Unassigned_Ambiguity	64643

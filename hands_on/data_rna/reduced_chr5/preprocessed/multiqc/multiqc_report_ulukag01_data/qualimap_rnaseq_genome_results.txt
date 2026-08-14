@@ -1,0 +1,5 @@
+Sample	reads_aligned	total_alignments	non_unique_alignments	reads_aligned_genes	ambiguous_alignments	not_aligned	ssp_estimation	reads_aligned_exonic	reads_aligned_intronic	reads_aligned_intergenic	reads_aligned_overlapping_exon	5_bias	3_bias	5_3_bias
+SKMel147_ARID2KO_R1_RNA_chr5_R1	1080674	1128172	81249	872550	45896	287	0.03	872550	110069	18408	26705	0.54	0.6	0.98
+SKMel147_ARID2KO_R2_RNA_chr5_R1	1515784	1581872	114566	1251514	67522	503	0.03	1251514	122509	25761	36154	0.5	0.57	0.86
+SKMel147_ARID2WT_R1_RNA_chr5_R1	1606832	1678431	124861	1323726	71286	1352	0.03	1323726	130671	27887	33259	0.44	0.52	0.98
+SKMel147_ARID2WT_R2_RNA_chr5_R1	1404990	1466910	108005	1128772	60885	361	0.03	1128772	143620	25628	35352	0.59	0.6	1.01

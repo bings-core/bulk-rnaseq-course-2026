@@ -1,0 +1,54 @@
+RNA-Seq QC report
+-----------------------------------
+
+>>>>>>> Input
+
+    bam file = /sc/arion/projects/BiNGS/bings_omics/data/bings/2026/bulk_course_data/hands_on/data_rna/reduced_chr5/preprocessed/star/SKMel147_ARID2WT_R1_RNA_chr5_R1_Aligned.sortedByCoord.out.bam
+    gff file = /sc/arion/projects/BiNGS/bings_omics/data/bings/2026/bulk_course_data/hands_on/engine/annotation/data/gencode.v36.annotation_chr5.gtf
+    counting algorithm = uniquely-mapped-reads
+    protocol = non-strand-specific
+
+
+>>>>>>> Reads alignment
+
+    reads aligned  = 1,606,832
+    total alignments = 1,678,431
+    secondary alignments = 71,599
+    non-unique alignments = 124,861
+    aligned to genes  = 1,323,726
+    ambiguous alignments = 71,286
+    no feature assigned = 158,558
+    not aligned = 1,352
+    SSP estimation (fwd/rev) = 0.03 / 0.97
+
+
+>>>>>>> Reads genomic origin
+
+    exonic =  1,323,726 (89.3%)
+    intronic = 130,671 (8.82%)
+    intergenic = 27,887 (1.88%)
+    overlapping exon = 33,259 (2.24%)
+
+
+>>>>>>> Transcript coverage profile
+
+    5' bias = 0.44
+    3' bias = 0.52
+    5'-3' bias = 0.98
+
+
+>>>>>>> Junction analysis
+
+    reads at junctions = 412,083
+
+    AGGT : 4.97%
+    TCCT : 4.44%
+    ACCT : 4.21%
+    AGAT : 4.1%
+    AGAA : 3.82%
+    AGGA : 3.74%
+    ATCT : 3.36%
+    AGCT : 3.18%
+    CGGT : 2.51%
+    GCCT : 2.45%
+    CTAC : 2.32%

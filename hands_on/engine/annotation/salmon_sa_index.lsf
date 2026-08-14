@@ -1,0 +1,21 @@
+#!/bin/bash
+#BSUB -J salmon_sa_index_1
+#BSUB -P acc_BiNGS
+#BSUB -q premium
+#BSUB -n 8
+#BSUB -W 0:30
+#BSUB -R rusage[mem=2000]
+#BSUB -R span[hosts=1]
+#BSUB -oo /sc/arion/projects/BiNGS/bings_omics/data/bings/2023/bings_teaching_material/analysis_package/analysis/rnaseq/demird01/annotation/salmon_sa_index.out
+#BSUB -eo /sc/arion/projects/BiNGS/bings_omics/data/bings/2023/bings_teaching_material/analysis_package/analysis/rnaseq/demird01/annotation/salmon_sa_index.err
+#BSUB -L /bin/bash
+
+module load salmon/1.2.1
+grep "^>" /sc/arion/projects/BiNGS/bings_omics/data/bings/2023/bings_teaching_material/analysis_package/analysis/rnaseq/demird01/annotation/data/GRCh38.p13.chr5.genome.fa | cut -d " " -f 1 > /sc/arion/projects/BiNGS/bings_omics/data/bings/2023/bings_teaching_material/analysis_package/analysis/rnaseq/demird01/annotation/data/salmon/1.2.1/decoys.txt
+sed -i.bak -e 's/>//g' /sc/arion/projects/BiNGS/bings_omics/data/bings/2023/bings_teaching_material/analysis_package/analysis/rnaseq/demird01/annotation/data/salmon/1.2.1/decoys.txt
+cat /sc/arion/projects/BiNGS/bings_omics/data/bings/2023/bings_teaching_material/analysis_package/analysis/rnaseq/demird01/annotation/data/salmon/1.2.1/gencode.v36.chr5.transcripts.fa /sc/arion/projects/BiNGS/bings_omics/data/bings/2023/bings_teaching_material/analysis_package/analysis/rnaseq/demird01/annotation/data/GRCh38.p13.chr5.genome.fa > /sc/arion/projects/BiNGS/bings_omics/data/bings/2023/bings_teaching_material/analysis_package/analysis/rnaseq/demird01/annotation/data/salmon/1.2.1/gentrome.fa
+salmon index --transcripts /sc/arion/projects/BiNGS/bings_omics/data/bings/2023/bings_teaching_material/analysis_package/analysis/rnaseq/demird01/annotation/data/salmon/1.2.1/gentrome.fa --index /sc/arion/projects/BiNGS/bings_omics/data/bings/2023/bings_teaching_material/analysis_package/analysis/rnaseq/demird01/annotation/salmon/1.2.1/chr5_index --threads 8 --decoys /sc/arion/projects/BiNGS/bings_omics/data/bings/2023/bings_teaching_material/analysis_package/analysis/rnaseq/demird01/annotation/data/salmon/1.2.1/decoys.txt --gencode
+rm /sc/arion/projects/BiNGS/bings_omics/data/bings/2023/bings_teaching_material/analysis_package/analysis/rnaseq/demird01/annotation/data/salmon/1.2.1/decoys.txt*
+rm /sc/arion/projects/BiNGS/bings_omics/data/bings/2023/bings_teaching_material/analysis_package/analysis/rnaseq/demird01/annotation/data/salmon/1.2.1/gentrome.fa
+module unload salmon/1.2.1
+

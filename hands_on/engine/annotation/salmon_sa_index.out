@@ -1,0 +1,88 @@
+Sender: LSF System <lsfadmin@lc02c23>
+Subject: Job 141490051: <salmon_sa_index_1> in cluster <chimera> Done
+
+Job <salmon_sa_index_1> was submitted from host <lc02a29.chimera.hpc.mssm.edu> by user <demird01> in cluster <chimera> at Thu Oct 17 11:55:03 2024
+Job was executed on host(s) <8*lc02c23>, in queue <premium>, as user <demird01> in cluster <chimera> at Thu Oct 17 11:55:06 2024
+</hpc/users/demird01> was used as the home directory.
+</sc/arion/projects/BiNGS/bings_omics/data/bings/2023/bings_teaching_material/analysis_package/analysis/rnaseq/demird01/code> was used as the working directory.
+Started at Thu Oct 17 11:55:06 2024
+Terminated at Thu Oct 17 11:56:34 2024
+Results reported at Thu Oct 17 11:56:34 2024
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+#BSUB -J salmon_sa_index_1
+#BSUB -P acc_BiNGS
+#BSUB -q premium
+#BSUB -n 8
+#BSUB -W 0:30
+#BSUB -R rusage[mem=2000]
+#BSUB -R span[hosts=1]
+#BSUB -oo /sc/arion/projects/BiNGS/bings_omics/data/bings/2023/bings_teaching_material/analysis_package/analysis/rnaseq/demird01/annotation/salmon_sa_index.out
+#BSUB -eo /sc/arion/projects/BiNGS/bings_omics/data/bings/2023/bings_teaching_material/analysis_package/analysis/rnaseq/demird01/annotation/salmon_sa_index.err
+#BSUB -L /bin/bash
+
+module load salmon/1.2.1
+grep "^>" /sc/arion/projects/BiNGS/bings_omics/data/bings/2023/bings_teaching_material/analysis_package/analysis/rnaseq/demird01/annotation/data/GRCh38.p13.chr5.genome.fa | cut -d " " -f 1 > /sc/arion/projects/BiNGS/bings_omics/data/bings/2023/bings_teaching_material/analysis_package/analysis/rnaseq/demird01/annotation/data/salmon/1.2.1/decoys.txt
+sed -i.bak -e 's/>//g' /sc/arion/projects/BiNGS/bings_omics/data/bings/2023/bings_teaching_material/analysis_package/analysis/rnaseq/demird01/annotation/data/salmon/1.2.1/decoys.txt
+cat /sc/arion/projects/BiNGS/bings_omics/data/bings/2023/bings_teaching_material/analysis_package/analysis/rnaseq/demird01/annotation/data/salmon/1.2.1/gencode.v36.chr5.transcripts.fa /sc/arion/projects/BiNGS/bings_omics/data/bings/2023/bings_teaching_material/analysis_package/analysis/rnaseq/demird01/annotation/data/GRCh38.p13.chr5.genome.fa > /sc/arion/projects/BiNGS/bings_omics/data/bings/2023/bings_teaching_material/analysis_package/analysis/rnaseq/demird01/annotation/data/salmon/1.2.1/gentrome.fa
+salmon index --transcripts /sc/arion/projects/BiNGS/bings_omics/data/bings/2023/bings_teaching_material/analysis_package/analysis/rnaseq/demird01/annotation/data/salmon/1.2.1/gentrome.fa --index /sc/arion/projects/BiNGS/bings_omics/data/bings/2023/bings_teaching_material/analysis_package/analysis/rnaseq/demird01/annotation/salmon/1.2.1/chr5_index --threads 8 --decoys /sc/arion/projects/BiNGS/bings_omics/data/bings/2023/bings_teaching_material/analysis_package/analysis/rnaseq/demird01/annotation/data/salmon/1.2.1/decoys.txt --gencode
+rm /sc/arion/projects/BiNGS/bings_omics/data/bings/2023/bings_teaching_material/analysis_package/analysis/rnaseq/demird01/annotation/data/salmon/1.2.1/decoys.txt*
+rm /sc/arion/projects/BiNGS/bings_omics/data/bings/2023/bings_teaching_material/analysis_package/analysis/rnaseq/demird01/annotation/data/salmon/1.2.1/gentrome.fa
+module unload salmon/1.2.1
+
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   398.91 sec.
+    Max Memory :                                 968 MB
+    Average Memory :                             417.39 MB
+    Total Requested Memory :                     16000.00 MB
+    Delta Memory :                               15032.00 MB
+    Max Swap :                                   -
+    Max Processes :                              4
+    Max Threads :                                13
+    Run time :                                   88 sec.
+    Turnaround time :                            91 sec.
+
+The output (if any) follows:
+
+Threads = 8
+Vertex length = 31
+Hash functions = 5
+Filter size = 4294967296
+Capacity = 2
+Files: 
+/sc/arion/projects/BiNGS/bings_omics/data/bings/2023/bings_teaching_material/analysis_package/analysis/rnaseq/demird01/annotation/salmon/1.2.1/chr5_index/ref_k31_fixed.fa
+--------------------------------------------------------------------------------
+Round 0, 0:4294967296
+Pass	Filling	Filtering
+1	10	22	
+2	3	1
+True junctions count = 1021783
+False junctions count = 337359
+Hash table size = 1359142
+Candidate marks count = 13553832
+--------------------------------------------------------------------------------
+Reallocating bifurcations time: 0
+True marks count: 13170178
+Edges construction time: 4
+--------------------------------------------------------------------------------
+Distinct junctions = 1021783
+
+for info, total work write each  : 2.331    total work inram from level 3 : 4.322  total work raw : 25.000 
+Bitarray       861079552  bits (100.00 %)   (array + ranks )
+final hash             0  bits (0.00 %) (nb in final hash 0)
+
+
+PS:
+
+Read file </sc/arion/projects/BiNGS/bings_omics/data/bings/2023/bings_teaching_material/analysis_package/analysis/rnaseq/demird01/annotation/salmon_sa_index.err> for stderr output of this job.
+

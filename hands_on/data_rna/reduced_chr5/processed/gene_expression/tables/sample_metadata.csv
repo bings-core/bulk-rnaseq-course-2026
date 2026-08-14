@@ -1,0 +1,5 @@
+"Sample Names","File Names","Replicate","Genotype","Cell Line","Species","file_path"
+"ARID2_WT_Rep1","SKMel147_ARID2WT_R1_RNA_chr5_R1.fastq","rep1","ARID2_WT","SKmel147 (Melanoma)","homo_sapiens","/sc/arion/projects/BiNGS/bings_omics/data/bings/2026/bulk_course_data/hands_on/data_rna/reduced_chr5/preprocessed/salmon/SKMel147_ARID2WT_R1/quant.sf"
+"ARID2_WT_Rep2","SKMel147_ARID2WT_R2_RNA_chr5_R1.fastq","rep2","ARID2_WT","SKmel147 (Melanoma)","homo_sapiens","/sc/arion/projects/BiNGS/bings_omics/data/bings/2026/bulk_course_data/hands_on/data_rna/reduced_chr5/preprocessed/salmon/SKMel147_ARID2WT_R2/quant.sf"
+"ARID2_KO_Rep1","SKMel147_ARID2KO_R1_RNA_chr5_R1.fastq","rep1","ARID2_KO","SKmel147 (Melanoma)","homo_sapiens","/sc/arion/projects/BiNGS/bings_omics/data/bings/2026/bulk_course_data/hands_on/data_rna/reduced_chr5/preprocessed/salmon/SKMel147_ARID2KO_R1/quant.sf"
+"ARID2_KO_Rep2","SKMel147_ARID2KO_R2_RNA_chr5_R1.fastq","rep2","ARID2_KO","SKmel147 (Melanoma)","homo_sapiens","/sc/arion/projects/BiNGS/bings_omics/data/bings/2026/bulk_course_data/hands_on/data_rna/reduced_chr5/preprocessed/salmon/SKMel147_ARID2KO_R2/quant.sf"

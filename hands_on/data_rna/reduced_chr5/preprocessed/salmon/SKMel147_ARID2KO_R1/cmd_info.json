@@ -1,0 +1,12 @@
+{
+    "salmon_version": "1.2.1",
+    "index": "/sc/arion/projects/BiNGS/bings_omics/data/bings/2026/bulk_course_data/hands_on/engine/annotation/salmon/1.2.1/chr5_index",
+    "libType": "A",
+    "unmatedReads": "/sc/arion/projects/BiNGS/bings_omics/data/bings/2026/bulk_course_data/hands_on/data_rna/reduced_chr5/preprocessed/trimgalore/SKMel147_ARID2KO_R1_RNA_chr5_R1_trimmed.fq.gz",
+    "threads": "4",
+    "validateMappings": [],
+    "seqBias": [],
+    "gcBias": [],
+    "output": "/sc/arion/projects/BiNGS/bings_omics/data/bings/2026/bulk_course_data/hands_on/data_rna/reduced_chr5/preprocessed/salmon/SKMel147_ARID2KO_R1",
+    "auxDir": "aux_info"
+}

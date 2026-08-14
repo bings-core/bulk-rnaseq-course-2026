@@ -1,0 +1,54 @@
+# =============================================================================
+# BiNGS Bulk RNA-seq Course — .gitignore
+# =============================================================================
+# The shared hands_on/ tree is ~12 GB (data + indices + container + fastqs).
+# We push only the browseable stuff (code + small tables + figures + READMEs)
+# and let a `bash engine/download_reference_data.sh` step pull the large blobs
+# back into place on Minerva (symlinks to the shared reference).
+
+# ─── Non-RNA data (out of scope for this repo) ───────────────────────────────
+data_chip/
+data_atac/
+
+# ─── Big binary blobs — student clones symlink these back via download script
+# Singularity container (7.1 GB)
+engine/singularity_containers/*.sif
+
+# Full STAR + Salmon indices (~2 GB + ~800 MB) — indices are pre-built, huge
+engine/annotation/star/
+engine/annotation/salmon/
+
+# chr5 genome FASTA (177 MB) — kept alongside code as reference material via symlink
+engine/annotation/data/GRCh38.p13.chr5.genome.fa
+
+# Raw fastqs (200-300 MB each)
+data_rna/reduced_chr5/raw/fastq/*.fastq
+data_rna/reduced_chr5/raw/fastq/*.fastq.gz
+
+# STAR alignment BAMs (60-65 MB each) — students regenerate in session 4
+data_rna/reduced_chr5/preprocessed/star/*.bam
+data_rna/reduced_chr5/preprocessed/star/*.bam.bai
+
+# Salmon quant intermediates (medium size; students regenerate)
+data_rna/reduced_chr5/preprocessed/salmon/*/aux_info/
+data_rna/reduced_chr5/preprocessed/salmon/*/libParams/
+data_rna/reduced_chr5/preprocessed/salmon/*/logs/
+
+# TrimGalore trimmed fastqs (large intermediates; students regenerate)
+data_rna/reduced_chr5/preprocessed/trimgalore/*_trimmed.fq.gz
+
+# ─── R session artifacts ─────────────────────────────────────────────────────
+.Rhistory
+.RData
+.Rproj.user/
+Rplots.pdf
+*.Rproj
+
+# ─── OS junk ─────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ─── Scratch / logs ──────────────────────────────────────────────────────────
+*.log
+*_lsf_stdout*
+*_lsf_stderr*

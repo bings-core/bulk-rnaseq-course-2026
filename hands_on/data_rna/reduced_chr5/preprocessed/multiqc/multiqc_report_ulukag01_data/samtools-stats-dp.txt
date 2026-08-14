@@ -1,0 +1,5 @@
+Sample	Total sequences	Mapped &amp; paired	Properly paired	Duplicated	QC Failed	Reads MQ0	Mapped bases (CIGAR)	Bases Trimmed	Duplicated bases	Diff chromosomes	Other orientation	Inward pairs	Outward pairs
+SKMel147_ARID2KO_R1_RNA_chr5_R1	1.080961	0.0	0.0	0.0	0.0	0.001519	80.23058999999999	0.0	0.0	0.0	0.0	0.0	0.0
+SKMel147_ARID2KO_R2_RNA_chr5_R1	1.516287	0.0	0.0	0.0	0.0	0.002015	112.51776799999999	0.0	0.0	0.0	0.0	0.0	0.0
+SKMel147_ARID2WT_R1_RNA_chr5_R1	1.6081839999999998	0.0	0.0	0.0	0.0	0.002044	119.217755	0.0	0.0	0.0	0.0	0.0	0.0
+SKMel147_ARID2WT_R2_RNA_chr5_R1	1.405351	0.0	0.0	0.0	0.0	0.001709	104.280453	0.0	0.0	0.0	0.0	0.0	0.0

@@ -1,0 +1,152 @@
+STAR version=2.7.5b
+STAR compilation time,server,dir=Mon Aug 3 17:50:52 EDT 2020 li03c03.chimera.hpc.mssm.edu:/hpc/packages/minerva-centos7/star/2.7.5b/src/STAR-2.7.5b/source
+##### Command Line:
+STAR --runThreadN 4 --genomeDir /sc/arion/projects/BiNGS/bings_omics/data/bings/2026/bulk_course_data/hands_on/engine/annotation/star/2.7.5b/chr5_index --readFilesIn /sc/arion/projects/BiNGS/bings_omics/data/bings/2026/bulk_course_data/hands_on/data_rna/reduced_chr5/preprocessed/trimgalore/SKMel147_ARID2WT_R2_RNA_chr5_R1_trimmed.fq.gz --readFilesCommand zcat --outSAMtype BAM SortedByCoordinate --outFileNamePrefix /sc/arion/projects/BiNGS/bings_omics/data/bings/2026/bulk_course_data/hands_on/data_rna/reduced_chr5/preprocessed/star/SKMel147_ARID2WT_R2_RNA_chr5_R1_ --outSAMunmapped Within --quantMode GeneCounts
+##### Initial USER parameters from Command Line:
+outFileNamePrefix                 /sc/arion/projects/BiNGS/bings_omics/data/bings/2026/bulk_course_data/hands_on/data_rna/reduced_chr5/preprocessed/star/SKMel147_ARID2WT_R2_RNA_chr5_R1_
+###### All USER parameters from Command Line:
+runThreadN                    4     ~RE-DEFINED
+genomeDir                     /sc/arion/projects/BiNGS/bings_omics/data/bings/2026/bulk_course_data/hands_on/engine/annotation/star/2.7.5b/chr5_index     ~RE-DEFINED
+readFilesIn                   /sc/arion/projects/BiNGS/bings_omics/data/bings/2026/bulk_course_data/hands_on/data_rna/reduced_chr5/preprocessed/trimgalore/SKMel147_ARID2WT_R2_RNA_chr5_R1_trimmed.fq.gz        ~RE-DEFINED
+readFilesCommand              zcat        ~RE-DEFINED
+outSAMtype                    BAM   SortedByCoordinate        ~RE-DEFINED
+outFileNamePrefix             /sc/arion/projects/BiNGS/bings_omics/data/bings/2026/bulk_course_data/hands_on/data_rna/reduced_chr5/preprocessed/star/SKMel147_ARID2WT_R2_RNA_chr5_R1_     ~RE-DEFINED
+outSAMunmapped                Within        ~RE-DEFINED
+quantMode                     GeneCounts        ~RE-DEFINED
+##### Finished reading parameters from all sources
+
+##### Final user re-defined parameters-----------------:
+runThreadN                        4
+genomeDir                         /sc/arion/projects/BiNGS/bings_omics/data/bings/2026/bulk_course_data/hands_on/engine/annotation/star/2.7.5b/chr5_index
+readFilesIn                       /sc/arion/projects/BiNGS/bings_omics/data/bings/2026/bulk_course_data/hands_on/data_rna/reduced_chr5/preprocessed/trimgalore/SKMel147_ARID2WT_R2_RNA_chr5_R1_trimmed.fq.gz   
+readFilesCommand                  zcat   
+outFileNamePrefix                 /sc/arion/projects/BiNGS/bings_omics/data/bings/2026/bulk_course_data/hands_on/data_rna/reduced_chr5/preprocessed/star/SKMel147_ARID2WT_R2_RNA_chr5_R1_
+outSAMtype                        BAM   SortedByCoordinate   
+outSAMunmapped                    Within   
+quantMode                         GeneCounts   
+
+-------------------------------
+##### Final effective command line:
+STAR   --runThreadN 4   --genomeDir /sc/arion/projects/BiNGS/bings_omics/data/bings/2026/bulk_course_data/hands_on/engine/annotation/star/2.7.5b/chr5_index   --readFilesIn /sc/arion/projects/BiNGS/bings_omics/data/bings/2026/bulk_course_data/hands_on/data_rna/reduced_chr5/preprocessed/trimgalore/SKMel147_ARID2WT_R2_RNA_chr5_R1_trimmed.fq.gz      --readFilesCommand zcat      --outFileNamePrefix /sc/arion/projects/BiNGS/bings_omics/data/bings/2026/bulk_course_data/hands_on/data_rna/reduced_chr5/preprocessed/star/SKMel147_ARID2WT_R2_RNA_chr5_R1_   --outSAMtype BAM   SortedByCoordinate      --outSAMunmapped Within      --quantMode GeneCounts   
+----------------------------------------
+
+Number of fastq files for each mate = 1
+
+   Input read files for mate 1 :
+-rw-r----- 1 ulukag01 BiNGS_bulk 36737014 Aug 10 10:23 /sc/arion/projects/BiNGS/bings_omics/data/bings/2026/bulk_course_data/hands_on/data_rna/reduced_chr5/preprocessed/trimgalore/SKMel147_ARID2WT_R2_RNA_chr5_R1_trimmed.fq.gz
+
+   readsCommandsFile:
+exec > "/sc/arion/projects/BiNGS/bings_omics/data/bings/2026/bulk_course_data/hands_on/data_rna/reduced_chr5/preprocessed/star/SKMel147_ARID2WT_R2_RNA_chr5_R1__STARtmp/tmp.fifo.read1"
+echo FILE 0
+zcat      "/sc/arion/projects/BiNGS/bings_omics/data/bings/2026/bulk_course_data/hands_on/data_rna/reduced_chr5/preprocessed/trimgalore/SKMel147_ARID2WT_R2_RNA_chr5_R1_trimmed.fq.gz"
+
+WARNING: --limitBAMsortRAM=0, will use genome size as RAM limit for BAM sorting
+Finished loading and checking parameters
+Reading genome generation parameters:
+### STAR   --runMode genomeGenerate   --runThreadN 8   --genomeDir /sc/arion/projects/BiNGS/bings_omics/data/bings/2023/bings_teaching_material/analysis_package/analysis/rnaseq/demird01/annotation/star/2.7.5b/chr5_index   --genomeFastaFiles /sc/arion/projects/BiNGS/bings_omics/data/bings/2023/bings_teaching_material/analysis_package/analysis/rnaseq/demird01/annotation/data/GRCh38.p13.chr5.genome.fa      --genomeSAindexNbases 12   --sjdbGTFfile /sc/arion/projects/BiNGS/bings_omics/data/bings/2023/bings_teaching_material/analysis_package/analysis/rnaseq/demird01/annotation/data/gencode.v36.annotation_chr5.gtf
+### GstrandBit=32
+versionGenome                 2.7.4a     ~RE-DEFINED
+genomeType                    Full     ~RE-DEFINED
+genomeFastaFiles              /sc/arion/projects/BiNGS/bings_omics/data/bings/2023/bings_teaching_material/analysis_package/analysis/rnaseq/demird01/annotation/data/GRCh38.p13.chr5.genome.fa        ~RE-DEFINED
+genomeSAindexNbases           12     ~RE-DEFINED
+genomeChrBinNbits             18     ~RE-DEFINED
+genomeSAsparseD               1     ~RE-DEFINED
+genomeTransformType           None     ~RE-DEFINED
+genomeTransformVCF            -     ~RE-DEFINED
+sjdbOverhang                  100     ~RE-DEFINED
+sjdbFileChrStartEnd           -        ~RE-DEFINED
+sjdbGTFfile                   /sc/arion/projects/BiNGS/bings_omics/data/bings/2023/bings_teaching_material/analysis_package/analysis/rnaseq/demird01/annotation/data/gencode.v36.annotation_chr5.gtf     ~RE-DEFINED
+sjdbGTFchrPrefix              -     ~RE-DEFINED
+sjdbGTFfeatureExon            exon     ~RE-DEFINED
+sjdbGTFtagExonParentTranscripttranscript_id     ~RE-DEFINED
+sjdbGTFtagExonParentGene      gene_id     ~RE-DEFINED
+sjdbInsertSave                Basic     ~RE-DEFINED
+genomeFileSizes               185217060   1524591572        ~RE-DEFINED
+Genome version is compatible with current STAR
+Number of real (reference) chromosomes= 1
+1	chr5	181538259	0
+--sjdbOverhang = 100 taken from the generated genome
+Started loading the genome: Mon Aug 10 10:23:58 2026
+
+Genome: size given as a parameter = 185217060
+SA: size given as a parameter = 1524591572
+SAindex: size given as a parameter = 1
+Read from SAindex: pGe.gSAindexNbases=12  nSAi=22369620
+nGenome=185217060;  nSAbyte=1524591572
+GstrandBit=32   SA number of indices=369597956
+Shared memory is not used for genomes. Allocated a private copy of the genome.
+Genome file size: 185217060 bytes; state: good=1 eof=0 fail=0 bad=0
+Loading Genome ... done! state: good=1 eof=0 fail=0 bad=0; loaded 185217060 bytes
+SA file size: 1524591572 bytes; state: good=1 eof=0 fail=0 bad=0
+Loading SA ... done! state: good=1 eof=0 fail=0 bad=0; loaded 1524591572 bytes
+Loading SAindex ... done: 97867203 bytes
+Finished loading the genome: Mon Aug 10 10:23:59 2026
+
+Processing splice junctions database sjdbN=17668,   pGe.sjdbOverhang=100 
+alignIntronMax=alignMatesGapMax=0, the max intron size will be approximately determined by (2^winBinNbits)*winAnchorDistNbins=589824
+Created thread # 1
+Starting to map file # 0
+mate 1:   /sc/arion/projects/BiNGS/bings_omics/data/bings/2026/bulk_course_data/hands_on/data_rna/reduced_chr5/preprocessed/trimgalore/SKMel147_ARID2WT_R2_RNA_chr5_R1_trimmed.fq.gz
+Created thread # 2
+Created thread # 3
+BAM sorting: 273684 mapped reads
+BAM sorting bins genomic start loci:
+1	0	314544
+2	0	479988
+3	0	914496
+4	0	1328692
+5	0	1801500
+6	0	5464056
+7	0	6604144
+8	0	6715452
+9	0	7904179
+10	0	10254805
+11	0	10258409
+12	0	10261678
+13	0	10264748
+14	0	10415499
+15	0	10679781
+16	0	10681107
+17	0	14359439
+18	0	14476893
+19	0	14508760
+20	0	14651859
+21	0	14652770
+22	0	14653059
+23	0	14663095
+24	0	16451573
+25	0	18704323
+26	0	31421374
+27	0	37464275
+28	0	70855092
+29	0	96746346
+30	0	96784016
+31	0	98781689
+32	0	98867565
+33	0	102989440
+34	0	107194951
+35	0	109192961
+36	0	109868614
+37	0	111127125
+38	0	111730066
+39	0	112863319
+40	0	113018179
+41	0	115275225
+42	0	115615521
+43	0	115913709
+44	0	119499333
+45	0	122817003
+46	0	123604794
+47	0	126777231
+48	0	126836611
+Thread #1 end of input stream, nextChar=-1
+Completed: thread #0
+Completed: thread #3
+Completed: thread #1
+Joined thread # 1
+Completed: thread #2
+Joined thread # 2
+Joined thread # 3
+Aug 10 10:24:04 ..... started sorting BAM
+Max memory needed for sorting = 173824623
+ALL DONE!

@@ -1,0 +1,5 @@
+Sample	Uniquely mapped	Mapped to multiple loci	Mapped to too many loci	Unmapped: too short	Unmapped: other
+SKMel147_ARID2KO_R1_RNA_chr5_R1	1046923.0	33751.0	82.0	102.0	102.0
+SKMel147_ARID2KO_R2_RNA_chr5_R1	1467306.0	48478.0	105.0	199.0	199.0
+SKMel147_ARID2WT_R1_RNA_chr5_R1	1553570.0	53262.0	313.0	297.0	742.0
+SKMel147_ARID2WT_R2_RNA_chr5_R1	1358905.0	46085.0	80.0	140.0	140.0
