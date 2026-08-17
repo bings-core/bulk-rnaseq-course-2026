@@ -20,6 +20,7 @@ TAs and instructors monitor them between sessions — office hours can be set up
 | #  | Date         | Time         | Location   | Topic                                          | 
 |----|--------------|--------------|------------|------------------------------------------------|
 | 01 | Wed · Sep 9  | 4:00-5:30 PM | Hess 8-101 | Introduction to bulk RNA-seq & BiNGS           | 
+| Optional | Wed · Sep 16 | 3:30-4:00 PM | Hess 5-101 | If you need help with logging into msmc-green wifi, HPC setup, logging into minerva, opening OnDemand, getting ready to run code during session 2, feel free to come in half an hour early and we will be there to help you!       | 
 | 02 | Wed · Sep 16 | 4:00-5:30 PM | Hess 5-101 | Introduction to HPC & R in biostatistics       | 
 | 03 | Wed · Sep 23 | 4:00-5:30 PM | Hess 5-101 | QC metrics & tools                             | 
 | 04 | Wed · Sep 30 | 4:00-5:30 PM | Hess 5-101 | Preprocessing                                  |
