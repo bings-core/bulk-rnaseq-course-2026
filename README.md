@@ -86,5 +86,3 @@ Before sessions begin, complete these three steps from [`minerva/README.md`](min
 
 Then at the start of each Wednesday session, launch [OnDemand Code Server](minerva/README.md#ondemand-code-server) (bash sessions) or [OnDemand RStudio Server](minerva/README.md#ondemand-rstudio-server) (R sessions) with reservation `BINGS_1`. Outside of session times, leave reservation empty.
 
-
-

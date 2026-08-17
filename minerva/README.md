@@ -45,8 +45,9 @@ so do this as early as possible.
    **dan.hasson@mssm.edu** so we can add you to the course project
    (`acc_BiNGS_bulk`) and its shared folder (`BiNGS_bulk`).
 
-**If you already have a Minerva account:** skip step 1 and just email your
-username to Gulay and Dan (step 3) so we can add you to the project.
+**If you already have a Minerva account:** skip step 1 and just email
+your username to Gulay and Dan (step 3) so we can add you to the
+project.
 
 Once you're in the project, your shared folder is at
 `/sc/arion/projects/BiNGS_bulk/`. We will notify you when access is
@@ -202,10 +203,9 @@ Leave that window open while you use OnDemand — closing it or clicking
 OnDemand is Mount Sinai's browser-based interface to Minerva compute
 nodes. Pick the app that matches what you'll do this session:
 
-- **[Code Server](#ondemand-code-server)** — VS Code in the browser; use
-  it for **shell / bash** work (Sessions 2 preprocessing, Session 4).
+- **[Code Server](#ondemand-code-server)** — VS Code in the browser.
 - **[RStudio Server](#ondemand-rstudio-server)** — RStudio in the
-  browser; use it for **R** work (Sessions 5, 6).
+  browser.
 
 Same portal, same login for both:
 **[https://ondemand.hpc.mssm.edu/](https://ondemand.hpc.mssm.edu/)** —
@@ -215,20 +215,17 @@ Authenticator prompt.
 ### OnDemand Code Server
 
 1. Under **Interactive Apps → Servers**, click **Code Server**.
-2. Fill in the launch form (1 hr / 1 core / 1 GB is enough for quick
-   file-management work; bump the last three for hands-on sessions):
+2. Fill in the launch form 
 
-   ![Code Server launch form](screenshots/ondemand_code_server_launch.jpg)
-
-   | Field | Quick check | During a session |
+   | Field | In between sessions | During a session |
    |-------|-------------|------------------|
    | Queue | `Premium` | `Premium` |
-   | Project Account | `acc_BiNGS_bulk` | `acc_BiNGS_bulk` |
+   | Project Account | `acc_BiNGS_bulk or if your lab has an acc_ account, use that` | `acc_BiNGS_bulk` |
    | Codeserver Version | `4.15` | `4.15` |
-   | Working Directory | `/sc/arion/projects/BiNGS_bulk` | `/sc/arion/projects/BiNGS_bulk` |
-   | Number of hours | `1` | `3` |
-   | Number of cores | `1` | `4` |
-   | Memory request (GB) | `1` | `16` |
+   | Working Directory | `/sc/arion/projects/BiNGS_bulk or another directory you want to work in` | `/sc/arion/projects/BiNGS_bulk` |
+   | Number of hours | `3 or however many hours you want session to be active` | `3` |
+   | Number of cores | `4` | `4` |
+   | Memory request (GB) | `16` | `16` |
    | Reservation ID | *(leave blank)* | `BINGS_1` |
 
 3. Click **Launch** at the bottom.
