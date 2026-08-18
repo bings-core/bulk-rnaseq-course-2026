@@ -93,8 +93,7 @@ wifi or off-campus VPN). Skip ahead, do that step, then come back here.
 - **Mac / Linux:** the built-in **Terminal** app (or iTerm2).
 - **Windows:** the built-in **Windows Terminal** (Win 11 default; free
   from the Microsoft Store on Win 10) — it ships with OpenSSH, so the
-  `ssh` command works out of the box. If you'd rather use a GUI-first
-  SSH client, install **MobaXterm** or **PuTTY** — see the
+  `ssh` command works out of the box. See the
   [official Minerva Logging in guide](https://labs.icahn.mssm.edu/minervalab/documentation/logging-in/)
   for setup instructions and screenshots.
 
