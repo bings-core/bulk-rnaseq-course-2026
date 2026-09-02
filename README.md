@@ -22,8 +22,10 @@ end of day **Friday September 4** so we have enough time to fix anything broken.
 Three short answers: who you are, what you work on, and what you want to be
 able to do by the end of the course. This is how you will communicate your 
 questions with the course instructors and TAs, so it's a good practice.
-You'll need a free [GitHub account](https://github.com/signup) if you don't
-have one.
+
+**You'll need a free GitHub account to post.** If you don't have one, sign up at
+**[github.com/signup](https://github.com/signup)** — it takes two minutes, a
+personal email address is fine, and you do not need to pay for anything.
 
 ### 2. Set up Microsoft Authenticator
 
@@ -175,7 +177,7 @@ which node it ran on.</sub>
 
 ## Asking questions
 
-**All course questions go in the [Issues](../../issues) tab.** Not email — Issues.
+**All course questions go in the [Issues](../../issues) tab.** 
 
 This is deliberate. When you hit a problem, three other people usually have the
 same one, and an issue answers all four of you at once and stays searchable for
@@ -184,24 +186,12 @@ Office hours can be set up on request.
 
 **You'll need a free GitHub account to post.** If you don't have one, sign up at
 **[github.com/signup](https://github.com/signup)** — it takes two minutes, a
-personal email address is fine, and you do not need to pay for anything. This is
-also a genuinely useful thing to own as a scientist: it's where nearly all
-bioinformatics software lives, and where you'll eventually put your own analysis
-code.
-
-Two issue templates are set up for you:
-
-- **👋 Introduce yourself** — please do this before Session 1 (step 1 above).
-- **❓ Ask a question** — for anything that isn't working.
+personal email address is fine, and you do not need to pay for anything. 
 
 No question is too basic here. Several of you told us on the interest form that
 you have no programming experience at all, which is exactly who this course is
 built for.
 
-> One exception: **account, password and MFA problems** belong to Scientific
-> Computing at **hpchelp@hpc.mssm.edu**, not to us. Anything about the course
-> project itself — folder access, the `acc_BiNGS_bulk` account, the `BINGS_1`
-> reservation — is ours.
 
 ## Schedule
 
