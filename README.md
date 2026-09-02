@@ -15,11 +15,22 @@ practice data, the analysis pipeline, and reading. Ask questions any time in the
 Four things, in this order. Budget about half an hour in total. Please finish by
 end of day **Friday September 5** so we have enough time to fix anything broken.
 
-### 1. Set up Microsoft Authenticator
+### 1. Introduce yourself
+
+**[Open an introduction issue →](../../issues/new?template=01-introduce-yourself.md)**
+
+Tell us who you are, what you work on, and what you want to get out of the
+course. This isn't busywork: your answers about prior programming experience and
+whether you have your own data shape how we pitch the hands-on sessions and how
+we plan Sessions 9 and 10. It also means that when you post a question in week
+four, everyone already knows who you are. You'll need a free
+[GitHub account](https://github.com/signup) if you don't have one.
+
+### 2. Set up Microsoft Authenticator
 
 Mount Sinai requires multi-factor authentication on **every** Minerva and VPN
 login, so nothing else on this list works without it. If you already approve a
-phone prompt when you log into Sinai systems, you're done — skip to step 2.
+phone prompt when you log into Sinai systems, you're done — skip to step 3.
 
 1. Install **Microsoft Authenticator** on your phone, from the
    [App Store](https://apps.apple.com/app/microsoft-authenticator/id983156458) or
@@ -31,7 +42,7 @@ phone prompt when you log into Sinai systems, you're done — skip to step 2.
 From then on, every Minerva and VPN login sends a prompt to your phone that you
 approve, or shows a number you type into the app.
 
-### 2. Get onto the Sinai network
+### 3. Get onto the Sinai network
 
 Minerva is not reachable from the open internet. Your laptop has to be on the
 Sinai network first — **on campus that means the wifi, anywhere else it means
@@ -68,10 +79,7 @@ address. Full guide with per-device screenshots:
    window; when the indicator turns green and reads **Connected**, you're on.
 4. Leave that window open while you work — closing it drops the tunnel.
 
-Screenshots of both steps are in
-[`minerva/README.md`](minerva/README.md#off-campus-vpn).
-
-### 3. Run the one-time access check
+### 4. Run the one-time access check
 
 **This is the important one.** It takes about two minutes and it's how you find
 out whether your access actually works while there's still time to fix it.
@@ -166,17 +174,6 @@ membership, creates `/sc/arion/projects/BiNGS_bulk/<your-username>/`, and
 submits a five-minute job to the classroom reservation that loads R and reports
 which node it ran on.</sub>
 
-### 4. Introduce yourself
-
-**[Open an introduction issue →](../../issues/new?template=01-introduce-yourself.md)**
-
-Tell us who you are, what you work on, and what you want to get out of the
-course. This isn't busywork: your answers about prior programming experience and
-whether you have your own data shape how we pitch the hands-on sessions and how
-we plan Sessions 9 and 10. It also means that when you post a question in week
-four, everyone already knows who you are. You'll need a free
-[GitHub account](https://github.com/signup) if you don't have one.
-
 ## Asking questions
 
 **All course questions go in the [Issues](../../issues) tab.** Not email — Issues.
@@ -195,7 +192,7 @@ code.
 
 Two issue templates are set up for you:
 
-- **👋 Introduce yourself** — please do this before Session 1 (step 4 above).
+- **👋 Introduce yourself** — please do this before Session 1 (step 1 above).
 - **❓ Ask a question** — for anything that isn't working.
 
 No question is too basic here. Several of you told us on the interest form that
