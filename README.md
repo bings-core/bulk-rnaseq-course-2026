@@ -104,7 +104,7 @@ bash /sc/arion/projects/BiNGS_bulk/shared/access_check.sh
 ```
 
 It creates your personal course folder and submits a short test job, so give it
-about 30 seconds. It's safe to run more than once.
+a few seconds. It's safe to run more than once.
 
 **d. Check the output.** You should see all five checks pass:
 
@@ -125,7 +125,7 @@ about 30 seconds. It's safe to run more than once.
 [3/5] Your personal course folder
   OK       Ready: /sc/arion/projects/BiNGS_bulk/jdoe01
 
-[4/5] Submitting a test job (this takes ~30 seconds, please wait)
+[4/5] Submitting a test job (usually ~10 seconds, please wait)
   OK       Job ran under project account acc_BiNGS_bulk.
 
 [5/5] Classroom reservation

@@ -147,7 +147,7 @@ Copy this line, paste it, press Enter:
 bash /sc/arion/projects/BiNGS_bulk/shared/access_check.sh
 ```
 
-Give it about 30 seconds — it submits a real job and waits for it to
+Give it a few seconds — it submits a real job and waits for it to
 finish. It's safe to run more than once, and it changes nothing except
 creating your own folder.
 
@@ -172,7 +172,7 @@ All five checks should pass:
 [3/5] Your personal course folder
   OK       Ready: /sc/arion/projects/BiNGS_bulk/jdoe01
 
-[4/5] Submitting a test job (this takes ~30 seconds, please wait)
+[4/5] Submitting a test job (usually ~10 seconds, please wait)
   OK       Job ran under project account acc_BiNGS_bulk.
 
 [5/5] Classroom reservation

@@ -2,7 +2,7 @@
 # =============================================================================
 #  BiNGS Bulk RNA-seq Course (Fall 2026) - one-time Minerva access check
 #
-#  Run this once, before Session 1, from a Minerva login node:
+#  Run this once from a Minerva login node:
 #
 #      bash /sc/arion/projects/BiNGS_bulk/shared/access_check.sh
 #
@@ -69,7 +69,7 @@ echo
 
 # --- 4 & 5. Test job on the reservation --------------------------------------
 NODE=""
-echo "[4/5] Submitting a test job (this takes ~30 seconds, please wait)"
+echo "[4/5] Submitting a test job (usually ~10 seconds, please wait)"
 if [ "$FAILED" -eq 1 ]; then
     info "Skipped - fix the failures above first."
     echo
@@ -95,7 +95,24 @@ module load R/4.2.0
 Rscript -e 'cat("CHECK_R=", R.version.string, "\n", sep="")'
 LSFJOB
 
-    bsub -K -o "$JOB_OUT" -e /dev/null < "$JOB_LSF" > /dev/null 2>&1
+    BSUB_ERR="${MY_DIR}/.access_check_bsub.err"
+    rm -f "$BSUB_ERR"
+
+    # No -e: LSF merges the job's stderr into the -o file, which is what we
+    # want people to be able to paste into an issue.
+    bsub -K -o "$JOB_OUT" < "$JOB_LSF" > /dev/null 2> "$BSUB_ERR"
+
+    # bsub -K returns as soon as the job ends, but LSF writes the output file
+    # asynchronously to shared storage - it is routinely not there yet. Wait
+    # for it rather than assuming it has landed.
+    for _ in $(seq 1 60); do
+        if [ -s "$JOB_OUT" ] && grep -q \
+             "Successfully completed\|Exited with\|TERM_\|Failed to" \
+             "$JOB_OUT" 2>/dev/null; then
+            break
+        fi
+        sleep 1
+    done
 
     # Only look at what the job printed, not LSF's echo of the script itself.
     RESULT=$(sed -n '/The output (if any) follows:/,$p' "$JOB_OUT" 2>/dev/null)
@@ -112,15 +129,24 @@ LSFJOB
             *)               pass "Job ran on $NODE (not a reserved node, but it ran)." ;;
         esac
         [ -n "$RVER" ] && info "R on the compute node: $RVER"
-        rm -f "$JOB_LSF"
+        rm -f "$JOB_LSF" "$BSUB_ERR"
     else
-        fail "The test job did not complete."
-        info "-> Look at $JOB_OUT for the reason, and paste it into an issue at"
-        info "   github.com/bings-core/bulk-rnaseq-course-2026/issues"
-        if [ -f "$JOB_OUT" ]; then
-            ERRLINE=$(grep -m1 -i 'not a member\|not valid\|error' "$JOB_OUT")
-            [ -n "$ERRLINE" ] && info "   (first error line: $ERRLINE)"
+        if [ -s "$BSUB_ERR" ]; then
+            fail "The test job could not be submitted. LSF said:"
+            while IFS= read -r errline; do
+                [ -n "$errline" ] && info "   $errline"
+            done < "$BSUB_ERR"
+        elif [ ! -s "$JOB_OUT" ]; then
+            fail "The test job was submitted but produced no output in 60s."
+            info "   It may still be queued. Try running this script again."
+        else
+            fail "The test job did not complete."
+            ERRLINE=$(grep -m1 -i 'not a member\|not valid\|Exited with\|error' "$JOB_OUT")
+            [ -n "$ERRLINE" ] && info "   LSF said: $ERRLINE"
         fi
+        info "-> Full details are in $JOB_OUT"
+        info "   Please paste them into an issue at"
+        info "   github.com/bings-core/bulk-rnaseq-course-2026/issues"
     fi
     echo
 fi
