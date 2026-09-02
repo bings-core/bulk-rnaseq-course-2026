@@ -104,6 +104,11 @@ The session runs on Mount Sinai's Minerva HPC using the reserved node/queue via 
 | Project account  | `acc_BiNGS_bulk`             |
 | Queue            | `premium`                    |
 
+The reservation `BINGS_1` is live **continuously from Sep 2 to Nov 12**, not
+only during Wednesday class hours — so use it whenever you come back to redo a
+session or work through the material on your own time. See
+[Using the reservation](../minerva/README.md#using-the-reservation).
+
 All R sessions run using the `rbings_20250925.sif` singularity container (R 4.3.1 with DESeq2 1.42, clusterProfiler 4.10, msigdbr 7.5, enrichplot 1.22, org.Hs.eg.db 3.18, plus ComplexHeatmap, circlize, patchwork, and every other package the three sessions need).
 
 ---

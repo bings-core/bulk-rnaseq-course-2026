@@ -11,8 +11,9 @@ block.
 
 ## Setup
 
-Interactive shell on a Minerva compute node (grab one via OnDemand using the
-session reservation):
+Interactive shell on a Minerva compute node (grab one via OnDemand with
+**Reservation ID `BINGS_1`** — it's valid any time through Nov 12, not just
+during class):
 
 ```bash
 cd /sc/arion/projects/BiNGS_bulk/${USER}/hands_on

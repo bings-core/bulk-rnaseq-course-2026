@@ -136,12 +136,16 @@ built for.
 - **Content:** Two open sessions where participants run the full production BiNGS bulk RNA-seq pipeline on data they bring themselves. TAs and instructors work through it alongside each participant end-to-end: sample-metadata setup, preprocessing, DEG analysis, functional enrichment, and (where relevant) epigenetic integration. Goal: leave the course with a reproducible analysis of your own data, not just the course dataset.
 - **Tools:** the full BiNGS bulk RNA-seq pipeline (all tools from Sessions 4–8)
 
-## Every session, once we've started
+## Working on the course
 
-At the start of each Wednesday session, launch
-[OnDemand Code Server](minerva/README.md#ondemand-code-server) (bash sessions) or
-[OnDemand RStudio Server](minerva/README.md#ondemand-rstudio-server) (R sessions)
-with **Reservation ID `BINGS_1`** — that's what puts you on the nodes we've
-reserved for the class. Outside of session times, leave the reservation field
-blank.
+Launch [OnDemand Code Server](minerva/README.md#ondemand-code-server) (bash
+sessions) or [OnDemand RStudio Server](minerva/README.md#ondemand-rstudio-server)
+(R sessions), and set **Reservation ID** to **`BINGS_1`**.
+
+**`BINGS_1` is live continuously from Wed Sep 2, 3:55 PM to Wed Nov 12,
+5:30 PM** — the whole course, not just Wednesday class hours. Use it any
+time you're working on course material, including evenings and weekends.
+It puts your job on the two nodes we've reserved for the class, so it
+usually starts immediately instead of queuing behind the rest of the
+institution. Full details: [Using the reservation](minerva/README.md#using-the-reservation).
 

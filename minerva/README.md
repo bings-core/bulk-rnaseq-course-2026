@@ -23,13 +23,20 @@ steps 4 and 5 are what you'll repeat every time you sit down to work.
 4. [Get onto the Sinai network](#get-onto-the-sinai-network) —
    [on-campus wifi](#on-campus-wifi-msmc-green) *or*
    [off-campus VPN](#off-campus-vpn)
-5. [Launch an OnDemand session](#launch-an-ondemand-session) —
+5. [Using the reservation](#using-the-reservation) — what `BINGS_1` is,
+   and why you should use it every time, not just on Wednesdays.
+6. [Launch an OnDemand session](#launch-an-ondemand-session) —
    [Code Server](#ondemand-code-server) (bash / VS Code) *or*
    [RStudio Server](#ondemand-rstudio-server) (R)
 
-> 📌 **During sessions**, set the OnDemand launch form's **Reservation ID**
-> to `BINGS_1` so your Code Server / RStudio job lands on the reserved
-> classroom nodes. Outside sessions, leave the reservation field blank.
+> 📌 **The reservation `BINGS_1` is live right now and stays live
+> continuously until the course ends** — from **Wed Sep 2, 3:55 PM** to
+> **Wed Nov 12, 5:30 PM**. It is *not* switched on only during Wednesday
+> class hours. Put `BINGS_1` in the OnDemand launch form's **Reservation
+> ID** field whenever you work on the course — in session, on a Sunday
+> evening, at 2 AM — and your job lands on the nodes we've set aside for
+> the class instead of competing with the whole cluster. See
+> [Using the reservation](#using-the-reservation).
 
 ## Minerva account
 
@@ -43,7 +50,7 @@ you gave us your Minerva username, you already have:
 |------|-------|
 | Shared course folder | `/sc/arion/projects/BiNGS_bulk/` |
 | LSF project account | `acc_BiNGS_bulk` |
-| Classroom reservation | `BINGS_1` (active Sep 2 – Nov 12) |
+| Classroom reservation | `BINGS_1` — live continuously Sep 2, 3:55 PM → Nov 12, 5:30 PM |
 
 You don't need to do anything to request these — just confirm they work
 with the [one-time access check](#one-time-access-check) below. That
@@ -324,6 +331,73 @@ machine.
 Leave that window open while you use OnDemand — closing it or clicking
 **Disconnect** drops the tunnel.
 
+## Using the reservation
+
+We have booked two compute nodes exclusively for this course. The booking
+is called a **reservation**, and its name is **`BINGS_1`**.
+
+**It is live continuously for the whole course:**
+
+| | |
+|---|---|
+| Starts | Wednesday **September 2, 3:55 PM** — already active |
+| Ends | Wednesday **November 12, 5:30 PM** |
+| Capacity | 192 CPU cores across two nodes (`lc07e04`, `lc07e05`) |
+
+The most common misunderstanding is that the reservation only exists
+during Wednesday class hours. **It doesn't.** It is one single unbroken
+window running from the start date to the end date. A Saturday afternoon,
+a Tuesday night, the week of Session 6 — it's all inside the window, and
+`BINGS_1` works the whole time.
+
+So: **use `BINGS_1` whenever you're working on the course.** You do not
+need to check whether class is in session, and you do not need to leave
+the field blank at other times.
+
+### How to use it
+
+**In OnDemand** — type `BINGS_1` into the **Reservation ID** field on the
+Code Server or RStudio Server launch form.
+
+**In a batch job** — add the `-U` line to your job script, as in
+[`hello_minerva.lsf`](hello_minerva.lsf):
+
+```bash
+#BSUB -U BINGS_1
+```
+
+or pass it on the command line:
+
+```bash
+bsub -P acc_BiNGS_bulk -U BINGS_1 -q premium -n 4 -W 2:00 ./my_script.sh
+```
+
+### Why bother
+
+Minerva is shared by the whole institution, and at busy times a job can
+sit in the queue for a long while. Jobs submitted to `BINGS_1` go to
+nodes that are held for this course, so they generally start immediately.
+That's the difference between running a practice analysis in an evening
+and giving up on it.
+
+If you forget the reservation, nothing breaks — your job just goes into
+the general queue like any other and may wait longer.
+
+### One courtesy
+
+The reservation is 192 cores shared between about thirty of you, which is
+plenty for coursework but not unlimited. Two requests:
+
+- If you're running something genuinely heavy or long — many samples, a
+  multi-hour alignment, your own full dataset — please submit it to the
+  general queue (just leave the reservation out) rather than parking it
+  on the classroom nodes for hours.
+- Close your OnDemand sessions when you're finished with them. An idle
+  Code Server session holds its cores until it times out.
+
+Neither of these applies to normal coursework. Run the exercises on the
+reservation without a second thought.
+
 ## Launch an OnDemand session
 
 OnDemand is Mount Sinai's browser-based interface to Minerva compute
@@ -343,16 +417,16 @@ Authenticator prompt.
 1. Under **Interactive Apps → Servers**, click **Code Server**.
 2. Fill in the launch form 
 
-   | Field | In between sessions | During a session |
-   |-------|-------------|------------------|
-   | Queue | `Premium` | `Premium` |
-   | Project Account | `acc_BiNGS_bulk or if your lab has an acc_ account, use that` | `acc_BiNGS_bulk` |
-   | Codeserver Version | `4.15` | `4.15` |
-   | Working Directory | `/sc/arion/projects/BiNGS_bulk or another directory you want to work in` | `/sc/arion/projects/BiNGS_bulk` |
-   | Number of hours | `3 or however many hours you want session to be active` | `3` |
-   | Number of cores | `4` | `4` |
-   | Memory request (GB) | `16` | `16` |
-   | Reservation ID | *(leave blank)* | `BINGS_1` |
+   | Field | Value |
+   |-------|-------|
+   | Queue | `Premium` |
+   | Project Account | `acc_BiNGS_bulk` (or your own lab's `acc_` account, if you'd rather bill your work there) |
+   | Codeserver Version | `4.15` |
+   | Working Directory | `/sc/arion/projects/BiNGS_bulk` (or wherever you want to work) |
+   | Number of hours | `3` (or however long you want the session to stay alive) |
+   | Number of cores | `4` |
+   | Memory request (GB) | `16` |
+   | **Reservation ID** | **`BINGS_1`** — any time between Sep 2 and Nov 12, not just during class |
 
 3. Click **Launch** at the bottom.
 4. Wait for the job status to flip to **Running**, then click **Connect
@@ -384,7 +458,7 @@ and 6). Same OnDemand portal — different app.
    | Number of hours | `3` |
    | Number of cores | `1` |
    | Memory request (GB) | `4` |
-   | Reservation ID *(during session only, leave blank otherwise)* | `BINGS_1` |
+   | **Reservation ID** | **`BINGS_1`** — any time between Sep 2 and Nov 12, not just during class |
 
 3. Click **Launch**, then **Connect to RStudio Server** when the job is
    running.
