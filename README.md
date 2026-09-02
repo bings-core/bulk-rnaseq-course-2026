@@ -12,7 +12,7 @@ practice data, the analysis pipeline, and reading. Ask questions any time in the
 
 ## Before Session 1
 
-Four things, in this order. Budget about half an hour in total. Please finish by
+Four things, in this order. Budget about half an hour. Please finish by
 end of day **Friday September 4** so we have enough time to fix anything broken.
 
 ### 1. Introduce yourself
