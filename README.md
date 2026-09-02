@@ -163,9 +163,8 @@ as `access_check_<date>_<time>.log`. Leave it there — it's how we confirm on o
 side that everyone is set up, so you don't need to email us to say it worked.
 
 If anything says **FAILED**, please
-[open an Issue](../../issues/new?template=02-question.md) and paste the output
-in. Don't wait and don't try to work around it — most of these are ours to fix
-and need a day or two, which is exactly why we're asking you to do this now.
+[open an Issue](../../issues/new?template=02-question.md) and we will look into
+what may have caused the issue and solve it.
 
 **e. Log out.** Type `exit` (or press **Ctrl-D**).
 
