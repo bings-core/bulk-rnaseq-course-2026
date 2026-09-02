@@ -112,6 +112,9 @@ about 30 seconds. It's safe to run more than once.
 ============================================================
   BiNGS Bulk RNA-seq Course - Minerva access check
 ============================================================
+  user: jdoe01    date: Wed Sep  2 17:39:34 EDT 2026
+  login node: lc07e55
+============================================================
 
 [1/5] Your Minerva account
   OK       You are logged in as: jdoe01
@@ -126,7 +129,7 @@ about 30 seconds. It's safe to run more than once.
   OK       Job ran under project account acc_BiNGS_bulk.
 
 [5/5] Classroom reservation
-  OK       Job landed on reserved node lc07e05 - reservation BINGS_1 works.
+  OK       Job landed on reserved node lc07e04 - reservation BINGS_1 works.
            R on the compute node: R version 4.2.0 (2022-04-22)
 
 ------------------------------------------------------------
@@ -135,10 +138,20 @@ about 30 seconds. It's safe to run more than once.
   Your course folder:  /sc/arion/projects/BiNGS_bulk/jdoe01
   You are ready for Session 1. Nothing else to do.
 ------------------------------------------------------------
+RESULT: PASS user=jdoe01 node=lc07e04 date=2026-09-02 17:39:38
+
+  A copy of this output was saved to:
+    /sc/arion/projects/BiNGS_bulk/jdoe01/access_check_20260902_173934.log
+
+  You can now type 'exit' to log out of Minerva.
 ```
 
 If you see **ALL CHECKS PASSED**, you're completely set up — account, folder,
 job scheduler, classroom reservation and R.
+
+The script also saves a copy of everything it printed into your course folder,
+as `access_check_<date>_<time>.log`. Leave it there — it's how we confirm on our
+side that everyone is set up, so you don't need to email us to say it worked.
 
 If anything says **FAILED**, please
 [open an Issue](../../issues/new?template=02-question.md) and paste the output

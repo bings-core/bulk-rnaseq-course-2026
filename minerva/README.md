@@ -159,6 +159,9 @@ All five checks should pass:
 ============================================================
   BiNGS Bulk RNA-seq Course - Minerva access check
 ============================================================
+  user: jdoe01    date: Wed Sep  2 17:39:34 EDT 2026
+  login node: lc07e55
+============================================================
 
 [1/5] Your Minerva account
   OK       You are logged in as: jdoe01
@@ -173,7 +176,7 @@ All five checks should pass:
   OK       Job ran under project account acc_BiNGS_bulk.
 
 [5/5] Classroom reservation
-  OK       Job landed on reserved node lc07e05 - reservation BINGS_1 works.
+  OK       Job landed on reserved node lc07e04 - reservation BINGS_1 works.
            R on the compute node: R version 4.2.0 (2022-04-22)
 
 ------------------------------------------------------------
@@ -182,11 +185,23 @@ All five checks should pass:
   Your course folder:  /sc/arion/projects/BiNGS_bulk/jdoe01
   You are ready for Session 1. Nothing else to do.
 ------------------------------------------------------------
+RESULT: PASS user=jdoe01 node=lc07e04 date=2026-09-02 17:39:38
+
+  A copy of this output was saved to:
+    /sc/arion/projects/BiNGS_bulk/jdoe01/access_check_20260902_173934.log
+
+  You can now type 'exit' to log out of Minerva.
 ```
 
 **ALL CHECKS PASSED** means you're completely set up: account, project
 folder, job scheduler, classroom reservation, and R. Nothing else to do
 before Session 1.
+
+A copy of everything printed is saved into your course folder as
+`access_check_<date>_<time>.log`. Please leave it there — the course
+staff read these to confirm everyone is set up, which means you don't
+have to email anyone to say it worked. Running the check again just adds
+another dated log next to it; nothing is overwritten.
 
 ### 6. Log out
 
@@ -212,8 +227,17 @@ order, it:
    (`lc07e04` / `lc07e05`), which tests the `BINGS_1` reservation, and
    reports the R version available there.
 
-The job's full output is saved as `access_check_job.out` in your folder if
-you want to read it.
+Two files are left in your folder afterwards: `access_check_job.out`,
+which is the raw output of the test job, and
+`access_check_<date>_<time>.log`, a plain-text transcript of everything
+the script printed. The transcript ends with a single-line summary like
+
+```
+RESULT: PASS user=jdoe01 node=lc07e04 date=2026-09-02 17:39:38
+```
+
+which is what lets the course staff check everyone's status at a glance
+rather than asking each of you individually.
 
 ### If something fails
 

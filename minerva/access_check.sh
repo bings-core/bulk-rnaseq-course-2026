@@ -10,21 +10,29 @@
 #  short test job to the classroom reservation. Takes about 30 seconds.
 #  It changes nothing except creating your own folder, and it is safe to
 #  run more than once.
+#
+#  A copy of everything printed is saved to your course folder as
+#  access_check_<date>_<time>.log so the course staff can check it.
 # =============================================================================
 
 PROJECT_DIR="/sc/arion/projects/BiNGS_bulk"
 MY_DIR="${PROJECT_DIR}/${USER}"
 ACCOUNT="acc_BiNGS_bulk"
 RESERVATION="BINGS_1"
+TS="$(date +%Y%m%d_%H%M%S)"
 FAILED=0
 
 pass() { printf '  \033[32mOK\033[0m       %s\n' "$1"; }
 fail() { printf '  \033[31mFAILED\033[0m   %s\n' "$1"; FAILED=1; }
 info() { printf '           %s\n' "$1"; }
 
+run_checks() {
 echo
 echo "============================================================"
 echo "  BiNGS Bulk RNA-seq Course - Minerva access check"
+echo "============================================================"
+echo "  user: ${USER}    date: $(date)"
+echo "  login node: $(hostname)"
 echo "============================================================"
 echo
 
@@ -60,6 +68,7 @@ fi
 echo
 
 # --- 4 & 5. Test job on the reservation --------------------------------------
+NODE=""
 echo "[4/5] Submitting a test job (this takes ~30 seconds, please wait)"
 if [ "$FAILED" -eq 1 ]; then
     info "Skipped - fix the failures above first."
@@ -131,6 +140,35 @@ else
     echo "  We would much rather fix this now than on September 9."
 fi
 echo "------------------------------------------------------------"
+
+# One machine-readable line, so the course staff can scan every participant
+# at once without reading each transcript.
+if [ "$FAILED" -eq 0 ]; then
+    echo "RESULT: PASS user=${USER} node=${NODE:-none} date=$(date '+%Y-%m-%d %H:%M:%S')"
+else
+    echo "RESULT: FAIL user=${USER} node=${NODE:-none} date=$(date '+%Y-%m-%d %H:%M:%S')"
+fi
+}
+
+# --- Run everything, capturing a transcript ----------------------------------
+LOG_TMP="$(mktemp "${TMPDIR:-/tmp}/access_check.XXXXXX")"
+run_checks 2>&1 | tee "$LOG_TMP"
+
+if [ -d "$MY_DIR" ] && [ -w "$MY_DIR" ]; then
+    LOG_FILE="${MY_DIR}/access_check_${TS}.log"
+    # Strip the colour codes so the saved file is plain text.
+    sed -e 's/\x1b\[[0-9;]*m//g' "$LOG_TMP" > "$LOG_FILE" 2>/dev/null
+    chmod 644 "$LOG_FILE" 2>/dev/null
+    echo
+    echo "  A copy of this output was saved to:"
+    echo "    $LOG_FILE"
+else
+    echo
+    echo "  Could not save a copy of this output - your course folder is not"
+    echo "  writable. Please paste the text above into a GitHub issue instead."
+fi
+rm -f "$LOG_TMP"
+
 echo
 echo "  You can now type 'exit' to log out of Minerva."
 echo
