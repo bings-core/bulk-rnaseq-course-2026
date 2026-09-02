@@ -1,0 +1,29 @@
+#!/bin/bash
+# ---------------------------------------------------------------------------
+# hello_minerva.lsf — course access check, part 2.
+#
+# A five-minute job that proves three things at once:
+#   1. you can submit to the course project account  (acc_BiNGS_bulk)
+#   2. you can use the classroom reservation          (BINGS_1)
+#   3. R loads on a compute node
+#
+# Submit it with:   bsub < hello_minerva.lsf
+# ---------------------------------------------------------------------------
+#BSUB -J hello_minerva
+#BSUB -P acc_BiNGS_bulk
+#BSUB -q premium
+#BSUB -U BINGS_1
+#BSUB -n 1
+#BSUB -W 00:05
+#BSUB -R rusage[mem=2000]
+#BSUB -o hello_minerva.%J.out
+#BSUB -e hello_minerva.%J.err
+
+echo "Hello from $(whoami)"
+echo "Running on compute node: $(hostname)"
+echo "Date: $(date)"
+echo "My course folder: /sc/arion/projects/BiNGS_bulk/$USER"
+
+module purge
+module load R/4.2.0
+Rscript -e 'cat("R is working:", R.version.string, "\n")'

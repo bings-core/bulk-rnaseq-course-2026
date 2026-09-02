@@ -10,10 +10,69 @@ practice data, the analysis pipeline, and reading. Ask questions any time in the
 - **Platform:** Minerva HPC (project `BiNGS_bulk`, `/sc/arion/projects/BiNGS_bulk/`)
 - **Organized by:** BiNGS Core · Tisch Cancer Center, Mount Sinai
 
+## Before Session 1
+
+Four things, in this order. Budget about half an hour in total. Please finish by
+**Friday September 5** so we have the weekend and Monday to fix anything broken —
+a Minerva problem discovered on Sep 9 cannot be fixed during Session 1.
+
+**1. Set up Microsoft Authenticator** →
+[guide](minerva/README.md#set-up-microsoft-authenticator)
+Mount Sinai requires MFA on every single Minerva and VPN login. Without it,
+nothing else on this list will work. Skip only if you already use it daily.
+
+**2. Get onto the Sinai network** →
+[guide](minerva/README.md#get-onto-the-sinai-network)
+On campus, that's the `MSMC-Green` wifi. Anywhere else, it's the F5 VPN, which
+needs a one-time client install — do that install now rather than at 3:55 PM on
+a Wednesday.
+
+**3. Run the one-time access check** →
+[guide](minerva/README.md#one-time-access-check)
+Two short steps: create your own folder under `/sc/arion/projects/BiNGS_bulk/`,
+then submit a five-minute test job that confirms you can use the classroom
+compute nodes and that R loads. **This is the important one** — it's how you
+find out whether your access actually works while there's still time to fix it.
+If any part fails, [open an Issue](../../issues) rather than waiting.
+
+**4. Introduce yourself** →
+[open an introduction issue](../../issues/new?template=01-introduce-yourself.md)
+Tell us who you are, what you work on, and what you want to get out of the
+course. This isn't busywork: your answers about prior programming experience and
+whether you have your own data shape how we pitch the hands-on sessions and how
+we plan Sessions 9 and 10. It also means that when you post a question in week
+four, everyone already knows who you are. You'll need a free
+[GitHub account](https://github.com/signup) if you don't have one.
+
 ## Asking questions
 
-Please open an [Issue](../../issues). 
-TAs and instructors monitor them between sessions — office hours can be set up upon request.
+**All course questions go in the [Issues](../../issues) tab.** Not email — Issues.
+
+This is deliberate. When you hit a problem, three other people usually have the
+same one, and an issue answers all four of you at once and stays searchable for
+the rest of the course. Instructors and TAs monitor the tab between sessions.
+Office hours can be set up on request.
+
+**You'll need a free GitHub account to post.** If you don't have one, sign up at
+**[github.com/signup](https://github.com/signup)** — it takes two minutes, a
+personal email address is fine, and you do not need to pay for anything. This is
+also a genuinely useful thing to own as a scientist: it's where nearly all
+bioinformatics software lives, and where you'll eventually put your own analysis
+code.
+
+Two issue templates are set up for you:
+
+- **👋 Introduce yourself** — please do this before Session 1. See below.
+- **❓ Ask a question** — for anything that isn't working.
+
+No question is too basic here. Several of you told us on the interest form that
+you have no programming experience at all, which is exactly who this course is
+built for.
+
+> One exception: **account, password and MFA problems** belong to Scientific
+> Computing at **hpchelp@hpc.mssm.edu**, not to us. Anything about the course
+> project itself — folder access, the `acc_BiNGS_bulk` account, the `BINGS_1`
+> reservation — is ours.
 
 ## Schedule
 
@@ -77,13 +136,12 @@ TAs and instructors monitor them between sessions — office hours can be set up
 - **Content:** Two open sessions where participants run the full production BiNGS bulk RNA-seq pipeline on data they bring themselves. TAs and instructors work through it alongside each participant end-to-end: sample-metadata setup, preprocessing, DEG analysis, functional enrichment, and (where relevant) epigenetic integration. Goal: leave the course with a reproducible analysis of your own data, not just the course dataset.
 - **Tools:** the full BiNGS bulk RNA-seq pipeline (all tools from Sessions 4–8)
 
-## Getting started
+## Every session, once we've started
 
-Before sessions begin, complete these three steps from [`minerva/README.md`](minerva/README.md):
-
-1. [Request a Minerva account](minerva/README.md#request-a-minerva-account) — request an account and once you get a confirmation from HPC that your minerva account is activated, send us your username so we can add you to the course project (`BiNGS_bulk`).
-2. [Set up Microsoft Authenticator](minerva/README.md#set-up-microsoft-authenticator) — install and register the MFA app if you haven't before. Mount Sinai requires this for every Minerva login and VPN tunnel.
-3. [One-time access check](minerva/README.md#one-time-access-check) — one-line command that creates your own folder under the shared project and confirms your access is live.
-
-Then at the start of each Wednesday session, launch [OnDemand Code Server](minerva/README.md#ondemand-code-server) (bash sessions) or [OnDemand RStudio Server](minerva/README.md#ondemand-rstudio-server) (R sessions) with reservation `BINGS_1`. Outside of session times, leave reservation empty.
+At the start of each Wednesday session, launch
+[OnDemand Code Server](minerva/README.md#ondemand-code-server) (bash sessions) or
+[OnDemand RStudio Server](minerva/README.md#ondemand-rstudio-server) (R sessions)
+with **Reservation ID `BINGS_1`** — that's what puts you on the nodes we've
+reserved for the class. Outside of session times, leave the reservation field
+blank.
 

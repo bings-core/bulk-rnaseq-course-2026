@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: "🚨 Urgent, day-of problem (can't get into the building or find the room)"
+    url: "https://github.com/bings-core/bulk-rnaseq-course-2026#readme"
+    about: "Don't open an issue — call Dan Hasson at 646-824-6449."
+  - name: "Minerva account or password problem"
+    url: "https://labs.icahn.mssm.edu/minervalab/"
+    about: "Account creation, password resets and MFA are handled by Scientific Computing at hpchelp@hpc.mssm.edu, not by the course staff."
