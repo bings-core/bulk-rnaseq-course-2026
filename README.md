@@ -16,27 +16,80 @@ Four things, in this order. Budget about half an hour in total. Please finish by
 **Friday September 5** so we have the weekend and Monday to fix anything broken —
 a Minerva problem discovered on Sep 9 cannot be fixed during Session 1.
 
-**1. Set up Microsoft Authenticator** →
-[guide](minerva/README.md#set-up-microsoft-authenticator)
-Mount Sinai requires MFA on every single Minerva and VPN login. Without it,
-nothing else on this list will work. Skip only if you already use it daily.
+### 1. Set up Microsoft Authenticator
 
-**2. Get onto the Sinai network** →
-[guide](minerva/README.md#get-onto-the-sinai-network)
-On campus, that's the `MSMC-Green` wifi. Anywhere else, it's the F5 VPN, which
-needs a one-time client install — do that install now rather than at 3:55 PM on
-a Wednesday.
+Mount Sinai requires multi-factor authentication on **every** Minerva and VPN
+login, so nothing else on this list works without it. If you already approve a
+phone prompt when you log into Sinai systems, you're done — skip to step 2.
 
-**3. Run the one-time access check** →
-[guide](minerva/README.md#one-time-access-check)
+1. Install **Microsoft Authenticator** on your phone, from the
+   [App Store](https://apps.apple.com/app/microsoft-authenticator/id983156458) or
+   [Google Play](https://play.google.com/store/apps/details?id=com.azure.authenticator).
+2. Register your Mount Sinai account with the app by following the official
+   Sinai walkthrough:
+   **[itsecurity.mssm.edu/ms-authenticator](https://itsecurity.mssm.edu/ms-authenticator/)**
+
+From then on, every Minerva and VPN login sends a prompt to your phone that you
+approve, or shows a number you type into the app.
+
+### 2. Get onto the Sinai network
+
+Minerva is not reachable from the open internet. Your laptop has to be on the
+Sinai network first — **on campus that means the wifi, anywhere else it means
+the VPN**.
+
+**On campus — connect to `MSMC-Green`**
+
+In your wireless settings, pick `MSMC-Green` and sign in. The username format
+depends on which side of Mount Sinai you're affiliated with, and this is the
+part that trips people up:
+
+| Affiliation | Username format | Example |
+|-------------|-----------------|---------|
+| **School** (faculty, staff, students) | `mssmcampus\<your-username>` | `mssmcampus\doej01` |
+| **Hospital** (employees) | `msnyuhealth\<your-network-ID>` | `msnyuhealth\doej01` |
+
+Note the backslash, and that this is your Sinai username, not your email
+address. Full guide with per-device screenshots:
+[Mount Sinai Wifi Instructions (PDF)](https://icahn.mssm.edu/files/ISMMS/Assets/About%20the%20School/Computer%20Services/Mount-Sinai-Wifi-Instructions.pdf).
+
+**Off campus — install and connect the F5 VPN**
+
+Please do the install part this week rather than at 3:55 PM on a Wednesday.
+
+*One time,* install the F5 client for your operating system:
+[Mac](https://itsecurity.mssm.edu/vpn-tunnel-for-mac/) ·
+[Windows](https://itsecurity.mssm.edu/vpn-tunnel-for-windows/)
+
+*Every time you work off campus,* connect through it:
+
+1. Go to the VPN portal for your side of Mount Sinai —
+   **school:** [dcsmsvpn.mssm.edu](https://dcsmsvpn.mssm.edu) ·
+   **hospital:** [msvpn.mountsinai.org](https://msvpn.mountsinai.org)
+2. Log in and approve the Microsoft Authenticator prompt.
+3. Under **Network Access**, click **Tunnel**. The F5 client opens in its own
+   window; when the indicator turns green and reads **Connected**, you're on.
+4. Leave that window open while you work — closing it drops the tunnel.
+
+Screenshots of both steps are in
+[`minerva/README.md`](minerva/README.md#off-campus-vpn).
+
+### 3. Run the one-time access check
+
+Full walkthrough: **[`minerva/README.md`](minerva/README.md#one-time-access-check)**
+— it has the exact commands to copy and paste, so follow it there rather than
+from memory.
+
 Two short steps: create your own folder under `/sc/arion/projects/BiNGS_bulk/`,
 then submit a five-minute test job that confirms you can use the classroom
 compute nodes and that R loads. **This is the important one** — it's how you
 find out whether your access actually works while there's still time to fix it.
 If any part fails, [open an Issue](../../issues) rather than waiting.
 
-**4. Introduce yourself** →
-[open an introduction issue](../../issues/new?template=01-introduce-yourself.md)
+### 4. Introduce yourself
+
+**[Open an introduction issue →](../../issues/new?template=01-introduce-yourself.md)**
+
 Tell us who you are, what you work on, and what you want to get out of the
 course. This isn't busywork: your answers about prior programming experience and
 whether you have your own data shape how we pitch the hands-on sessions and how
@@ -62,7 +115,7 @@ code.
 
 Two issue templates are set up for you:
 
-- **👋 Introduce yourself** — please do this before Session 1. See below.
+- **👋 Introduce yourself** — please do this before Session 1 (step 4 above).
 - **❓ Ask a question** — for anything that isn't working.
 
 No question is too basic here. Several of you told us on the interest form that
