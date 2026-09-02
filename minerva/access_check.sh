@@ -59,6 +59,10 @@ echo
 # --- 3. Personal folder ------------------------------------------------------
 echo "[3/5] Your personal course folder"
 if mkdir -p "$MY_DIR" 2>/dev/null && [ -w "$MY_DIR" ]; then
+    # Force group access regardless of the participant's umask. Without this,
+    # anyone running with umask 077 gets a 700 folder the course staff cannot
+    # read, so their access-check log would be invisible to us.
+    chmod 2750 "$MY_DIR" 2>/dev/null
     pass "Ready: $MY_DIR"
     echo "Welcome $USER - created $(date)" > "${MY_DIR}/welcome.txt"
 else
@@ -113,6 +117,10 @@ LSFJOB
         fi
         sleep 1
     done
+
+    # Group-readable regardless of umask: if this run failed, the course
+    # staff need to be able to read this file to see why.
+    chmod 644 "$JOB_OUT" 2>/dev/null
 
     # Only look at what the job printed, not LSF's echo of the script itself.
     RESULT=$(sed -n '/The output (if any) follows:/,$p' "$JOB_OUT" 2>/dev/null)
