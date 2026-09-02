@@ -13,17 +13,15 @@ practice data, the analysis pipeline, and reading. Ask questions any time in the
 ## Before Session 1
 
 Four things, in this order. Budget about half an hour in total. Please finish by
-end of day **Friday September 5** so we have enough time to fix anything broken.
+end of day **Friday September 4** so we have enough time to fix anything broken.
 
 ### 1. Introduce yourself
 
 **[Open an introduction issue →](../../issues/new?template=01-introduce-yourself.md)**
 
 Three short answers: who you are, what you work on, and what you want to be
-able to do by the end of the course. That last one isn't busywork — it shapes
-how we pitch the hands-on sessions and how we plan Sessions 9 and 10, which are
-set aside for running the pipeline on data you bring yourself. It also means
-that when you post a question in week four, everyone already knows who you are.
+able to do by the end of the course. This is how you will communicate your 
+questions with the course instructors and TAs, so it's a good practice.
 You'll need a free [GitHub account](https://github.com/signup) if you don't
 have one.
 
