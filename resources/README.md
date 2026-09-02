@@ -37,13 +37,29 @@ pipeline looks like* → *the analyst's toolkit*.
 
 ## Minerva training
 
-Mount Sinai runs a Minerva user group that records intro-to-HPC training
-sessions. Landing page (calendar + recordings archive):
+Scientific Computing runs free Minerva training, and two of this autumn's
+live sessions are close to ideal preparation for this course. **We
+recommend attending both.** Thursdays, 1:00–2:00 PM, in person with a Zoom
+option — you register per session to get the link.
+
+| Date | Session | Covers |
+|------|---------|--------|
+| **Thu Sep 17** | Introduction to Minerva | Minerva resources, account and logging in, the user software environment, other services |
+| **Thu Sep 24** | Load Sharing Facility (LSF) Job Scheduler | Job submission and monitoring, parallel jobs and GPUs, job arrays and the self-scheduler |
+
+The timing lines up: each falls the day after our own Session 2 (Sep 16,
+HPC and R) and Session 3 (Sep 23). If anything in ours moves too fast,
+theirs covers the same ground from scratch.
+
+Their first session (Sep 10) is about the Minerva *Restricted* Cluster,
+which this course doesn't use — you can skip it.
+
+Registration and the full schedule are on the landing page:
 
 - 📎 **[Minerva User Group & Training Sessions](https://labs.icahn.mssm.edu/minervalab/resources/the-minerva-user-group-and-training-classes/)**
 
-Three specific sessions from the archive are worth watching (or skimming
-the slides) before or alongside Session 2:
+If you'd rather not wait, or you miss one, the archive has recordings of
+past runs of the same material:
 
 - **February 2, 2026 — Introduction to Minerva.** File systems, module system,
   batch vs interactive jobs, quotas. Foundation for everything the course does
