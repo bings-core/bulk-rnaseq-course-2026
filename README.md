@@ -13,8 +13,7 @@ practice data, the analysis pipeline, and reading. Ask questions any time in the
 ## Before Session 1
 
 Four things, in this order. Budget about half an hour in total. Please finish by
-**Friday September 5** so we have the weekend and Monday to fix anything broken —
-a Minerva problem discovered on Sep 9 cannot be fixed during Session 1.
+end of day **Friday September 5** so we have enough time to fix anything broken.
 
 ### 1. Set up Microsoft Authenticator
 
@@ -54,8 +53,6 @@ address. Full guide with per-device screenshots:
 [Mount Sinai Wifi Instructions (PDF)](https://icahn.mssm.edu/files/ISMMS/Assets/About%20the%20School/Computer%20Services/Mount-Sinai-Wifi-Instructions.pdf).
 
 **Off campus — install and connect the F5 VPN**
-
-Please do the install part this week rather than at 3:55 PM on a Wednesday.
 
 *One time,* install the F5 client for your operating system:
 [Mac](https://itsecurity.mssm.edu/vpn-tunnel-for-mac/) ·
