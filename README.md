@@ -86,7 +86,7 @@ out whether your access actually works while there's still time to fix it.
 **a. Open a terminal on your own laptop.**
 On **Mac** that's the built-in **Terminal** app. On **Windows** it's
 **Windows Terminal** (already installed on Win 11; free from the Microsoft
-Store on Win 10) — it ships with `ssh`, so nothing else to install.
+Store on Win 10).
 
 **b. Log into Minerva.** Replace `<your-minerva-username>` with your own:
 
@@ -94,13 +94,13 @@ Store on Win 10) — it ships with `ssh`, so nothing else to install.
 ssh <your-minerva-username>@minerva.hpc.mssm.edu
 ```
 
+*(If your Sinai email ends in `@mountsinai.org` rather than `@mssm.edu`, use
+`minerva-org.hpc.mssm.edu` instead.)*
+
 You'll be asked for your **Sinai password**, then your **Microsoft
 Authenticator** code or push approval. The password prompt shows nothing at
 all as you type — no dots, no asterisks. That's normal; type it and press
 Enter.
-
-*(If your Sinai email ends in `@mountsinai.org` rather than `@mssm.edu`, use
-`minerva-org.hpc.mssm.edu` instead.)*
 
 When you see a prompt like `[jdoe01@li03c04 ~]$`, you're on Minerva.
 
