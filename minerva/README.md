@@ -14,9 +14,8 @@ steps 4 and 5 are what you'll repeat every time you sit down to work.
 1. [Minerva account](#minerva-account) — most of you already have one and
    are already added to the course project.
 2. [Set up Microsoft Authenticator](#set-up-microsoft-authenticator)
-3. [One-time access check](#one-time-access-check) — two short steps that
-   prove your access is live: create your own folder under the course
-   project, then run a five-minute test job on the classroom nodes.
+3. [One-time access check](#one-time-access-check) — one command that
+   proves your access is live and creates your course folder.
 
 *Every time you want to work on the course:*
 
@@ -98,158 +97,130 @@ The guide walks you through:
 
 ## One-time access check
 
-This is the one thing we need every participant to do **before Session 1**.
-It takes about five minutes and it is how we find out — while there's still
-time to fix it — whether your access is actually working.
-
-There are two parts. Part 1 proves you can reach the shared course folder.
-Part 2 proves you can run a job on the classroom compute nodes. They test
-different things, so please do both.
+One command, run once, before Session 1. It confirms your access works and
+creates your personal course folder. Takes about two minutes.
 
 Reference: the official Minerva
 [Logging in](https://labs.icahn.mssm.edu/minervalab/documentation/logging-in/)
 and [Quick start](https://labs.icahn.mssm.edu/minervalab/minerva-quick-start/)
 pages.
 
-### Before you start
+### 1. Get on the Sinai network
 
-**1. Be on the Sinai network** — see
-[Get onto the Sinai network](#get-onto-the-sinai-network) (on-campus
-wifi or off-campus VPN). Skip ahead, do that step, then come back here.
+Your laptop has to be on the Sinai network before it can reach Minerva —
+see [Get onto the Sinai network](#get-onto-the-sinai-network) (on-campus
+wifi or off-campus VPN). Do that first, then come back here.
 
-**2. Open a terminal on your own laptop:**
+### 2. Open a terminal on your laptop
 
 - **Mac / Linux:** the built-in **Terminal** app (or iTerm2).
-- **Windows:** the built-in **Windows Terminal** (Win 11 default; free
-  from the Microsoft Store on Win 10) — it ships with OpenSSH, so the
-  `ssh` command works out of the box. See the
-  [official Minerva Logging in guide](https://labs.icahn.mssm.edu/minervalab/documentation/logging-in/)
-  for setup instructions and screenshots.
+- **Windows:** the built-in **Windows Terminal** — already installed on
+  Windows 11, free from the Microsoft Store on Windows 10. It ships with
+  OpenSSH, so the `ssh` command below works with nothing else installed.
+  The [official Minerva Logging in guide](https://labs.icahn.mssm.edu/minervalab/documentation/logging-in/)
+  has screenshots.
 
-**3. SSH into Minerva.** Replace `<your-minerva-username>` with the
-username you were assigned:
+### 3. Log into Minerva
+
+Replace `<your-minerva-username>` with the username you were assigned:
 
 ```bash
 ssh <your-minerva-username>@minerva.hpc.mssm.edu
 ```
 
-*(If your Sinai email is `@mountsinai.org` rather than `@mssm.edu`, use
-`minerva-org.hpc.mssm.edu` instead.)*
+*(If your Sinai email ends in `@mountsinai.org` rather than `@mssm.edu`,
+use `minerva-org.hpc.mssm.edu` instead.)*
 
-You'll be prompted for your **Sinai password**, then a **Microsoft
-Authenticator** verification code (or push approval). Once you see a
-`[<your-username>@li03c##]$` prompt, you're on Minerva.
+You'll be asked for your **Sinai password**, then a **Microsoft
+Authenticator** code or push approval.
 
 > The password prompt shows **nothing at all** as you type — no dots, no
 > asterisks. That's normal on Linux. Type it and press Enter.
 
-### Part 1 — Claim your folder
+When you see a prompt like `[jdoe01@li03c04 ~]$`, you're on Minerva.
 
-Copy and paste this line, and press Enter:
+### 4. Run the check
 
-```bash
-cd /sc/arion/projects/BiNGS_bulk/ && mkdir -p $USER && cd $USER && echo "Welcome $USER" > welcome.txt && cat welcome.txt && pwd
-```
-
-You should see:
-
-```
-Welcome <your-minerva-username>
-/sc/arion/projects/BiNGS_bulk/<your-minerva-username>
-```
-
-That folder is yours for the whole course — it's where your work will
-live. Everyone can see everyone's folders, which is deliberate: it means
-a TA can look at your files when you're stuck.
-
-### Part 2 — Run a test job
-
-Part 1 only proved you can reach the *folder*. Actual analysis runs on
-compute nodes, through the job scheduler, on the reservation we've
-booked for the class. This second step proves all of that works.
-
-Still in your folder from Part 1, copy the whole block below — from
-`cat` down to the final `EOF` — paste it, and press Enter:
+Copy this line, paste it, press Enter:
 
 ```bash
-cat > hello_minerva.lsf <<'EOF'
-#!/bin/bash
-#BSUB -J hello_minerva
-#BSUB -P acc_BiNGS_bulk
-#BSUB -q premium
-#BSUB -U BINGS_1
-#BSUB -n 1
-#BSUB -W 00:05
-#BSUB -R rusage[mem=2000]
-#BSUB -o hello_minerva.%J.out
-#BSUB -e hello_minerva.%J.err
-
-echo "Hello from $(whoami)"
-echo "Running on compute node: $(hostname)"
-echo "Date: $(date)"
-echo "My course folder: /sc/arion/projects/BiNGS_bulk/$USER"
-
-module purge
-module load R/4.2.0
-Rscript -e 'cat("R is working:", R.version.string, "\n")'
-EOF
+bash /sc/arion/projects/BiNGS_bulk/shared/access_check.sh
 ```
 
-That wrote a small job script. (It's also in this repo as
-[`hello_minerva.lsf`](hello_minerva.lsf) if you'd rather read it first.)
-Now submit it:
+Give it about 30 seconds — it submits a real job and waits for it to
+finish. It's safe to run more than once, and it changes nothing except
+creating your own folder.
 
-```bash
-bsub < hello_minerva.lsf
-```
+### 5. Read the output
 
-You'll get back a job ID:
+All five checks should pass:
 
 ```
-Job <268055683> is submitted to queue <premium>.
+============================================================
+  BiNGS Bulk RNA-seq Course - Minerva access check
+============================================================
+
+[1/5] Your Minerva account
+  OK       You are logged in as: jdoe01
+
+[2/5] Course group membership
+  OK       You are in the BiNGS_bulk group.
+
+[3/5] Your personal course folder
+  OK       Ready: /sc/arion/projects/BiNGS_bulk/jdoe01
+
+[4/5] Submitting a test job (this takes ~30 seconds, please wait)
+  OK       Job ran under project account acc_BiNGS_bulk.
+
+[5/5] Classroom reservation
+  OK       Job landed on reserved node lc07e05 - reservation BINGS_1 works.
+           R on the compute node: R version 4.2.0 (2022-04-22)
+
+------------------------------------------------------------
+  ALL CHECKS PASSED
+
+  Your course folder:  /sc/arion/projects/BiNGS_bulk/jdoe01
+  You are ready for Session 1. Nothing else to do.
+------------------------------------------------------------
 ```
 
-Check on it with `bjobs`. It usually finishes in under ten seconds, so
-you may well see nothing at all — an empty `bjobs` means it's already
-done, which is good news:
-
-```bash
-bjobs
-```
-
-Then read the output, substituting your own job ID:
-
-```bash
-cat hello_minerva.*.out
-```
-
-Near the bottom of that file, past LSF's resource-usage summary, you
-should find:
-
-```
-Hello from <your-minerva-username>
-Running on compute node: lc07e04     <- or lc07e05
-Date: ...
-My course folder: /sc/arion/projects/BiNGS_bulk/<your-minerva-username>
-R is working: R version 4.2.0 (2022-04-22)
-```
-
-The file should also say **`Successfully completed.`** near the top.
-
-If you see all of that, you're completely set up: account, project
+**ALL CHECKS PASSED** means you're completely set up: account, project
 folder, job scheduler, classroom reservation, and R. Nothing else to do
 before Session 1.
 
-### Part 3 — Log out
+### 6. Log out
 
 Type `exit` (or press **Ctrl-D**) to close the SSH session.
 
+### What the script actually does
+
+It's [`access_check.sh`](access_check.sh) in this folder, and the copy you
+run lives at `/sc/arion/projects/BiNGS_bulk/shared/access_check.sh`. In
+order, it:
+
+1. Reports which account you're logged in as.
+2. Checks you're in the `BiNGS_bulk` UNIX group — this is what grants
+   access to the shared course folder.
+3. Creates `/sc/arion/projects/BiNGS_bulk/<your-username>/`, your working
+   folder for the whole course, and drops a `welcome.txt` in it. Everyone
+   can see everyone's folders, which is deliberate: it means a TA can look
+   at your files when you're stuck.
+4. Submits a five-minute job under the `acc_BiNGS_bulk` project account
+   and waits for it. This is a separate permission from folder access —
+   they have been out of sync before, so it's worth testing.
+5. Confirms the job landed on one of the two reserved classroom nodes
+   (`lc07e04` / `lc07e05`), which tests the `BINGS_1` reservation, and
+   reports the R version available there.
+
+The job's full output is saved as `access_check_job.out` in your folder if
+you want to read it.
+
 ### If something fails
 
-Please **don't sit on it** — the whole point of doing this a week early
-is that we have time to fix it. Open an
-[Issue](../../issues) with the exact error text, or bring it to the
-optional help session before Session 2.
+Please **don't sit on it** — the whole point of doing this a week early is
+that we have time to fix it. Open an
+[Issue](../../issues/new?template=02-question.md) with the output pasted
+in, or come to the optional help session before Session 2.
 
 Common failures and what they mean:
 
@@ -257,11 +228,11 @@ Common failures and what they mean:
 |---|---|---|
 | `ssh: Could not resolve hostname` | You're not on the Sinai network | Connect to MSMC-Green or the VPN, then retry |
 | `Permission denied` after your password | Wrong username, or MFA not registered | Check your username; set up [Microsoft Authenticator](#set-up-microsoft-authenticator) |
-| `-bash: cd: /sc/arion/projects/BiNGS_bulk/: No such file or directory` | You're on Minerva but not in the course project | Open an Issue — this one is ours to fix |
-| `Permission denied` on `mkdir` | Same as above — you're not in the project group yet | Open an Issue |
-| `User <you> is not a member of the specified user group` after `bsub` | You're in the folder group but not the reservation group | Open an Issue — this is a known half-provisioned state and we can get it fixed in a day |
-| `Project account acc_BiNGS_bulk is not valid` | Typo, or you're not on the project | Check the spelling first, then open an Issue |
-| `bjobs` shows `PEND` for a long time | The reservation is busy, or you're off-reservation | Usually fine — wait a minute. If it's still pending after five, tell us |
+| `[2/5] FAILED You are NOT in the BiNGS_bulk group` | You're on Minerva but not on the course project | Open an Issue — ours to fix |
+| `[3/5] FAILED Could not create or write to ...` | Same as above | Open an Issue |
+| `[4/5] FAILED` with `not a member of the specified user group` | You're in the folder group but not the reservation group | Open an Issue — a known half-provisioned state, fixable in about a day |
+| `[4/5] FAILED` with `Project account ... is not valid` | You're not on the project account | Open an Issue |
+| The script hangs at step 4 for several minutes | The reservation is unusually busy | Press Ctrl-C, wait a few minutes, run it again. Tell us if it happens twice |
 
 ## Get onto the Sinai network
 

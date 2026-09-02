@@ -73,15 +73,85 @@ Screenshots of both steps are in
 
 ### 3. Run the one-time access check
 
-Full walkthrough: **[`minerva/README.md`](minerva/README.md#one-time-access-check)**
-— it has the exact commands to copy and paste, so follow it there rather than
-from memory.
+**This is the important one.** It takes about two minutes and it's how you find
+out whether your access actually works while there's still time to fix it.
 
-Two short steps: create your own folder under `/sc/arion/projects/BiNGS_bulk/`,
-then submit a five-minute test job that confirms you can use the classroom
-compute nodes and that R loads. **This is the important one** — it's how you
-find out whether your access actually works while there's still time to fix it.
-If any part fails, [open an Issue](../../issues) rather than waiting.
+**a. Open a terminal on your own laptop.**
+On **Mac** that's the built-in **Terminal** app. On **Windows** it's
+**Windows Terminal** (already installed on Win 11; free from the Microsoft
+Store on Win 10) — it ships with `ssh`, so nothing else to install.
+
+**b. Log into Minerva.** Replace `<your-minerva-username>` with your own:
+
+```bash
+ssh <your-minerva-username>@minerva.hpc.mssm.edu
+```
+
+You'll be asked for your **Sinai password**, then your **Microsoft
+Authenticator** code or push approval. The password prompt shows nothing at
+all as you type — no dots, no asterisks. That's normal; type it and press
+Enter.
+
+*(If your Sinai email ends in `@mountsinai.org` rather than `@mssm.edu`, use
+`minerva-org.hpc.mssm.edu` instead.)*
+
+When you see a prompt like `[jdoe01@li03c04 ~]$`, you're on Minerva.
+
+**c. Run the check.** Copy this one line, paste it, press Enter:
+
+```bash
+bash /sc/arion/projects/BiNGS_bulk/shared/access_check.sh
+```
+
+It creates your personal course folder and submits a short test job, so give it
+about 30 seconds. It's safe to run more than once.
+
+**d. Check the output.** You should see all five checks pass:
+
+```
+============================================================
+  BiNGS Bulk RNA-seq Course - Minerva access check
+============================================================
+
+[1/5] Your Minerva account
+  OK       You are logged in as: jdoe01
+
+[2/5] Course group membership
+  OK       You are in the BiNGS_bulk group.
+
+[3/5] Your personal course folder
+  OK       Ready: /sc/arion/projects/BiNGS_bulk/jdoe01
+
+[4/5] Submitting a test job (this takes ~30 seconds, please wait)
+  OK       Job ran under project account acc_BiNGS_bulk.
+
+[5/5] Classroom reservation
+  OK       Job landed on reserved node lc07e05 - reservation BINGS_1 works.
+           R on the compute node: R version 4.2.0 (2022-04-22)
+
+------------------------------------------------------------
+  ALL CHECKS PASSED
+
+  Your course folder:  /sc/arion/projects/BiNGS_bulk/jdoe01
+  You are ready for Session 1. Nothing else to do.
+------------------------------------------------------------
+```
+
+If you see **ALL CHECKS PASSED**, you're completely set up — account, folder,
+job scheduler, classroom reservation and R.
+
+If anything says **FAILED**, please
+[open an Issue](../../issues/new?template=02-question.md) and paste the output
+in. Don't wait and don't try to work around it — most of these are ours to fix
+and need a day or two, which is exactly why we're asking you to do this now.
+
+**e. Log out.** Type `exit` (or press **Ctrl-D**).
+
+<sub>Curious what it did? The script is
+[`minerva/access_check.sh`](minerva/access_check.sh) — it checks your group
+membership, creates `/sc/arion/projects/BiNGS_bulk/<your-username>/`, and
+submits a five-minute job to the classroom reservation that loads R and reports
+which node it ran on.</sub>
 
 ### 4. Introduce yourself
 
