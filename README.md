@@ -19,12 +19,13 @@ end of day **Friday September 5** so we have enough time to fix anything broken.
 
 **[Open an introduction issue →](../../issues/new?template=01-introduce-yourself.md)**
 
-Tell us who you are, what you work on, and what you want to get out of the
-course. This isn't busywork: your answers about prior programming experience and
-whether you have your own data shape how we pitch the hands-on sessions and how
-we plan Sessions 9 and 10. It also means that when you post a question in week
-four, everyone already knows who you are. You'll need a free
-[GitHub account](https://github.com/signup) if you don't have one.
+Three short answers: who you are, what you work on, and what you want to be
+able to do by the end of the course. That last one isn't busywork — it shapes
+how we pitch the hands-on sessions and how we plan Sessions 9 and 10, which are
+set aside for running the pipeline on data you bring yourself. It also means
+that when you post a question in week four, everyone already knows who you are.
+You'll need a free [GitHub account](https://github.com/signup) if you don't
+have one.
 
 ### 2. Set up Microsoft Authenticator
 
