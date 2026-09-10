@@ -196,7 +196,7 @@ built for.
 
 | #  | Date         | Time         | Location   | Topic | PPT |
 |----|--------------|--------------|------------|------------------------------------------------|--------|
-| 01 | Wed · Sep 9  | 4:00-5:30 PM | Hess 8-101 | Introduction to bulk RNA-seq & BiNGS | [Slides](https://mtsinai-my.sharepoint.com/:p:/g/personal/deniz_demircioglu_mssm_edu/IQDsXA73gsRpQLIVw0g0oJMWAehZJlfkwKyfDfxWRKHU3LA?e=ZMIGOw) |
+| 01 | Wed · Sep 9  | 4:00-5:30 PM | Hess 8-101 | Introduction to bulk RNA-seq & BiNGS | [Slides](https://mtsinai-my.sharepoint.com/:p:/g/personal/deniz_demircioglu_mssm_edu/IQDsXA73gsRpQLIVw0g0oJMWASJMRNYkHYcu1j1yNBAat-Q?e=xg5MYo) |
 | Optional | Wed · Sep 16 | 3:30-4:00 PM | Hess 5-101 | If you need help with logging into msmc-green wifi, HPC setup, logging into minerva, opening OnDemand, getting ready to run code during session 2, feel free to come in half an hour early and we will be there to help you! |  |
 | 02 | Wed · Sep 16 | 4:00-5:30 PM | Hess 5-101 | Introduction to HPC & R in biostatistics |  |
 | 03 | Wed · Sep 23 | 4:00-5:30 PM | Hess 5-101 | QC metrics & tools |  |
