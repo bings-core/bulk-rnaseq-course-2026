@@ -198,7 +198,7 @@ built for.
 |----|--------------|--------------|------------|------------------------------------------------|--------|
 | 01 | Wed · Sep 9  | 4:00-5:30 PM | Hess 8-101 | Introduction to bulk RNA-seq & BiNGS | [Slides](https://mtsinai-my.sharepoint.com/:p:/g/personal/deniz_demircioglu_mssm_edu/IQDsXA73gsRpQLIVw0g0oJMWASJMRNYkHYcu1j1yNBAat-Q?e=xg5MYo) |
 | Optional | Wed · Sep 16 | 3:30-4:00 PM | Hess 5-101 | If you need help with logging into msmc-green wifi, HPC setup, logging into minerva, opening OnDemand, getting ready to run code during session 2, feel free to come in half an hour early and we will be there to help you! |  |
-| 02 | Wed · Sep 16 | 4:00-5:30 PM | Hess 5-101 | Introduction to HPC & R in biostatistics |  |
+| 02 | Wed · Sep 16 | 4:00-5:30 PM | Hess 5-101 | Introduction to HPC & R in biostatistics | [Slides](https://mtsinai-my.sharepoint.com/:p:/g/personal/deniz_demircioglu_mssm_edu/IQBcEvH3_tHDRZyzyVxSibIxARgq1stOF7Ng5nR-tNya9No?e=tG9BNr) · [R script](https://mtsinai-my.sharepoint.com/:u:/g/personal/deniz_demircioglu_mssm_edu/IQAgTHD_KnA_Qr_SGxWhG72IAch5a7K7VUYnAIUYc2MFAuE?e=68vWpb) |
 | 03 | Wed · Sep 23 | 4:00-5:30 PM | Hess 5-101 | QC metrics & tools |  |
 | 04 | Wed · Sep 30 | 4:00-5:30 PM | Hess 5-101 | Preprocessing |  |
 | 05 | Wed · Oct 7  | 4:00-5:30 PM | Hess 5-101 | Differential expression analysis |  |
@@ -208,7 +208,7 @@ built for.
 | 09 | Wed · Nov 4  | 4:00-5:30 PM | Hess 5-101 | Bring your own data · full pipeline |  |
 | 10 | Wed · Nov 11 | 4:00-5:30 PM | Hess 8-101 | Bring your own data · full pipeline |  |
 
-Slides are linked in the **PPT** column and are posted after each session. They open in Microsoft 365 with your Sinai account.
+Slides (and the R script for hands-on sessions) are linked in the **PPT** column and are posted after each session. They open in Microsoft 365 with your Sinai account.
 
 ## Syllabus
 
