@@ -199,7 +199,7 @@ built for.
 | 01 | Wed · Sep 9  | 4:00-5:30 PM | Hess 8-101 | Introduction to bulk RNA-seq & BiNGS | [PPT](https://mtsinai-my.sharepoint.com/:p:/g/personal/deniz_demircioglu_mssm_edu/IQDsXA73gsRpQLIVw0g0oJMWASJMRNYkHYcu1j1yNBAat-Q?e=xg5MYo) |
 | Optional | Wed · Sep 16 | 3:30-4:00 PM | Hess 5-101 | If you need help with logging into msmc-green wifi, HPC setup, logging into minerva, opening OnDemand, getting ready to run code during session 2, feel free to come in half an hour early and we will be there to help you! |  |
 | 02 | Wed · Sep 16 | 4:00-5:30 PM | Hess 5-101 | Introduction to HPC & R in biostatistics | [PPT](https://mtsinai-my.sharepoint.com/:p:/g/personal/deniz_demircioglu_mssm_edu/IQBcEvH3_tHDRZyzyVxSibIxARgq1stOF7Ng5nR-tNya9No?e=tG9BNr) · [Script](https://mtsinai-my.sharepoint.com/:u:/g/personal/deniz_demircioglu_mssm_edu/IQAgTHD_KnA_Qr_SGxWhG72IAch5a7K7VUYnAIUYc2MFAuE?e=68vWpb) |
-| 03 | Wed · Sep 23 | 4:00-5:30 PM | Hess 5-101 | QC metrics & tools |  |
+| 03 | Wed · Sep 23 | 4:00-5:30 PM | Hess 5-101 | QC metrics & tools | [PPT](https://mtsinai-my.sharepoint.com/:p:/g/personal/deniz_demircioglu_mssm_edu/IQCvg7laxMeZSZBHe4zbWT0oAbC6u-niI-NIMSO_6LoYObw?e=hEAgwi) |
 | 04 | Wed · Sep 30 | 4:00-5:30 PM | Hess 5-101 | Preprocessing |  |
 | 05 | Wed · Oct 7  | 4:00-5:30 PM | Hess 5-101 | Differential expression analysis |  |
 | 06 | Wed · Oct 14 | 4:00-5:30 PM | James 12   | Functional enrichment analysis |  |
