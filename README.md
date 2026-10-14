@@ -202,7 +202,7 @@ built for.
 | 03 | Wed · Sep 23 | 4:00-5:30 PM | Hess 5-101 | QC metrics & tools | [PPT](https://mtsinai-my.sharepoint.com/:p:/g/personal/deniz_demircioglu_mssm_edu/IQCvg7laxMeZSZBHe4zbWT0oAbC6u-niI-NIMSO_6LoYObw?e=hEAgwi) |
 | 04 | Wed · Sep 30 | 4:00-5:30 PM | Hess 5-101 | Preprocessing | [PPT](https://mtsinai-my.sharepoint.com/:p:/g/personal/deniz_demircioglu_mssm_edu/IQBckSdRcrEIS6Upr1C3Q_1gAZBOUOBQWn4MQjNS-EoMNIc?e=YlGR5s) · [Script](https://mtsinai-my.sharepoint.com/:u:/g/personal/deniz_demircioglu_mssm_edu/IQC_hZ-OCyCpSbl7Wp1iJSoTARmSA9pijGXksNSvAgtdZSM?e=YQ8gHT) |
 | 05 | Wed · Oct 7  | 4:00-5:30 PM | Hess 5-101 | Differential expression analysis | [PPT](https://mtsinai-my.sharepoint.com/:p:/g/personal/deniz_demircioglu_mssm_edu/IQA5bDUVsGy3RbhWNnPYYRtPAY4Q0lEe7hPchBUgvRB1DVU?e=ixgRjy) · [Script](https://mtsinai-my.sharepoint.com/:u:/g/personal/deniz_demircioglu_mssm_edu/IQAYKPeE4lztS7d6Xp-u6bkcAaitspqW1h6cWJwhpSeI7Bo?e=FZ5HcA) |
-| 06 | Wed · Oct 14 | 4:00-5:30 PM | James 12   | Functional enrichment analysis |  |
+| 06 | Wed · Oct 14 | 4:00-5:30 PM | James 12   | Functional enrichment analysis | [PPT](https://mtsinai-my.sharepoint.com/:p:/g/personal/deniz_demircioglu_mssm_edu/IQACy40ucXuFQrdLlxqSLh8zAbfwdczGnNjjeytiHA5nj6s?e=iafvZK) · [Script](https://mtsinai-my.sharepoint.com/:u:/g/personal/deniz_demircioglu_mssm_edu/IQA7KmAtPX5ZTKaK5jkosC8QAZZus-lwZZOqSPHHqmRmoOY?e=hsXxGq) |
 | 07 | Wed · Oct 21 | 4:00-5:30 PM | James 12   | Interpreting results · public datasets · single-cell intro |  |
 | 08 | Wed · Oct 28 | 4:00-5:30 PM | Hess 5-101 | Integration: ATAC-seq / ChIP-seq & epigenetics |  |
 | 09 | Wed · Nov 4  | 4:00-5:30 PM | Hess 5-101 | Bring your own data · full pipeline |  |
