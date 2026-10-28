@@ -204,7 +204,7 @@ built for.
 | 05 | Wed · Oct 7  | 4:00-5:30 PM | Hess 5-101 | Differential expression analysis | [PPT](https://mtsinai-my.sharepoint.com/:p:/g/personal/deniz_demircioglu_mssm_edu/IQA5bDUVsGy3RbhWNnPYYRtPAY4Q0lEe7hPchBUgvRB1DVU?e=ixgRjy) · [Script](https://mtsinai-my.sharepoint.com/:u:/g/personal/deniz_demircioglu_mssm_edu/IQAYKPeE4lztS7d6Xp-u6bkcAaitspqW1h6cWJwhpSeI7Bo?e=FZ5HcA) |
 | 06 | Wed · Oct 14 | 4:00-5:30 PM | James 12   | Functional enrichment analysis | [PPT](https://mtsinai-my.sharepoint.com/:p:/g/personal/deniz_demircioglu_mssm_edu/IQACy40ucXuFQrdLlxqSLh8zAbfwdczGnNjjeytiHA5nj6s?e=iafvZK) · [Script](https://mtsinai-my.sharepoint.com/:u:/g/personal/deniz_demircioglu_mssm_edu/IQA7KmAtPX5ZTKaK5jkosC8QAZZus-lwZZOqSPHHqmRmoOY?e=hsXxGq) |
 | 07 | Wed · Oct 21 | 4:00-5:30 PM | James 12   | Interpreting results · public datasets · single-cell intro |  [PPT](https://mtsinai-my.sharepoint.com/:p:/g/personal/deniz_demircioglu_mssm_edu/IQDDnu-J7MHLT7TNTtPDZnj4AXFTs7CYQo-EqjNwyv4OUhs?e=dZ1Zn5) |
-| 08 | Wed · Oct 28 | 4:00-5:30 PM | Hess 5-101 | Integration: ATAC-seq / ChIP-seq & epigenetics |  |
+| 08 | Wed · Oct 28 | 4:00-5:30 PM | Hess 5-101 | Integration: ATAC-seq / ChIP-seq & epigenetics | [PPT](https://mtsinai-my.sharepoint.com/:p:/g/personal/deniz_demircioglu_mssm_edu/IQCjnPlJS1vZT6MEj99gVqwuAdT8GFCsMSrgFd4ps1XCPgo?e=ZE1r7h) |
 | 09 | Wed · Nov 4  | 4:00-5:30 PM | Hess 5-101 | Bring your own data · full pipeline |  |
 | 10 | Wed · Nov 11 | 4:00-5:30 PM | Hess 8-101 | Bring your own data · full pipeline |  |
 
