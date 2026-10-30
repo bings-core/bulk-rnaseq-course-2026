@@ -164,11 +164,3 @@ results/
 ```
 
 The report has three sections: samples and quality control (with the MultiQC report as a download), clustering, and differential expression (one contrast at a time, from a menu).
-
-## Known differences and limits (v0.1)
-
-- **Salmon is not reproducible run to run.** Two identical Salmon runs differ slightly, so DEG counts can change by a few genes between reruns. STAR and featureCounts results are reproducible.
-- **Qualimap** is version 2.2.2d from the Galaxy depot. The course uses 2.2.1, which is not on the depot.
-- **MultiQC** is the stock 1.35 image from the Galaxy depot. The course uses a build with the same analysis code and different front-end files (jQuery, and AI features disabled), so the tables and plots should match.
-- **Human and mouse only.** One species per project.
-- Results depend on your data, so check the QC section of the report before interpreting the DE results.
