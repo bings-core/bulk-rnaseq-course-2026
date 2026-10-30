@@ -1,0 +1,5 @@
+sample_id,condition,replicate,fastq_1,fastq_2,strandedness,batch
+CTRL_1,CTRL,1,data/raw/CTRL_1_R1.fastq.gz,data/raw/CTRL_1_R2.fastq.gz,auto,
+CTRL_2,CTRL,2,data/raw/CTRL_2_R1.fastq.gz,data/raw/CTRL_2_R2.fastq.gz,auto,
+KO_1,KO,1,data/raw/KO_1_R1.fastq.gz,data/raw/KO_1_R2.fastq.gz,auto,
+KO_2,KO,2,data/raw/KO_2_R1.fastq.gz,data/raw/KO_2_R2.fastq.gz,auto,
