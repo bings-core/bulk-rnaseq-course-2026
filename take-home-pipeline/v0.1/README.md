@@ -148,6 +148,17 @@ bash scripts/run_r.sh scripts/03_enrichment.R
 bash scripts/run_r.sh scripts/04_report.R
 ```
 
+### Restart from a step
+
+If a step fails for some samples, restart those samples from that step instead of from the beginning. `--from` runs the named step and every step after it; earlier outputs must already exist.
+
+```bash
+SAMPLE_FILTER="KO_1 KO_2"  # set in config.sh: only these samples
+bash scripts/submit_preprocess.sh --from star
+```
+
+The steps are `fastqc`, `trim`, `salmon`, `star`, `featurecounts` and `qualimap`. MultiQC always runs at the end.
+
 ## 6. Outputs
 
 ```
