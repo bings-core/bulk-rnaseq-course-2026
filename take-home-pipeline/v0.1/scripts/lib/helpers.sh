@@ -48,6 +48,8 @@ run() {
 # submit NAME CORES MEM_GB [DEPENDENCY] -- COMMAND...
 #   With LSF_ACCOUNT set: submits one LSF job (named NAME) and prints its job ID.
 #   Without it: runs the command here, so the same scripts work interactively.
+#   MEM_GB is the TOTAL memory for the job. LSF on Minerva counts memory per core, so it is divided by CORES here
+#   (rounded up). Asking LSF for MEM_GB per core would request CORES times too much and wait much longer in the queue.
 #   DEPENDENCY is an LSF -w expression built from job IDs, e.g. "done(278498211) && done(278498213)".
 #   Prints the LSF job ID (empty when run here).
 submit() {
@@ -58,8 +60,9 @@ submit() {
   if [ -z "$LSF_ACCOUNT" ]; then
     run "$@"; return
   fi
+  local per_core_mb=$(( (mem * 1024 + cores - 1) / cores ))     # total GB -> MB per core
   local args=(-P "$LSF_ACCOUNT" -q "$LSF_QUEUE" -n "$cores"
-              -R "span[hosts=1]" -R "rusage[mem=$((mem*1024))]" -M "$((mem*1024))"
+              -R "span[hosts=1]" -R "rusage[mem=$per_core_mb]" -M "$per_core_mb"
               -J "$name" -o "logs/$name.%J.out" -e "logs/$name.%J.err")
   [ -n "$LSF_WALLTIME" ] && args+=(-W "$LSF_WALLTIME")
   [ -n "$dep" ] && args+=(-w "$dep")
