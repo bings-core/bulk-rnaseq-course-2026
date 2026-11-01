@@ -21,6 +21,9 @@ if (length(filt) && any(nzchar(filt))) samples <- samples[samples$sample_id %in%
 samples$condition <- factor(samples$condition, levels = unique(c(contrasts$reference, samples$condition)))
 use_batch <- any(!is.na(samples$batch) & nzchar(as.character(samples$batch)))   # an empty batch column reads as NA
 design_formula <- if (use_batch) ~ batch + condition else ~ condition
+# DE cutoffs from config.sh: a gene is DE when padj < PADJ_CUTOFF and |log2FC| >= LFC_CUTOFF
+padj_cut <- as.numeric(env("PADJ_CUTOFF")); if (is.na(padj_cut)) padj_cut <- 0.05
+lfc_cut  <- as.numeric(env("LFC_CUTOFF"));  if (is.na(lfc_cut))  lfc_cut <- 1
 de_dir  <- file.path(results_dir, "processed", "differential_expression")
 exp_dir <- file.path(results_dir, "processed", "gene_expression")
 fig_dir <- file.path(de_dir, "figures")
@@ -92,11 +95,11 @@ save_base(function() print(pheatmap(cor_mat, annotation_col = ann, annotation_ro
 for (i in seq_len(nrow(contrasts))) {
   cn    <- contrasts$name[i]
   treat <- contrasts$treatment[i]; ref <- contrasts$reference[i]
-  res <- results(dds, contrast = c("condition", treat, ref), alpha = 0.05)
+  res <- results(dds, contrast = c("condition", treat, ref), alpha = padj_cut)
   tab <- as.data.frame(res); tab$gene_id <- rownames(tab)
   tab <- left_join(tab, gene_names, by = "gene_id")
-  tab$status <- with(tab, ifelse(!is.na(padj) & padj < 0.05 & log2FoldChange >= 1, "up_regulated",
-                          ifelse(!is.na(padj) & padj < 0.05 & log2FoldChange <= -1, "down_regulated", "not_deg")))
+  tab$status <- with(tab, ifelse(!is.na(padj) & padj < padj_cut & log2FoldChange >= lfc_cut, "up_regulated",
+                          ifelse(!is.na(padj) & padj < padj_cut & log2FoldChange <= -lfc_cut, "down_regulated", "not_deg")))
   write_csv(tab, file.path(de_dir, "tables", paste0(cn, "_all_genes.csv")), na = "NA")
   writeLines(na.omit(tab$gene_name[tab$status == "up_regulated"]), file.path(de_dir, "tables", paste0(cn, "_upregulated.txt")))
   writeLines(na.omit(tab$gene_name[tab$status == "down_regulated"]), file.path(de_dir, "tables", paste0(cn, "_downregulated.txt")))

@@ -22,6 +22,10 @@ REF="$RESOURCE_DIR/$SPECIES"
 QUALIMAP_URL="https://depot.galaxyproject.org/singularity/qualimap:2.2.2d--hdfd78af_2"
 MULTIQC_URL="https://depot.galaxyproject.org/singularity/multiqc:1.35--pyhdfd78af_2"
 R_URL="https://bings-aws-public-data.s3.us-east-1.amazonaws.com/ulukag01/rbings_20250925.sif"
+# SHA-256 of the three containers, recorded from the test downloads (the R container is byte-identical to the course copy).
+QUALIMAP_SHA256=b42a6e6b718b6428cb7018b8c3ac26df70d8df443bf0901e24072aec23d4040e
+MULTIQC_SHA256=05e8af004f5f05a238bf66556c04ca137272ad578f858221bbfaf17d36732261
+R_SHA256=009f0201527c4da421d6ff04699e1e998f2a8507e414a93d31c88f36dffac75e
 
 # Download the three GENCODE files into $REF/download, checking each against MD5SUMS (retrying partial downloads).
 download() {
@@ -71,29 +75,29 @@ build_txdb() {
   run bash scripts/run_r.sh scripts/lib/make_txdb.R
 }
 
-# Qualimap container from the Galaxy depot (Qualimap 2.2.1 is not on the depot; 2.2.2d is the nearest release).
-get_qualimap() {
+# Download one container and check its SHA-256 (recorded from the test downloads). A file that does not match is
+# downloaded again; a finished download that does not match is kept as .part and the step fails.
+fetch_image() {
+  local url="$1" img="$2" want="$3"
   mkdir -p containers
-  local img="$QUALIMAP_IMAGE"
-  [ -s "$img" ] && return 0
-  run curl -sfL -o "$img.part" "$QUALIMAP_URL" && mv "$img.part" "$img"
+  if [ -s "$img" ] && echo "$want  $img" | sha256sum -c --status -; then echo "ok: $img (checksum matches)"; return 0; fi
+  [ -e "$img" ] && { echo "checksum does not match for $img, downloading it again" >&2; rm -f "$img"; }
+  curl -sfL -C - -o "$img.part" "$url" || echo "curl did not finish cleanly for $img; checking the file" >&2
+  if echo "$want  $img.part" | sha256sum -c --status -; then
+    mv "$img.part" "$img"; echo "ok: $img"; return 0
+  fi
+  echo "ERROR: checksum mismatch for $img.part (expected $want). Delete $img.part and run the step again." >&2
+  return 1
 }
+
+# Qualimap container from the Galaxy depot (Qualimap 2.2.1 is not on the depot; 2.2.2d is the nearest release).
+get_qualimap() { fetch_image "$QUALIMAP_URL" "$QUALIMAP_IMAGE" "$QUALIMAP_SHA256"; }
 
 # MultiQC 1.35 container from the Galaxy depot (the stock release; the course image adds only front-end changes).
-get_multiqc() {
-  mkdir -p containers
-  local img="$MULTIQC_CONTAINER"
-  [ -s "$img" ] && return 0
-  run curl -sfL -o "$img.part" "$MULTIQC_URL" && mv "$img.part" "$img"
-}
+get_multiqc() { fetch_image "$MULTIQC_URL" "$MULTIQC_CONTAINER" "$MULTIQC_SHA256"; }
 
 # R container (R, DESeq2, clusterProfiler, msigdbr), the same image the course uses, from its public S3 location.
-get_rcontainer() {
-  mkdir -p containers
-  local img="$R_CONTAINER"
-  [ -s "$img" ] && return 0
-  run curl -sfL -C - -o "$img.part" "$R_URL" && mv "$img.part" "$img"
-}
+get_rcontainer() { fetch_image "$R_URL" "$R_CONTAINER" "$R_SHA256"; }
 
 if [ "$1" = "--step" ]; then
   case "$2" in

@@ -1,12 +1,13 @@
 # Step 3: functional enrichment, as in Session 6.
 #   For each contrast: over-representation (up and down gene lists) and GSEA on the ranked genes, using MSigDB gene sets via msigdbr.
-# Run from the project root after step 2, inside the container:
-#   source config.sh; singularity exec -B /sc/arion -B /hpc "$R_CONTAINER" Rscript scripts/03_enrichment.R
+# Run from the project root after step 2 (submit_analysis.sh does this; or: bash scripts/run_r.sh scripts/03_enrichment.R).
 # Gene sets come from MSIGDB_COLLECTIONS in config.sh: H = Hallmark (default); C2:CP:KEGG = KEGG; C5:GO:BP = GO biological process.
+# Enrichment terms are kept at adjusted p < PADJ_CUTOFF (config.sh).
 
 suppressPackageStartupMessages({ library(clusterProfiler); library(msigdbr); library(enrichplot); library(ggplot2); library(readr); library(dplyr) })
 
 env <- function(k) Sys.getenv(k)
+padj_cut <- as.numeric(env("PADJ_CUTOFF")); if (is.na(padj_cut)) padj_cut <- 0.05
 species   <- env("SPECIES")
 results_dir <- env("RESULTS_DIR")
 contrasts <- read.csv(env("CONTRASTS_CSV"), stringsAsFactors = FALSE)
@@ -46,7 +47,7 @@ for (i in seq_len(nrow(contrasts))) {
   for (dir in c("up", "down")) {
     genes <- if (dir == "up") up else down
     if (length(genes) < 5) { cat("skip ORA", dir, cn, ": fewer than 5 genes\n"); next }
-    ora <- enricher(genes, universe = universe, TERM2GENE = t2g, pvalueCutoff = 0.05, minGSSize = 10, maxGSSize = 500)
+    ora <- enricher(genes, universe = universe, TERM2GENE = t2g, pvalueCutoff = padj_cut, minGSSize = 10, maxGSSize = 500)
     res <- as.data.frame(ora)
     write_csv(res, file.path(fa_dir, "tables", paste0("ora_", dir, "_", cn, ".csv")))
     if (nrow(res)) save_plot(dotplot(ora, showCategory = 15) + ggtitle(paste("ORA", dir, cn)), paste0("ora_", dir, "_", cn))
@@ -57,7 +58,7 @@ for (i in seq_len(nrow(contrasts))) {
   rank_stat[!is.finite(rank_stat)] <- 0
   rank_stat <- rank_stat + runif(length(rank_stat), -1e-6, 1e-6)
   gl <- sort(setNames(rank_stat, tab$gene_name), decreasing = TRUE); gl <- gl[!duplicated(names(gl))]   # GSEA needs a decreasing ranking
-  gsea <- GSEA(gl, TERM2GENE = t2g, pvalueCutoff = 0.05, minGSSize = 10, maxGSSize = 500, verbose = FALSE, seed = TRUE)
+  gsea <- GSEA(gl, TERM2GENE = t2g, pvalueCutoff = padj_cut, minGSSize = 10, maxGSSize = 500, verbose = FALSE, seed = TRUE)
   gres <- as.data.frame(gsea)
   write_csv(gres, file.path(fa_dir, "tables", paste0("gsea_", cn, ".csv")))
   if (nrow(gres)) save_plot(dotplot(gsea, showCategory = 15, split = ".sign") + facet_grid(. ~ .sign) + ggtitle(paste("GSEA", cn)), paste0("gsea_", cn))

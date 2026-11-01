@@ -19,8 +19,8 @@ Steps 2 to 4 are submitted together by `scripts/submit_analysis.sh`.
 ## Requirements
 
 - Minerva with LSF. Course users: account `acc_BiNGS_bulk`. After the course, use your own `acc_*` account.
-- Disk: about 60 GB for the references and containers, plus the results.
-- Memory: STAR needs about 32 to 40 GB per job. Plan 8 cores per sample.
+- Disk: about 45 GB per species for the references and containers. Each sample needs about 7 GB for a 90-million-read sample (trimmed FASTQs and the BAM), so plan for that plus the results.
+- Memory: each sample job asks for 40 GB in total on 8 cores (`MEM_STAR_GB`). Its peak use was about 30 GB. The STAR index build peaked at about 35 GB.
 - Internet from the compute nodes (GENCODE, the Galaxy depot, the public S3 bucket, and NCBI/ENA for step 0).
 - Site modules (available to all Minerva users): `fastqc/0.11.8`, `trim_galore/0.6.6`, `star/2.7.5b`, `salmon/1.2.1`, `samtools/1.11`, `subread/2.0.1`, `singularity/3.6.4`.
 
@@ -58,7 +58,8 @@ Edit `config.sh`. The settings you are most likely to change:
 | `LSF_ACCOUNT` | Your LSF account. Leave empty to run everything here, one step after another, with no jobs submitted |
 | `LSF_QUEUE`, `LSF_WALLTIME` | Queue and walltime for the jobs |
 | `THREADS` | Cores per tool (STAR and Salmon) |
-| `MEM_*_GB` | Memory per job, by step |
+| `MEM_*_GB` | Total memory per job, by step. LSF on Minerva counts memory per core, so the script divides this by `THREADS` |
+| `PADJ_CUTOFF`, `LFC_CUTOFF` | A gene is DE when padj < `PADJ_CUTOFF` and \|log2FC\| >= `LFC_CUTOFF` (defaults 0.05 and 1). `PADJ_CUTOFF` is also the enrichment cutoff in step 3 |
 | `MSIGDB_COLLECTIONS` | Gene sets for step 3, comma-separated: `H` (Hallmark), `C2:CP:KEGG`, `C5:GO:BP` |
 | `RUN_FEATURECOUNTS`, `RUN_QUALIMAP` | `yes` or `no` for the optional QC steps |
 | `SAMPLE_FILTER` | Run only these sample IDs (space-separated). Empty = all samples |
@@ -78,6 +79,7 @@ Paths (`RESOURCE_DIR`, `RESULTS_DIR`, `SAMPLES_CSV`, `CONTRASTS_CSV`, the contai
 | Human or mouse | `SPECIES=human` or `SPECIES=mouse`. Other species are not supported in v0.1 |
 | More or other gene sets | Change `MSIGDB_COLLECTIONS` |
 | Only some samples | Set `SAMPLE_FILTER` |
+| Other DE or enrichment cutoffs | Set `PADJ_CUTOFF` and `LFC_CUTOFF` |
 
 ## 3. Set up the references and containers (once)
 
@@ -87,7 +89,7 @@ bash scripts/setup_resources.sh
 
 With `LSF_ACCOUNT` set, this submits one job per part: the GENCODE download (each file is checked against GENCODE's MD5SUMS), the R container, the STAR index, the Salmon index, the TxDb, the Qualimap container and the MultiQC container. The builds start after the download. Check the four `setup_` jobs with `bjobs`; the references are ready when they are all `DONE`. Without `LSF_ACCOUNT` the same parts run one after another in your shell.
 
-The setup writes `resources/<species>/` and `containers/`. These are not part of the repository. In our test the STAR index took under an hour.
+The setup writes `resources/<species>/` and `containers/`. These are not part of the repository. In our test the STAR index took under an hour. Each container is checked against its SHA-256 after download; a file that does not match is downloaded again.
 
 ## 4. Prepare your samples and contrasts
 
@@ -130,13 +132,24 @@ Step 1, one job per sample and then MultiQC:
 bash scripts/submit_preprocess.sh
 ```
 
-Check progress with `bjobs`. When every sample job is `DONE` and MultiQC is `DONE`, run steps 2 to 4:
+Before anything is submitted, `scripts/check_inputs.sh` checks the sample sheet (IDs, FASTQ files, strandedness values, batch column), the references and the containers. It lists every problem and submits nothing if there is an error. It also warns about conditions with fewer than 2 replicates.
+
+Check progress with `bash scripts/status.sh`. It shows which steps each sample has finished, the `--from` step to restart from, and any failed jobs. Or use `bjobs`. When every sample job is `DONE` and MultiQC is `DONE`, run steps 2 to 4:
 
 ```bash
 bash scripts/submit_analysis.sh
 ```
 
-The report is ready when the `de_report` job is `DONE`.
+The report is ready when the `de_report` job is `DONE`. `submit_analysis.sh` checks the contrasts and the Salmon outputs first.
+
+### If a job fails
+
+1. Run `bash scripts/status.sh`. It names the failed job, and the `--from` step to restart each sample from.
+2. Read the job's error log, `logs/<name>.<jobid>.err`.
+3. Fix the cause. Restart the failed samples with `--from` (see below).
+4. If the MultiQC job is waiting for a failed sample, `status.sh` tells you to remove it with `bkill`. It cannot start until every sample is `DONE`.
+
+Without `LSF_ACCOUNT`, every step runs on the login node, one after another. Use that only for one sample or a quick test. Real runs need `LSF_ACCOUNT`.
 
 Without `LSF_ACCOUNT`, run the same steps one at a time:
 
@@ -172,6 +185,8 @@ results/
     differential_expression/figures/       PCA, correlation, volcano, MA, top-50 heatmaps (png and pdf)
     functional_analysis/tables/            ora_up_, ora_down_ and gsea_ tables per contrast
   report/rnaseq_report.html                the report: open it in any browser and share it as one file
+  run_info.txt                             the run record: date, host, pipeline commit, containers, and a copy of config.sh
+  tool_versions.tsv                        tool versions for the run (also shown in the report's Software section)
 ```
 
 The report has three sections: samples and quality control (with the MultiQC report as a download), clustering, and differential expression (one contrast at a time, from a menu).

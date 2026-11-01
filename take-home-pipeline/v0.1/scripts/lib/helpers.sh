@@ -72,3 +72,45 @@ submit() {
   jid=$(echo "$out" | grep -o '<[0-9]*>' | tr -d '<>' | head -1)
   echo "$jid"
 }
+
+# Record how this run was made, in results/run_info.txt (config, pipeline commit, containers) and
+# results/tool_versions.tsv (tool versions; the report reads this file). Loads the tool modules in a subshell.
+write_run_info() {
+  mkdir -p "$RESULTS_DIR"
+  local info="$RESULTS_DIR/run_info.txt" tv="$RESULTS_DIR/tool_versions.tsv" root commit
+  root="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+  commit=$(git -C "$root" rev-parse --short HEAD 2>/dev/null || echo "not a git checkout")
+  {
+    echo "date: $(date '+%Y-%m-%d %H:%M:%S %Z')"
+    echo "host: $(hostname)"
+    echo "user: $(whoami)"
+    echo "pipeline commit: $commit"
+    echo "project folder: $PWD"
+    echo "R container: $R_CONTAINER ($(stat -c '%s bytes, modified %y' "$R_CONTAINER" 2>/dev/null || echo missing))"
+    echo "Qualimap container: $QUALIMAP_IMAGE ($(stat -c '%s bytes' "$QUALIMAP_IMAGE" 2>/dev/null || echo missing))"
+    echo "MultiQC container: $MULTIQC_CONTAINER ($(stat -c '%s bytes' "$MULTIQC_CONTAINER" 2>/dev/null || echo missing))"
+    echo
+    echo "---- config.sh ----"
+    cat config.sh
+    echo "-------------------"
+  } > "$info"
+  (
+    module load trim_galore/0.6.6 star/2.7.5b salmon/1.2.1 samtools/1.11 subread/2.0.1 singularity/3.6.4 fastqc/0.11.8 >/dev/null 2>&1
+    {
+      printf "tool\tversion\n"
+      printf "FastQC\t%s\n" "$(fastqc --version 2>/dev/null | awk '{print $NF}')"
+      printf "TrimGalore\t%s\n" "$(trim_galore --version 2>/dev/null | grep -o 'version [0-9.]*' | awk '{print $2}')"
+      printf "Salmon\t%s\n" "$(salmon --version 2>/dev/null | awk '{print $NF}')"
+      printf "STAR\t%s\n" "$(STAR --version 2>/dev/null)"
+      printf "samtools\t%s\n" "$(samtools --version 2>/dev/null | head -1 | awk '{print $NF}')"
+      printf "featureCounts\t%s\n" "$(featureCounts -v 2>&1 | grep -o 'v[0-9.]*' | head -1 | tr -d v)"
+      if [ -f "$QUALIMAP_IMAGE" ]; then
+        printf "Qualimap\t%s\n" "2.2.2d (container, $(basename "$QUALIMAP_IMAGE"))"
+      fi
+      if [ -f "$MULTIQC_CONTAINER" ]; then
+        printf "MultiQC\t%s\n" "1.35 (container, $(basename "$MULTIQC_CONTAINER"))"
+      fi
+    } > "$tv"
+  )
+  echo "Run record: $info and $tv"
+}

@@ -4,12 +4,12 @@
 #   bash scripts/submit_preprocess.sh --from star     # restart each sample from one step: that step and everything after it
 #                                                     # (fastqc, trim, salmon, star, featurecounts, qualimap); earlier outputs must exist
 # To restart only some samples, set SAMPLE_FILTER in config.sh (space-separated sample IDs) and use --from.
-# Needs LSF_ACCOUNT (and LSF_QUEUE) in config.sh. Without LSF_ACCOUNT it runs the samples one after another here.
+# Checks the inputs first (check_inputs.sh) and records the run (run_info.txt). Check which steps each sample has finished
+# with status.sh. Needs LSF_ACCOUNT (and LSF_QUEUE) in config.sh. Without LSF_ACCOUNT it runs the samples one after another here.
 # Check progress with bjobs; each job writes logs/tp_<sample>.<jobid>.out and .err.
 
 source "$(dirname "$0")/lib/helpers.sh"
 load_config || exit 1
-species_refs || exit 1
 
 FROM=fastqc
 while [ $# -gt 0 ]; do
@@ -22,6 +22,9 @@ case "$FROM" in
   fastqc|trim|salmon|star|featurecounts|qualimap) ;;
   *) echo "unknown step '$FROM' for --from (use one of: fastqc trim salmon star featurecounts qualimap)" >&2; exit 1 ;;
 esac
+
+bash scripts/check_inputs.sh preprocess || exit 1
+write_run_info
 
 deps=""
 for sid in $(read_samples | awk '{print $1}'); do

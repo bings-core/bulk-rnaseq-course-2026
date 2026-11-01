@@ -6,6 +6,8 @@ suppressPackageStartupMessages({ library(base64enc); library(readr); library(dpl
 
 env <- function(k) Sys.getenv(k)
 results_dir <- env("RESULTS_DIR"); project <- env("PROJECT_NAME"); species <- env("SPECIES")
+padj_cut <- as.numeric(env("PADJ_CUTOFF")); if (is.na(padj_cut)) padj_cut <- 0.05     # same cutoffs as step 2
+lfc_cut  <- as.numeric(env("LFC_CUTOFF"));  if (is.na(lfc_cut))  lfc_cut <- 1
 samples     <- read.csv(env("SAMPLES_CSV"), stringsAsFactors = FALSE)
 contrasts   <- read.csv(env("CONTRASTS_CSV"), stringsAsFactors = FALSE)
 pre  <- file.path(results_dir, "preprocessed")
@@ -94,12 +96,20 @@ for (col in c("raw_reads", "after_trimming", "uniquely_mapped", "assigned_to_gen
 read_fmt$pct_assigned <- paste0(read_tab$pct_assigned, "%")
 names(read_fmt) <- c("Sample", "Raw reads", "After trimming", "Uniquely mapped (STAR)", "Assigned to genes (featureCounts)", "Assigned, % of raw")
 
-# DE gene counts per contrast (padj < 0.05 and |log2FC| >= 1)
+# DE gene counts per contrast (padj < PADJ_CUTOFF and |log2FC| >= LFC_CUTOFF)
 de_counts <- bind_rows(lapply(seq_len(nrow(contrasts)), function(i) {
   tab <- read_or_empty(file.path(proc, "differential_expression", "tables", paste0(contrasts$name[i], "_all_genes.csv")))
   up <- sum(tab$status == "up_regulated", na.rm = TRUE); dn <- sum(tab$status == "down_regulated", na.rm = TRUE)
   data.frame(Contrast = paste0(contrasts$treatment[i], " vs ", contrasts$reference[i]), Up = up, Down = dn, Total = up + dn)
 }))
+
+# Software versions: command-line tools from the run record (written by the submit scripts), R packages from this container
+tv_file <- file.path(results_dir, "tool_versions.tsv")
+tools <- if (file.exists(tv_file)) read.delim(tv_file, stringsAsFactors = FALSE) else data.frame(tool = "not recorded", version = "run record not found")
+names(tools) <- c("Tool", "Version")
+r_pkgs <- c("DESeq2", "tximport", "clusterProfiler", "msigdbr", "ggplot2", "pheatmap")
+r_vers <- vapply(r_pkgs, function(p) tryCatch(as.character(packageVersion(p)), error = function(e) "not installed"), character(1))
+software_tab <- rbind(tools, data.frame(Tool = paste("R package", r_pkgs), Version = unname(r_vers), stringsAsFactors = FALSE))
 
 # ---- Section 3: page sections ---------------------------------------------------------------
 css <- "body{font-family:Arial,Helvetica,sans-serif;max-width:1100px;margin:24px auto;padding:0 16px;color:#1c2027;line-height:1.45}
@@ -133,7 +143,8 @@ sections <- list(
   img(file.path(de, "pca_vst.png"), "PCA of variance-stabilised expression (top 500 most variable genes). Samples of the same condition should cluster together."),
   img(file.path(de, "correlation_heatmap.png"), "Pearson correlation between samples (top 500 most variable genes). Row and column colours show the condition, using the same colours as the PCA."),
   tags$h2("3. Differential expression"),
-  tags$p("A gene is called DE when padj < 0.05 and |log2 fold change| >= 1. Positive log2FC means higher in the treatment group."),
+  tags$p(paste0("A gene is called DE when padj < ", padj_cut, " and |log2 fold change| >= ", lfc_cut,
+                ". Positive log2FC means higher in the treatment group. Enrichment terms are kept at adjusted p < ", padj_cut, ".")),
   tbl(de_counts, digits = 7),
   tags$p(class = "note", "Choose a contrast from the menu below for its volcano, MA, heatmap and enrichment results.")
 )
@@ -175,7 +186,8 @@ sections <- c(sections, list(menu), de_blocks, list(tags$script(HTML(js))))
 
 sections <- c(sections, list(
   tags$h2("Software"),
-  tags$p(class = "note", "FastQC, TrimGalore, STAR, Salmon, samtools, featureCounts, MultiQC, tximport, DESeq2, clusterProfiler, msigdbr. Versions are listed in the README."),
+  tags$p("Versions used in this run. The tool versions come from the step 1 and 2 run record (results/run_info.txt, which also holds the config and the pipeline commit)."),
+  tbl(software_tab),
   tags$h2("Acknowledgements"),
   tags$p(class = "note", "The development of the Bioinformatics for Next Generation Sequencing (BiNGS) shared resource facility is partially supported by the NCI P30 (P30CA196521) Cancer Center support grant, the ISMMS Skin Biology and Disease Resource-based Center NIAMS P30 support grant (AR079200), and the Black Family Stem Cell Institute. This work was also supported in part through the computational resources and staff expertise provided by Scientific Computing at the Icahn School of Medicine at Mount Sinai and supported by the Clinical and Translational Science Awards (CTSA) grant UL1TR004419 from the National Center for Advancing Translational Sciences. Research reported in this paper was supported by the Office of Research Infrastructure of the National Institutes of Health under award number S10OD026880. The content is solely the responsibility of the authors and does not necessarily represent the official views of the National Institutes of Health."),
   tags$p(class = "note", "We asked that our work be acknowledged in publications and presentations supported by BiNGS. Please also consider including our bioinformaticians in the authors list in cases where they contributed significantly.")

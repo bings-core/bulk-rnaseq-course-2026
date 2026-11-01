@@ -49,6 +49,11 @@ SAMPLE_FILTER=
 # MSigDB gene sets for step 3 (comma-separated). H = Hallmark. C2:CP:KEGG = KEGG. C5:GO:BP = GO biological process.
 MSIGDB_COLLECTIONS=H
 
+# Cutoffs. A gene is DE when padj < PADJ_CUTOFF and |log2FC| >= LFC_CUTOFF (step 2).
+# PADJ_CUTOFF is also the adjusted p-value cutoff for the enrichment terms in step 3, and the report text follows both.
+PADJ_CUTOFF=0.05
+LFC_CUTOFF=1
+
 # Project name shown in the final report.
 PROJECT_NAME=my_rnaseq_project
 

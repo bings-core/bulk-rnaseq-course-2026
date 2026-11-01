@@ -35,7 +35,8 @@ run_from() {
 }
 
 # ---- Section 1: tools and reference ----------------------------------------------------
-module load fastqc/0.11.8 trim_galore/0.6.6 star/2.7.5b salmon/1.2.1 samtools/1.11 subread/2.0.1 singularity/3.6.4
+# fastqc/0.11.8 is loaded LAST: loading the others first swaps in FastQC 0.12.1 (a dependency changes the gcc module).
+module load trim_galore/0.6.6 star/2.7.5b salmon/1.2.1 samtools/1.11 subread/2.0.1 singularity/3.6.4 fastqc/0.11.8
 species_refs || exit 1
 P="$RESULTS_DIR/preprocessed"                  # folder names match the course MultiQC config
 mkdir -p "$P"/{fastqc_raw,trim_galore_trimmed,salmon,star,samtools,featurecounts,qualimap,strandedness}
