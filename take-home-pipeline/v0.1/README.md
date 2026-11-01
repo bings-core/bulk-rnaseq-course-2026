@@ -16,6 +16,9 @@ The pipeline follows Sessions 4 to 6 of the BiNGS Bulk RNA-seq course:
 
 Steps 2 to 4 are submitted together by `scripts/submit_analysis.sh`.
 
+For a worked, step-by-step example with real commands, outputs and a failure and fix, see
+[`examples/nup98_nsd1_human/RUN.md`](../examples/nup98_nsd1_human/RUN.md).
+
 ## Requirements
 
 - Minerva with LSF. Course users: account `acc_BiNGS_bulk`. After the course, use your own `acc_*` account.
@@ -87,7 +90,7 @@ Paths (`RESOURCE_DIR`, `RESULTS_DIR`, `SAMPLES_CSV`, `CONTRASTS_CSV`, the contai
 bash scripts/setup_resources.sh
 ```
 
-With `LSF_ACCOUNT` set, this submits one job per part: the GENCODE download (each file is checked against GENCODE's MD5SUMS), the R container, the STAR index, the Salmon index, the TxDb, the Qualimap container and the MultiQC container. The builds start after the download. Check the four `setup_` jobs with `bjobs`; the references are ready when they are all `DONE`. Without `LSF_ACCOUNT` the same parts run one after another in your shell.
+With `LSF_ACCOUNT` set, this submits one job per part: the GENCODE download (each file is checked against GENCODE's MD5SUMS), the R container, the STAR index, the Salmon index, the TxDb, the Qualimap container and the MultiQC container. The builds start after the download. That is seven jobs. Check them with `bjobs`. The references are ready when `setup_download`, `setup_star`, `setup_salmon` and `setup_txdb` are all `DONE`; the three container jobs finish earlier. Without `LSF_ACCOUNT` the same parts run one after another in your shell.
 
 The setup writes `resources/<species>/` and `containers/`. These are not part of the repository. In our test the STAR index took under an hour. Each container is checked against its SHA-256 after download; a file that does not match is downloaded again.
 

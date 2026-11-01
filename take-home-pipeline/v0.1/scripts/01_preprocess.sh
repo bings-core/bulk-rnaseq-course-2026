@@ -110,7 +110,8 @@ while read -r sid r1 r2 strand; do
   esac
   if [ "$strand" != auto ]; then st="$strand"; case "$strand" in unstranded) fc=0;; forward) fc=1;; reverse) fc=2;; esac; fi
   if run_from salmon; then   # one line per sample: replace an earlier line from a previous run
-    sed -i "/^${sid}\t/d" "$P/strandedness/strandedness_report.tsv" 2>/dev/null
+    touch "$P/strandedness/strandedness_report.tsv"        # sed -i fails on a missing file; the first samples to get here hit that
+    sed -i "/^${sid}\t/d" "$P/strandedness/strandedness_report.tsv"
     printf "%s\t%s\t%s\n" "$sid" "$inferred" "$st" >> "$P/strandedness/strandedness_report.tsv"
   fi
 

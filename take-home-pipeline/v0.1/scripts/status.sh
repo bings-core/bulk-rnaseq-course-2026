@@ -40,7 +40,9 @@ while read -r sid r1 r2 strand; do
     fi
   done
   printf " %s\n" "$restart"
-  [ "$restart" = complete ] || incomplete=$((incomplete + 1))
+  if [ "$restart" != complete ]; then
+    incomplete=$((incomplete + 1)); incomplete_jobs="$incomplete_jobs tp_$sid"
+  fi
 done < <(read_samples)
 echo
 echo "$incomplete sample(s) not complete."
@@ -48,7 +50,9 @@ echo "$incomplete sample(s) not complete."
 # LSF jobs from submit_preprocess.sh
 if [ -n "$LSF_ACCOUNT" ] && command -v bjobs >/dev/null 2>&1; then
   jobs=$(bjobs -a -w 2>/dev/null | awk '$7 ~ /^tp_/ { print $1, $3, $7 }')
-  failed=$(echo "$jobs" | awk '$2 == "EXIT" { print }')
+# Only failures that still matter: a sample job whose sample is not complete now, or the MultiQC job while samples are incomplete.
+  failed=$(echo "$jobs" | awk -v ids=" $incomplete_jobs " -v n="$incomplete" \
+    '$2 == "EXIT" && ((index(ids, " " $3 " ") > 0) || ($3 == "tp_multiqc" && n > 0))')
   waiting=$(echo "$jobs" | awk '$2 == "PEND" && $3 == "tp_multiqc" { print $1 }')
   if [ -n "$failed" ]; then
     echo "Failed LSF jobs (job id, status, name):"
