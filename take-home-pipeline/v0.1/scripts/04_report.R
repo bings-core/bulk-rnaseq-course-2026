@@ -27,12 +27,17 @@ tbl <- function(df, digits = 3) {
              tags$tbody(lapply(seq_len(nrow(df)), function(i) tags$tr(lapply(df[i, ], function(v) tags$td(as.character(v)))))))
 }
 read_or_empty <- function(f) if (file.exists(f)) read_csv(f, show_col_types = FALSE) else data.frame()
+# GSEA terms shown in both the table and the plot: the 10 with the largest |NES|, highest NES first.
+gsea_top <- function(df) {
+  if (!nrow(df)) return(df)
+  df <- df[order(-abs(df$NES)), ][seq_len(min(10, nrow(df))), ]
+  df[order(-df$NES), ]
+}
 # Top 10 enrichment terms. ORA: dot plot (x = gene ratio, dot size = gene set size, colour = adjusted p).
-# GSEA: NES bars for the 10 terms with the largest |NES|, highest NES at the top (red = enriched in treatment, blue = in reference).
+# GSEA: NES bars, highest NES at the top (red = enriched in treatment, blue = in reference).
 enrich_plot <- function(df, kind, title) {
   if (!nrow(df)) return(tags$p(tags$em("No terms.")))
-  if (kind == "GSEA") df <- df[order(-abs(df$NES)), ][seq_len(min(10, nrow(df))), ]
-  if (kind == "GSEA") df <- df[order(-df$NES), ]
+  if (kind == "GSEA") df <- gsea_top(df)
   df <- head(df, 10)
   df$term <- factor(df$ID, levels = rev(df$ID))
   p <- if (kind == "ORA") {
@@ -154,8 +159,8 @@ for (i in seq_len(nrow(contrasts))) {
     side_by_side(tbl(head(keep(ora_up), 10)), enrich_plot(ora_up, "ORA", "Up-regulated genes")),
     tags$p(tags$em("Over-representation, down-regulated genes")),
     side_by_side(tbl(head(keep(ora_dn), 10)), enrich_plot(ora_dn, "ORA", "Down-regulated genes")),
-    tags$p(tags$em("GSEA on the ranked gene list (NES > 0: enriched in the treatment group)")),
-    side_by_side(tbl(head(keep(gsea), 10)), enrich_plot(gsea, "GSEA", "GSEA (NES)"))
+    tags$p(tags$em("GSEA on the ranked gene list: the 10 terms with the largest |NES|, highest NES first (NES > 0: enriched in the treatment group)")),
+    side_by_side(tbl(keep(gsea_top(gsea))), enrich_plot(gsea, "GSEA", "GSEA (NES)"))
   )
 }
 menu <- tags$p(tags$label(`for` = "contrast", "Contrast: "),
