@@ -24,8 +24,8 @@ Open `config.sh` in a text editor and set these three values:
 | `LSF_ACCOUNT` | `acc_BiNGS_bulk` |
 | `PROJECT_NAME` | `mouse_se_variants` |
 
-Copy the nine FASTQs into `data/raw/` as described in the mouse run example, then run `setup_resources.sh` and wait for the
-references.
+Do steps 3 and 5 of the mouse run example: the GEO download of the nine samples into `data/raw/` (`submit_fetch.sh`), then
+`setup_resources.sh`. Wait for the references as described there. Section 1 below replaces the sample sheet from the mouse example.
 
 ## 1. Sample and contrast sheets with a batch column
 
@@ -101,19 +101,21 @@ restarted from the step it names:
 | APC_rep2 | featureCounts file (`featurecounts/APC_rep2.featureCounts.txt`) | `featurecounts` |
 | APC_rep3 | Qualimap folder (`qualimap/APC_rep3`) | `qualimap` |
 
-Each sample was restarted as its own job:
+Each sample was restarted as its own LSF job, so that the work runs on the cluster and not on the login node:
 
 ```bash
-bash scripts/01_preprocess.sh --sample WT_rep1 --from fastqc
-bash scripts/01_preprocess.sh --sample WT_rep2 --from trim
-bash scripts/01_preprocess.sh --sample WT_rep3 --from salmon
-bash scripts/01_preprocess.sh --sample APC_rep1 --from star
-bash scripts/01_preprocess.sh --sample APC_rep2 --from featurecounts
-bash scripts/01_preprocess.sh --sample APC_rep3 --from qualimap
+source scripts/lib/helpers.sh && load_config
+submit "from_WT_rep1" "$THREADS" "$MEM_STAR_GB" -- bash scripts/01_preprocess.sh --sample WT_rep1 --from fastqc
+submit "from_WT_rep2" "$THREADS" "$MEM_STAR_GB" -- bash scripts/01_preprocess.sh --sample WT_rep2 --from trim
+submit "from_WT_rep3" "$THREADS" "$MEM_STAR_GB" -- bash scripts/01_preprocess.sh --sample WT_rep3 --from salmon
+submit "from_APC_rep1" "$THREADS" "$MEM_STAR_GB" -- bash scripts/01_preprocess.sh --sample APC_rep1 --from star
+submit "from_APC_rep2" "$THREADS" "$MEM_STAR_GB" -- bash scripts/01_preprocess.sh --sample APC_rep2 --from featurecounts
+submit "from_APC_rep3" "$THREADS" "$MEM_STAR_GB" -- bash scripts/01_preprocess.sh --sample APC_rep3 --from qualimap
 ```
 
-On the LSF cluster, `submit_preprocess.sh --from <step>` with `SAMPLE_FILTER` set does the same for a set of samples
-(see the README).
+To restart a set of samples from one step in a single command, set `SAMPLE_FILTER` in `config.sh` and use
+`submit_preprocess.sh --from <step>` (see the README). The outputs were deleted only to test the restarts: you do not need to
+delete anything to follow this example.
 
 Result: each of the six samples reached `complete`, and each restart ran its step and everything after it. The
 `status.sh` output after the restarts shows `0 sample(s) not complete.`

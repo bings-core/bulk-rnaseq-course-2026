@@ -38,7 +38,7 @@ Contrasts (treatment vs reference, so log2FC > 0 means higher in the first group
 | Steps 2 to 4: DE, enrichment, report | `submit_analysis.sh` | about 5 min |
 
 Requirements: Minerva with LSF, your `acc_*` account (the course account is `acc_BiNGS_bulk`), about 60 GB of free space,
-and write access to `/sc/arion/projects/BiNGS_bulk/$USER`.
+write access to `/sc/arion/projects/BiNGS_bulk/$USER`, and internet access from the compute nodes (NCBI, ENA and GENCODE).
 
 ## 1. Clone the pipeline from GitHub
 
@@ -212,6 +212,7 @@ Outputs to look at first:
 - `results/processed/differential_expression/tables/<contrast>_all_genes.csv`
 - `results/processed/functional_analysis/tables/`: ORA and GSEA per contrast.
 - `results/run_info.txt` and `results/tool_versions.tsv`.
+- To look at the report on your own computer, copy `results/report/rnaseq_report.html` (for example with `scp` or your file browser) and open it in a browser.
 
 ## 8. If something fails
 

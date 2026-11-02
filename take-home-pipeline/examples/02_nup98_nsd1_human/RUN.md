@@ -174,6 +174,7 @@ Outputs to look at first:
 - `results/processed/differential_expression/tables/Differentiated_vs_Immature_all_genes.csv`
 - `results/processed/functional_analysis/tables/`: the ORA and GSEA tables.
 - `results/run_info.txt` and `results/tool_versions.tsv`: what was run, with which config and tool versions.
+- To look at the report on your own computer, copy `results/report/rnaseq_report.html` (for example with `scp` or your file browser) and open it in a browser.
 
 ## 8. If something fails
 
