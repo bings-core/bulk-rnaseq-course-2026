@@ -20,8 +20,8 @@ Worked, step-by-step examples with real commands and outputs, from simplest to m
 
 1. [Mouse from GEO, single-end, three contrasts](../examples/01_crc_mouse_geo/RUN.md)
 2. [Human patient RNA-seq, single-end, two conditions](../examples/02_nup98_nsd1_human/RUN.md)
-3. [Mouse with a batch term, and restarts from each step](../examples/03_mouse_se_variants/RUN.md)
-4. [Human single-end options: multi-lane, strandedness, cutoffs, optional steps, sample subset](../examples/04_human_se_variants/RUN.md)
+3. [Mouse with a batch term, and restarts from each step](../examples/03_crc_mouse_geo_variants/RUN.md)
+4. [Human single-end options: multi-lane, strandedness, cutoffs, optional steps, sample subset](../examples/04_nup98_nsd1_human_variants/RUN.md)
 5. [Human paired-end with a batch term (airway)](../examples/05_airway_pe_batch/RUN.md)
 6. [Mixed single-end and paired-end, and a killed job](../examples/06_mixed_se_pe/RUN.md)
 
