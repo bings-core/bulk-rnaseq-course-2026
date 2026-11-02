@@ -36,16 +36,21 @@ If `mkdir` fails, you do not have write access to `BiNGS_bulk`. Ask the BiNGS te
 
 ## 2. Copy the FASTQ files into the project folder
 
-Check that you can read the source folder, then copy the six files:
+Check that you can read the source folder, then copy the six files, renaming each one by removing its first 9 characters (`KQLGC3_7_`, `KQLGC3_8_` and so on):
 
 ```bash
 ls /sc/arion/projects/BiNGS/bings_omics/data/bings/2026/elvinwagenblast/poddan01/nup98_nsd1_patient_rnaseq/raw/rna/homo_sapiens
-cp /sc/arion/projects/BiNGS/bings_omics/data/bings/2026/elvinwagenblast/poddan01/nup98_nsd1_patient_rnaseq/raw/rna/homo_sapiens/*/*.fastq.gz .
+cp /sc/arion/projects/BiNGS/bings_omics/data/bings/2026/elvinwagenblast/poddan01/nup98_nsd1_patient_rnaseq/raw/rna/homo_sapiens/Differentiated_1/KQLGC3_7_R1T_1.fastq.gz R1T_1.fastq.gz
+cp /sc/arion/projects/BiNGS/bings_omics/data/bings/2026/elvinwagenblast/poddan01/nup98_nsd1_patient_rnaseq/raw/rna/homo_sapiens/Differentiated_2/KQLGC3_8_R1T_2.fastq.gz R1T_2.fastq.gz
+cp /sc/arion/projects/BiNGS/bings_omics/data/bings/2026/elvinwagenblast/poddan01/nup98_nsd1_patient_rnaseq/raw/rna/homo_sapiens/Differentiated_3/KQLGC3_9_R1T_3.fastq.gz R1T_3.fastq.gz
+cp /sc/arion/projects/BiNGS/bings_omics/data/bings/2026/elvinwagenblast/poddan01/nup98_nsd1_patient_rnaseq/raw/rna/homo_sapiens/Immature_1/KQLGC3_10_R2T_1.fastq.gz R2T_1.fastq.gz
+cp /sc/arion/projects/BiNGS/bings_omics/data/bings/2026/elvinwagenblast/poddan01/nup98_nsd1_patient_rnaseq/raw/rna/homo_sapiens/Immature_2/KQLGC3_11_R2T_2.fastq.gz R2T_2.fastq.gz
+cp /sc/arion/projects/BiNGS/bings_omics/data/bings/2026/elvinwagenblast/poddan01/nup98_nsd1_patient_rnaseq/raw/rna/homo_sapiens/Immature_3/KQLGC3_12_R2T_3.fastq.gz R2T_3.fastq.gz
 ls -l *.fastq.gz
 ```
 
 `ls -l *.fastq.gz` should list six `.fastq.gz` files. The files are single-end. `R1T` and `R2T` in the names are not read
-pairs; they are just labels. Step 4 shows which file belongs to which sample.
+pairs; they are just labels. The sample sheet in step 4 shows which file belongs to which sample.
 
 ## 3. Configure
 
@@ -75,12 +80,12 @@ The content of `samples.csv` is:
 
 ```csv
 sample_id,condition,replicate,fastq_1,fastq_2,strandedness,batch
-Differentiated_rep1,Differentiated,1,KQLGC3_7_R1T_1.fastq.gz,,auto,
-Differentiated_rep2,Differentiated,2,KQLGC3_8_R1T_2.fastq.gz,,auto,
-Differentiated_rep3,Differentiated,3,KQLGC3_9_R1T_3.fastq.gz,,auto,
-Immature_rep1,Immature,1,KQLGC3_10_R2T_1.fastq.gz,,auto,
-Immature_rep2,Immature,2,KQLGC3_11_R2T_2.fastq.gz,,auto,
-Immature_rep3,Immature,3,KQLGC3_12_R2T_3.fastq.gz,,auto,
+Differentiated_rep1,Differentiated,1,R1T_1.fastq.gz,,auto,
+Differentiated_rep2,Differentiated,2,R1T_2.fastq.gz,,auto,
+Differentiated_rep3,Differentiated,3,R1T_3.fastq.gz,,auto,
+Immature_rep1,Immature,1,R2T_1.fastq.gz,,auto,
+Immature_rep2,Immature,2,R2T_2.fastq.gz,,auto,
+Immature_rep3,Immature,3,R2T_3.fastq.gz,,auto,
 ```
 
 - Empty `fastq_2` and `batch` fields (the two commas with nothing between them): the samples are single-end and there is no batch.
