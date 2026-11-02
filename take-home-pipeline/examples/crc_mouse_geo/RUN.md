@@ -37,9 +37,12 @@ Contrasts (treatment vs reference, so log2FC > 0 means higher in the first group
 | Step 1: preprocessing | `submit_preprocess.sh` | about 15 to 20 min per sample (all in parallel) |
 | Steps 2 to 4: DE, enrichment, report | `submit_analysis.sh` | about 5 min |
 
-Requirements: Minerva with LSF, your `acc_*` account (the course account is `acc_BiNGS_bulk`), and about 60 GB of free space.
+Requirements: Minerva with LSF, your `acc_*` account (the course account is `acc_BiNGS_bulk`), about 60 GB of free space,
+and write access to `/sc/arion/projects/BiNGS_bulk/$USER`.
 
 ## 1. Clone the pipeline from GitHub
+
+Run these from your own project folder. Every path below is relative to `take-home-pipeline/v0.1`.
 
 ```bash
 mkdir -p /sc/arion/projects/BiNGS_bulk/$USER/pipeline_tests/mouse_geo && cd $_
@@ -49,21 +52,17 @@ git sparse-checkout set take-home-pipeline/v0.1
 cd take-home-pipeline/v0.1
 ```
 
-Run all commands from this folder.
+If `mkdir` fails, you do not have write access to `BiNGS_bulk`. Ask the BiNGS team before going on.
 
 ## 2. Configure
 
 ```bash
 cp config.example.sh config.sh
+sed -i 's/^SPECIES=.*/SPECIES=mouse/; s/^LSF_ACCOUNT=$/LSF_ACCOUNT=acc_BiNGS_bulk/; s/^PROJECT_NAME=.*/PROJECT_NAME=crc_mouse_geo/' config.sh
+grep -E "^(SPECIES|LSF_ACCOUNT|PROJECT_NAME)=" config.sh
 ```
 
-Changed in `config.sh` (everything else stays at the defaults):
-
-```bash
-SPECIES=mouse
-LSF_ACCOUNT=acc_BiNGS_bulk
-PROJECT_NAME=crc_mouse_geo
-```
+The `grep` should print the three lines with those values.
 
 ## 3. Download the FASTQs from GEO
 
@@ -73,16 +72,25 @@ bash scripts/submit_fetch.sh GSM7670963,GSM7670964,GSM7670965,GSM7670966,GSM7670
 
 This submits one LSF job per GSM (`fetch_<GSM>`), then one job that writes `samples_draft.csv`. The files go to
 `data/raw/`, named after their SRA run (for example `data/raw/SRR25474517.fastq.gz`). Each file is checked against the
-MD5 that ENA publishes. Check with `bjobs`: all `fetch_` jobs and `fetch_draft` should be `DONE`.
+MD5 that ENA publishes.
+
+Wait until the downloads are finished. This takes about 15 minutes. Check with `bjobs`: every `fetch_` job and
+`fetch_draft` should show `DONE`. Then check that all nine files arrived:
+
+```bash
+bjobs -w | grep fetch_
+ls data/raw/*.fastq.gz | wc -l    # expected: 9
+```
 
 The draft has the file names but no condition or replicate. Write `samples.csv` yourself (step 4). The draft does not
 know the groups; the GEO sample titles do (WT, APC, AKSP, replicates 1 to 3).
 
 ## 4. Write the sample and contrast sheets
 
-`samples.csv` (single-end, strandedness detected by Salmon):
+Create `samples.csv` (single-end, strandedness detected by Salmon):
 
-```csv
+```bash
+cat > samples.csv <<'EOF'
 sample_id,condition,replicate,fastq_1,fastq_2,strandedness,batch
 WT_rep1,WT,1,data/raw/SRR25474517.fastq.gz,,auto,
 WT_rep2,WT,2,data/raw/SRR25474516.fastq.gz,,auto,
@@ -93,15 +101,18 @@ APC_rep3,APC,3,data/raw/SRR25474512.fastq.gz,,auto,
 AKSP_rep1,AKSP,1,data/raw/SRR25474511.fastq.gz,,auto,
 AKSP_rep2,AKSP,2,data/raw/SRR25474510.fastq.gz,,auto,
 AKSP_rep3,AKSP,3,data/raw/SRR25474509.fastq.gz,,auto,
+EOF
 ```
 
-`contrasts.csv`:
+Create `contrasts.csv`:
 
-```csv
+```bash
+cat > contrasts.csv <<'EOF'
 name,treatment,reference
 APC_vs_WT,APC,WT
 AKSP_vs_WT,AKSP,WT
 AKSP_vs_APC,AKSP,APC
+EOF
 ```
 
 Check the sheets. Before the references exist, this reports them as missing; that is expected:

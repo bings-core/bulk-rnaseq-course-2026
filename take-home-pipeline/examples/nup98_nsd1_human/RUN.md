@@ -17,9 +17,12 @@ Pipeline: `take-home-pipeline/v0.1` from the latest `main`.
 | Steps 2 to 4: DE, enrichment, report | `submit_analysis.sh` | about 5 min |
 
 Requirements: Minerva with LSF, your `acc_*` account (the course account is `acc_BiNGS_bulk`), about 60 GB of free space
-(references, containers, FASTQ copies and results), and read access to the source folder.
+(references, containers, FASTQ copies and results), read access to the source folder, and write access to
+`/sc/arion/projects/BiNGS_bulk/$USER`.
 
 ## 1. Clone the pipeline from GitHub
+
+Run these from your own project folder. Every path below is relative to `take-home-pipeline/v0.1`.
 
 ```bash
 mkdir -p /sc/arion/projects/BiNGS_bulk/$USER/pipeline_tests/human_inhouse && cd $_
@@ -29,44 +32,38 @@ git sparse-checkout set take-home-pipeline/v0.1
 cd take-home-pipeline/v0.1
 ```
 
-Every path in the pipeline is relative to this folder, so run all commands from here.
+If `mkdir` fails, you do not have write access to `BiNGS_bulk`. Ask the BiNGS team before going on.
 
 ## 2. Copy the FASTQ files into `data/raw/`
 
-The source folder is read-only for you. Copy the six files, then check each copy against its source:
+Check that you can read the source folder, then copy the six files:
 
 ```bash
-SRC=/sc/arion/projects/BiNGS/bings_omics/data/bings/2026/elvinwagenblast/poddan01/nup98_nsd1_patient_rnaseq/raw/rna/homo_sapiens
+ls /sc/arion/projects/BiNGS/bings_omics/data/bings/2026/elvinwagenblast/poddan01/nup98_nsd1_patient_rnaseq/raw/rna/homo_sapiens
 mkdir -p data/raw
-for g in Differentiated_1 Differentiated_2 Differentiated_3 Immature_1 Immature_2 Immature_3; do
-  cp $SRC/$g/*.fastq.gz data/raw/
-done
-for f in data/raw/*.fastq.gz; do
-  [ "$(stat -c %s $f)" = "$(stat -c %s $(find $SRC -name $(basename $f)))" ] && gzip -t $f && echo "ok $(basename $f)"
-done
+cp /sc/arion/projects/BiNGS/bings_omics/data/bings/2026/elvinwagenblast/poddan01/nup98_nsd1_patient_rnaseq/raw/rna/homo_sapiens/*/*.fastq.gz data/raw/
+ls -l data/raw
 ```
 
-Expected: six `ok` lines. The files are single-end. `R1T` and `R2T` in the names are not read pairs; they are just labels.
+`ls -l data/raw` should list six `.fastq.gz` files. The files are single-end. `R1T` and `R2T` in the names are not read
+pairs; they are just labels. Step 4 shows which file belongs to which sample.
 
 ## 3. Configure
 
 ```bash
 cp config.example.sh config.sh
+sed -i 's/^SPECIES=.*/SPECIES=human/; s/^LSF_ACCOUNT=$/LSF_ACCOUNT=acc_BiNGS_bulk/; s/^PROJECT_NAME=.*/PROJECT_NAME=nup98_nsd1_patient_rnaseq/' config.sh
+grep -E "^(SPECIES|LSF_ACCOUNT|PROJECT_NAME)=" config.sh
 ```
 
-Changed in `config.sh` (everything else stays at the defaults):
-
-```bash
-SPECIES=human
-LSF_ACCOUNT=acc_BiNGS_bulk
-PROJECT_NAME=nup98_nsd1_patient_rnaseq
-```
+The `grep` should print the three lines with those values.
 
 ## 4. Write the sample and contrast sheets
 
-`samples.csv` (single-end, strandedness detected by Salmon):
+Create `samples.csv` (single-end, strandedness detected by Salmon):
 
-```csv
+```bash
+cat > samples.csv <<'EOF'
 sample_id,condition,replicate,fastq_1,fastq_2,strandedness,batch
 Differentiated_rep1,Differentiated,1,data/raw/KQLGC3_7_R1T_1.fastq.gz,,auto,
 Differentiated_rep2,Differentiated,2,data/raw/KQLGC3_8_R1T_2.fastq.gz,,auto,
@@ -74,13 +71,16 @@ Differentiated_rep3,Differentiated,3,data/raw/KQLGC3_9_R1T_3.fastq.gz,,auto,
 Immature_rep1,Immature,1,data/raw/KQLGC3_10_R2T_1.fastq.gz,,auto,
 Immature_rep2,Immature,2,data/raw/KQLGC3_11_R2T_2.fastq.gz,,auto,
 Immature_rep3,Immature,3,data/raw/KQLGC3_12_R2T_3.fastq.gz,,auto,
+EOF
 ```
 
-`contrasts.csv` (treatment is Differentiated, reference is Immature, so log2FC > 0 means higher in Differentiated):
+Create `contrasts.csv` (treatment is Differentiated, reference is Immature, so log2FC > 0 means higher in Differentiated):
 
-```csv
+```bash
+cat > contrasts.csv <<'EOF'
 name,treatment,reference
 Differentiated_vs_Immature,Differentiated,Immature
+EOF
 ```
 
 Check the sheets. This also checks the references and containers, which do not exist yet, so the check reports them as
