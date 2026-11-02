@@ -17,6 +17,17 @@ ENA (project PRJNA229998). Each donor is a cell line, which is used as the `batc
 Requirements: Minerva with LSF, your `acc_*` account (the course account is `acc_BiNGS_bulk`), about 80 GB of free space,
 and write access to `/sc/arion/projects/BiNGS_bulk/$USER`.
 
+## About the dataset
+
+- **Study:** Human airway smooth muscle transcriptome changes in response to asthma medications. GEO series GSE52778, SRA
+  project PRJNA229998, from the Department of Biostatistics, Epidemiology and Informatics, University of Pennsylvania.
+- **Biology:** primary human airway smooth muscle (HASM) cells from four white male donors, each under four conditions:
+  untreated, albuterol (a beta-2 agonist, 1 uM for 18 h), dexamethasone (Dex, a glucocorticoid, 1 uM for 18 h), and
+  albuterol plus Dex. This example compares untreated with Dex only. The donors are the four cell lines, used as the batch.
+- **Sequencing:** Illumina HiSeq 2000 with the TruSeq assay, 75 bp paired-end reads.
+- **Reference:** the original analysis used hg19 and the Tuxedo tools. This pipeline uses GRCh38 (GENCODE 36), so the
+  counts and DE results will not match the published analysis exactly.
+
 ## Samples
 
 Eight paired-end samples: four donors, each untreated and Dex. The GEO samples and runs are:

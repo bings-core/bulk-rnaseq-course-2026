@@ -5,6 +5,18 @@ Every command below was run on Minerva on 2026-11-01. The FASTQ files come from 
 
 Pipeline: `take-home-pipeline/v0.1` from the latest `main` of this repository.
 
+## About the dataset
+
+- **Study:** RNA-sequencing of genetically engineered intestinal organoid lines modeling colorectal cancer (CRC) progression.
+  GEO series GSE239754, SRA project PRJNA1000918, submitted by the Icahn School of Medicine at Mount Sinai.
+- **Biology:** mouse intestinal organoids (tumoroids) along the CRC progression series: wild type (WT), `ApcKO` (A), and
+  `ApcKO::KrasG12D::Smad4KO::Trp53KO` (AKSP). Here the `ApcKO` group is called APC. Organoids were collected at confluence and
+  sequenced in bulk.
+- **Design:** three replicates per line, nine samples in total.
+- **Sequencing:** Illumina NovaSeq 6000, cDNA libraries, single-end reads (about 46 million reads for WT Rep1, for example).
+- **Question:** how transcription changes across the malignancy continuum, from normal organoids to the APC-loss and
+  AKSP tumoroids.
+
 ## Samples
 
 Nine single-end mouse samples from GEO, three per group:

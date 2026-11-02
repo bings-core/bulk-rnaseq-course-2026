@@ -5,6 +5,18 @@ AKSP), with the replicate number as a batch term. It then checks the restart fro
 2026-11-01. The starting point is the mouse run example, so download the nine GEO samples and set up the references as
 described there.
 
+## About the dataset
+
+- **Study:** RNA-sequencing of genetically engineered intestinal organoid lines modeling colorectal cancer (CRC) progression.
+  GEO series GSE239754, SRA project PRJNA1000918, submitted by the Icahn School of Medicine at Mount Sinai.
+- **Biology:** mouse intestinal organoids (tumoroids) along the CRC progression series: wild type (WT), `ApcKO` (A), and
+  `ApcKO::KrasG12D::Smad4KO::Trp53KO` (AKSP). Here the `ApcKO` group is called APC. Organoids were collected at confluence and
+  sequenced in bulk.
+- **Design:** three replicates per line, nine samples in total.
+- **Sequencing:** Illumina NovaSeq 6000, cDNA libraries, single-end reads (about 46 million reads for WT Rep1, for example).
+- **Question:** how transcription changes across the malignancy continuum, from normal organoids to the APC-loss and
+  AKSP tumoroids.
+
 ## Setup
 
 ```bash
