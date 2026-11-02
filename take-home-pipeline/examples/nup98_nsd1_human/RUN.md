@@ -36,7 +36,7 @@ If `mkdir` fails, you do not have write access to `BiNGS_bulk`. Ask the BiNGS te
 
 ## 2. Copy the FASTQ files into the project folder
 
-Check that you can read the source folder, then copy the six files, renaming each one by removing its first 9 characters (`KQLGC3_7_`, `KQLGC3_8_` and so on):
+Check that you can read the source folder, then copy the six files:
 
 ```bash
 ls /sc/arion/projects/BiNGS/bings_omics/data/bings/2026/elvinwagenblast/poddan01/nup98_nsd1_patient_rnaseq/raw/rna/homo_sapiens
