@@ -66,7 +66,13 @@ Open `config.sh` in a text editor and set these three values. Leave everything e
 
 ## 4. Write the sample and contrast sheets
 
-Create `samples.csv` in the project folder. It has one row per sample, with this content:
+Copy the template, then replace its contents with the CSV below:
+
+```bash
+cp samples.example.csv samples.csv
+```
+
+The content of `samples.csv` is:
 
 ```csv
 sample_id,condition,replicate,fastq_1,fastq_2,strandedness,batch
@@ -82,7 +88,13 @@ Immature_rep3,Immature,3,data/raw/KQLGC3_12_R2T_3.fastq.gz,,auto,
 - `strandedness` is `auto`, so Salmon detects it.
 - Column names must match the header exactly.
 
-Create `contrasts.csv` in the project folder, with this content:
+Copy the template, then replace its contents with the CSV below:
+
+```bash
+cp contrasts.example.csv contrasts.csv
+```
+
+The content of `contrasts.csv` is:
 
 ```csv
 name,treatment,reference
