@@ -66,26 +66,28 @@ Open `config.sh` in a text editor and set these three values. Leave everything e
 
 ## 4. Write the sample and contrast sheets
 
-Create `samples.csv` in the project folder. It has one row per sample with these columns:
+Create `samples.csv` in the project folder. It has one row per sample, with this content:
 
-| sample_id | condition | replicate | fastq_1 | fastq_2 | strandedness | batch |
-|---|---|---|---|---|---|---|
-| Differentiated_rep1 | Differentiated | 1 | data/raw/KQLGC3_7_R1T_1.fastq.gz | (empty) | auto | (empty) |
-| Differentiated_rep2 | Differentiated | 2 | data/raw/KQLGC3_8_R1T_2.fastq.gz | (empty) | auto | (empty) |
-| Differentiated_rep3 | Differentiated | 3 | data/raw/KQLGC3_9_R1T_3.fastq.gz | (empty) | auto | (empty) |
-| Immature_rep1 | Immature | 1 | data/raw/KQLGC3_10_R2T_1.fastq.gz | (empty) | auto | (empty) |
-| Immature_rep2 | Immature | 2 | data/raw/KQLGC3_11_R2T_2.fastq.gz | (empty) | auto | (empty) |
-| Immature_rep3 | Immature | 3 | data/raw/KQLGC3_12_R2T_3.fastq.gz | (empty) | auto | (empty) |
+```csv
+sample_id,condition,replicate,fastq_1,fastq_2,strandedness,batch
+Differentiated_rep1,Differentiated,1,data/raw/KQLGC3_7_R1T_1.fastq.gz,,auto,
+Differentiated_rep2,Differentiated,2,data/raw/KQLGC3_8_R1T_2.fastq.gz,,auto,
+Differentiated_rep3,Differentiated,3,data/raw/KQLGC3_9_R1T_3.fastq.gz,,auto,
+Immature_rep1,Immature,1,data/raw/KQLGC3_10_R2T_1.fastq.gz,,auto,
+Immature_rep2,Immature,2,data/raw/KQLGC3_11_R2T_2.fastq.gz,,auto,
+Immature_rep3,Immature,3,data/raw/KQLGC3_12_R2T_3.fastq.gz,,auto,
+```
 
-- `fastq_2` and `batch` stay empty: the samples are single-end and there is no batch.
+- Empty `fastq_2` and `batch` fields (the two commas with nothing between them): the samples are single-end and there is no batch.
 - `strandedness` is `auto`, so Salmon detects it.
 - Column names must match the header exactly.
 
-Create `contrasts.csv` in the project folder. It has one row:
+Create `contrasts.csv` in the project folder, with this content:
 
-| name | treatment | reference |
-|---|---|---|
-| Differentiated_vs_Immature | Differentiated | Immature |
+```csv
+name,treatment,reference
+Differentiated_vs_Immature,Differentiated,Immature
+```
 
 Log2FC is positive when a gene is higher in Differentiated.
 

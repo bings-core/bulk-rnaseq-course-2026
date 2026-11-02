@@ -93,31 +93,33 @@ know the groups; the GEO sample titles do (WT, APC, AKSP, replicates 1 to 3).
 
 ## 4. Write the sample and contrast sheets
 
-Create `samples.csv` in the project folder. It has one row per sample with these columns:
+Create `samples.csv` in the project folder. It has one row per sample, with this content:
 
-| sample_id | condition | replicate | fastq_1 | fastq_2 | strandedness | batch |
-|---|---|---|---|---|---|---|
-| WT_rep1 | WT | 1 | data/raw/SRR25474517.fastq.gz | (empty) | auto | (empty) |
-| WT_rep2 | WT | 2 | data/raw/SRR25474516.fastq.gz | (empty) | auto | (empty) |
-| WT_rep3 | WT | 3 | data/raw/SRR25474515.fastq.gz | (empty) | auto | (empty) |
-| APC_rep1 | APC | 1 | data/raw/SRR25474514.fastq.gz | (empty) | auto | (empty) |
-| APC_rep2 | APC | 2 | data/raw/SRR25474513.fastq.gz | (empty) | auto | (empty) |
-| APC_rep3 | APC | 3 | data/raw/SRR25474512.fastq.gz | (empty) | auto | (empty) |
-| AKSP_rep1 | AKSP | 1 | data/raw/SRR25474511.fastq.gz | (empty) | auto | (empty) |
-| AKSP_rep2 | AKSP | 2 | data/raw/SRR25474510.fastq.gz | (empty) | auto | (empty) |
-| AKSP_rep3 | AKSP | 3 | data/raw/SRR25474509.fastq.gz | (empty) | auto | (empty) |
+```csv
+sample_id,condition,replicate,fastq_1,fastq_2,strandedness,batch
+WT_rep1,WT,1,data/raw/SRR25474517.fastq.gz,,auto,
+WT_rep2,WT,2,data/raw/SRR25474516.fastq.gz,,auto,
+WT_rep3,WT,3,data/raw/SRR25474515.fastq.gz,,auto,
+APC_rep1,APC,1,data/raw/SRR25474514.fastq.gz,,auto,
+APC_rep2,APC,2,data/raw/SRR25474513.fastq.gz,,auto,
+APC_rep3,APC,3,data/raw/SRR25474512.fastq.gz,,auto,
+AKSP_rep1,AKSP,1,data/raw/SRR25474511.fastq.gz,,auto,
+AKSP_rep2,AKSP,2,data/raw/SRR25474510.fastq.gz,,auto,
+AKSP_rep3,AKSP,3,data/raw/SRR25474509.fastq.gz,,auto,
+```
 
-- `fastq_2` and `batch` stay empty: the samples are single-end and there is no batch.
+- Empty `fastq_2` and `batch` fields (the two commas with nothing between them): the samples are single-end and there is no batch.
 - `strandedness` is `auto`, so Salmon detects it.
 - Column names must match the header exactly.
 
-Create `contrasts.csv` in the project folder. It has one row per comparison:
+Create `contrasts.csv` in the project folder, with this content:
 
-| name | treatment | reference |
-|---|---|---|
-| APC_vs_WT | APC | WT |
-| AKSP_vs_WT | AKSP | WT |
-| AKSP_vs_APC | AKSP | APC |
+```csv
+name,treatment,reference
+APC_vs_WT,APC,WT
+AKSP_vs_WT,AKSP,WT
+AKSP_vs_APC,AKSP,APC
+```
 
 Log2FC is positive when a gene is higher in the treatment group.
 
