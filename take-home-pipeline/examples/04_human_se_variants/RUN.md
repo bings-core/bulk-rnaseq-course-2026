@@ -24,30 +24,32 @@ Open `config.sh` in a text editor and set these three values:
 | `LSF_ACCOUNT` | `acc_BiNGS_bulk` |
 | `PROJECT_NAME` | `human_se_variants` |
 
-Copy the six single-end FASTQs into the project folder, as in the human run example, then run `bash scripts/setup_resources.sh`
-and wait for the references (see the README).
+Copy the six single-end FASTQs into `data/raw/`, as in the human run example (`cp` from the same source folder, then `ls -l data/raw`).
+Then run `bash scripts/setup_resources.sh` and wait for the references (see the README).
 
 ## Variant 1: multi-lane input
 
 One sample is split into two lane files, so that one sample is given as two files. The two parts are created at a read
-boundary, so that concatenating them gives the original file:
+boundary, so that concatenating them gives the original file. Run these inside `data/raw/`:
 
 ```bash
-lines=$(zcat KQLGC3_7_R1T_1.fastq.gz | wc -l); half=$(( (lines/8)*4 ))
-zcat KQLGC3_7_R1T_1.fastq.gz | head -n $half | gzip -1 > R1T_1_lane1.fastq.gz
-zcat KQLGC3_7_R1T_1.fastq.gz | tail -n +$((half+1)) | gzip -1 > R1T_1_lane2.fastq.gz
+cd data/raw
+lines=$(zcat R1T_1.fastq.gz | wc -l); half=$(( (lines/8)*4 ))
+zcat R1T_1.fastq.gz | head -n $half | gzip -1 > R1T_1_lane1.fastq.gz
+zcat R1T_1.fastq.gz | tail -n +$((half+1)) | gzip -1 > R1T_1_lane2.fastq.gz
+cd ../..
 ```
 
 In `samples.csv`, the two lanes are separated by a semicolon in `fastq_1`. A comma would split the CSV field:
 
 ```csv
 sample_id,condition,replicate,fastq_1,fastq_2,strandedness,batch
-Differentiated_rep1,Differentiated,1,R1T_1_lane1.fastq.gz;R1T_1_lane2.fastq.gz,,auto,
-Differentiated_rep2,Differentiated,2,KQLGC3_8_R1T_2.fastq.gz,,auto,
-Differentiated_rep3,Differentiated,3,KQLGC3_9_R1T_3.fastq.gz,,auto,
-Immature_rep1,Immature,1,KQLGC3_10_R2T_1.fastq.gz,,auto,
-Immature_rep2,Immature,2,KQLGC3_11_R2T_2.fastq.gz,,auto,
-Immature_rep3,Immature,3,KQLGC3_12_R2T_3.fastq.gz,,auto,
+Differentiated_rep1,Differentiated,1,data/raw/R1T_1_lane1.fastq.gz;data/raw/R1T_1_lane2.fastq.gz,,auto,
+Differentiated_rep2,Differentiated,2,data/raw/R1T_2.fastq.gz,,auto,
+Differentiated_rep3,Differentiated,3,data/raw/R1T_3.fastq.gz,,auto,
+Immature_rep1,Immature,1,data/raw/R2T_1.fastq.gz,,auto,
+Immature_rep2,Immature,2,data/raw/R2T_2.fastq.gz,,auto,
+Immature_rep3,Immature,3,data/raw/R2T_3.fastq.gz,,auto,
 ```
 
 `contrasts.csv`:
@@ -67,8 +69,8 @@ The DE result on this run was 1786 up and 1146 down (padj < 0.05, |log2FC| >= 1)
 In `samples.csv`, set `Immature_rep1` to `unstranded` and `Immature_rep2` to `reverse` (the other samples stay `auto`):
 
 ```csv
-Immature_rep1,Immature,1,KQLGC3_10_R2T_1.fastq.gz,,unstranded,
-Immature_rep2,Immature,2,KQLGC3_11_R2T_2.fastq.gz,,reverse,
+Immature_rep1,Immature,1,data/raw/R2T_1.fastq.gz,,unstranded,
+Immature_rep2,Immature,2,data/raw/R2T_2.fastq.gz,,reverse,
 ```
 
 Restart only those two samples from `featurecounts`, because their strandedness is used in that step. Set the sample

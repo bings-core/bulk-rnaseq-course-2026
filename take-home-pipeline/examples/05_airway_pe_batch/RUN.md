@@ -65,7 +65,8 @@ Open `config.sh` in a text editor and set these three values. Leave everything e
 bash scripts/submit_fetch.sh GSM1275862,GSM1275863,GSM1275866,GSM1275867,GSM1275870,GSM1275871,GSM1275874,GSM1275875
 ```
 
-This submits one LSF job per GSM (`fetch_<GSM>`) and then `fetch_draft`. Wait until all nine are `DONE` (`bjobs -w | grep fetch_`).
+This submits one LSF job per GSM (`fetch_<GSM>`) and then `fetch_draft`. The FASTQ files are written to `data/raw/`. The download
+needs internet access from the compute nodes (NCBI and ENA). Wait until all nine jobs are `DONE` (`bjobs -w | grep fetch_`).
 
 The draft in `samples_draft.csv` lists the `_1` and `_2` file of each run as `fastq_1` and `fastq_2`. The sample sheet
 below uses these names.
@@ -160,7 +161,8 @@ Results on this run (padj < 0.05 and |log2FC| >= 1):
 |---|---|---|
 | Dex_vs_untreated | 477 | 409 |
 
-Known Dex response genes are up in Dex vs untreated (log2FC from `Dex_vs_untreated_all_genes.csv`, padj < 1e-18 for all four):
+Known Dex response genes are up in Dex vs untreated (values from the `log2FoldChange` column of `Dex_vs_untreated_all_genes.csv`;
+padj < 1e-18 for all four):
 
 | Gene | log2FC |
 |---|---|

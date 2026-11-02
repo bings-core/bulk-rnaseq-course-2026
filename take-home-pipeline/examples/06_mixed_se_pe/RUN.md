@@ -23,12 +23,20 @@ Open `config.sh` in a text editor and set these three values:
 | `LSF_ACCOUNT` | `acc_BiNGS_bulk` |
 | `PROJECT_NAME` | `mixed_se_pe` |
 
-Put the FASTQs in `data/raw/` with these names:
+Put the single-end FASTQs in `data/raw/` from the human run example (the same source folder, as in its step 2):
 
-- `Differentiated_rep1.fastq.gz` and `Immature_rep1.fastq.gz`: single-end, from the human run example (`KQLGC3_7_R1T_1` and `KQLGC3_10_R2T_1`), renamed.
-- `SRR1039508_1.fastq.gz`, `SRR1039508_2.fastq.gz`, `SRR1039509_1.fastq.gz` and `SRR1039509_2.fastq.gz`: paired-end, from the airway run example.
+```bash
+mkdir -p data/raw
+SRC=/sc/arion/projects/BiNGS/bings_omics/data/bings/2026/elvinwagenblast/poddan01/nup98_nsd1_patient_rnaseq/raw/rna/homo_sapiens
+cp $SRC/R1T_1.fastq.gz data/raw/Differentiated_rep1.fastq.gz
+cp $SRC/R2T_1.fastq.gz data/raw/Immature_rep1.fastq.gz
+```
 
-Set up the references as described in the README (or reuse them, as the other examples did).
+Download the two paired-end airway runs (`SRR1039508` and `SRR1039509`) into `data/raw/` with the fetch command from the
+airway run example, using `GSM1275862,GSM1275863`, and wait for the jobs to finish (`bjobs -w | grep fetch_`).
+The files are named `SRR1039508_1.fastq.gz`, `SRR1039508_2.fastq.gz`, `SRR1039509_1.fastq.gz` and `SRR1039509_2.fastq.gz`.
+
+Set up the references with `bash scripts/setup_resources.sh`, then wait for `setup_star` and `setup_salmon` to finish (see the README).
 
 ## 1. Sample and contrast sheets
 
@@ -61,7 +69,7 @@ name,treatment,reference
 A_vs_B,A,B
 ```
 
-Check the sheets, then run step 1:
+Check the sheets, then run step 1 (the `check_inputs.sh` check passes once the references are finished):
 
 ```bash
 bash scripts/check_inputs.sh preprocess
@@ -79,7 +87,8 @@ The layout column should show `SE` for `Differentiated_rep1` and `Immature_rep1`
 
 ## 3. Killed sample job, then restart
 
-While the sample jobs ran, the job for `N61311_Dex` was killed with `bkill`. Then:
+This part shows what to do when a sample job stops early. In the test run, the job for `N61311_Dex` was killed with `bkill`
+while it ran. You do not need to kill anything to follow this example. Then:
 
 ```bash
 bash scripts/status.sh
