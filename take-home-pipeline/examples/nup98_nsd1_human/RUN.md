@@ -50,38 +50,44 @@ pairs; they are just labels. Step 4 shows which file belongs to which sample.
 
 ## 3. Configure
 
+Copy the template to `config.sh`:
+
 ```bash
 cp config.example.sh config.sh
-sed -i 's/^SPECIES=.*/SPECIES=human/; s/^LSF_ACCOUNT=$/LSF_ACCOUNT=acc_BiNGS_bulk/; s/^PROJECT_NAME=.*/PROJECT_NAME=nup98_nsd1_patient_rnaseq/' config.sh
-grep -E "^(SPECIES|LSF_ACCOUNT|PROJECT_NAME)=" config.sh
 ```
 
-The `grep` should print the three lines with those values.
+Open `config.sh` in a text editor and set these three values. Leave everything else as it is.
+
+| Setting | Value |
+|---|---|
+| `SPECIES` | `human` |
+| `LSF_ACCOUNT` | `acc_BiNGS_bulk` |
+| `PROJECT_NAME` | `nup98_nsd1_patient_rnaseq` |
 
 ## 4. Write the sample and contrast sheets
 
-Create `samples.csv` (single-end, strandedness detected by Salmon):
+Create `samples.csv` in the project folder. It has one row per sample with these columns:
 
-```bash
-cat > samples.csv <<'EOF'
-sample_id,condition,replicate,fastq_1,fastq_2,strandedness,batch
-Differentiated_rep1,Differentiated,1,data/raw/KQLGC3_7_R1T_1.fastq.gz,,auto,
-Differentiated_rep2,Differentiated,2,data/raw/KQLGC3_8_R1T_2.fastq.gz,,auto,
-Differentiated_rep3,Differentiated,3,data/raw/KQLGC3_9_R1T_3.fastq.gz,,auto,
-Immature_rep1,Immature,1,data/raw/KQLGC3_10_R2T_1.fastq.gz,,auto,
-Immature_rep2,Immature,2,data/raw/KQLGC3_11_R2T_2.fastq.gz,,auto,
-Immature_rep3,Immature,3,data/raw/KQLGC3_12_R2T_3.fastq.gz,,auto,
-EOF
-```
+| sample_id | condition | replicate | fastq_1 | fastq_2 | strandedness | batch |
+|---|---|---|---|---|---|---|
+| Differentiated_rep1 | Differentiated | 1 | data/raw/KQLGC3_7_R1T_1.fastq.gz | (empty) | auto | (empty) |
+| Differentiated_rep2 | Differentiated | 2 | data/raw/KQLGC3_8_R1T_2.fastq.gz | (empty) | auto | (empty) |
+| Differentiated_rep3 | Differentiated | 3 | data/raw/KQLGC3_9_R1T_3.fastq.gz | (empty) | auto | (empty) |
+| Immature_rep1 | Immature | 1 | data/raw/KQLGC3_10_R2T_1.fastq.gz | (empty) | auto | (empty) |
+| Immature_rep2 | Immature | 2 | data/raw/KQLGC3_11_R2T_2.fastq.gz | (empty) | auto | (empty) |
+| Immature_rep3 | Immature | 3 | data/raw/KQLGC3_12_R2T_3.fastq.gz | (empty) | auto | (empty) |
 
-Create `contrasts.csv` (treatment is Differentiated, reference is Immature, so log2FC > 0 means higher in Differentiated):
+- `fastq_2` and `batch` stay empty: the samples are single-end and there is no batch.
+- `strandedness` is `auto`, so Salmon detects it.
+- Column names must match the header exactly.
 
-```bash
-cat > contrasts.csv <<'EOF'
-name,treatment,reference
-Differentiated_vs_Immature,Differentiated,Immature
-EOF
-```
+Create `contrasts.csv` in the project folder. It has one row:
+
+| name | treatment | reference |
+|---|---|---|
+| Differentiated_vs_Immature | Differentiated | Immature |
+
+Log2FC is positive when a gene is higher in Differentiated.
 
 Check the sheets. This also checks the references and containers, which do not exist yet, so the check reports them as
 missing. That is expected before setup:

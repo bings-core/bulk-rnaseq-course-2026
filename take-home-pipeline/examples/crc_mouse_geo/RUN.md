@@ -56,13 +56,19 @@ If `mkdir` fails, you do not have write access to `BiNGS_bulk`. Ask the BiNGS te
 
 ## 2. Configure
 
+Copy the template to `config.sh`:
+
 ```bash
 cp config.example.sh config.sh
-sed -i 's/^SPECIES=.*/SPECIES=mouse/; s/^LSF_ACCOUNT=$/LSF_ACCOUNT=acc_BiNGS_bulk/; s/^PROJECT_NAME=.*/PROJECT_NAME=crc_mouse_geo/' config.sh
-grep -E "^(SPECIES|LSF_ACCOUNT|PROJECT_NAME)=" config.sh
 ```
 
-The `grep` should print the three lines with those values.
+Open `config.sh` in a text editor and set these three values. Leave everything else as it is.
+
+| Setting | Value |
+|---|---|
+| `SPECIES` | `mouse` |
+| `LSF_ACCOUNT` | `acc_BiNGS_bulk` |
+| `PROJECT_NAME` | `crc_mouse_geo` |
 
 ## 3. Download the FASTQs from GEO
 
@@ -87,33 +93,33 @@ know the groups; the GEO sample titles do (WT, APC, AKSP, replicates 1 to 3).
 
 ## 4. Write the sample and contrast sheets
 
-Create `samples.csv` (single-end, strandedness detected by Salmon):
+Create `samples.csv` in the project folder. It has one row per sample with these columns:
 
-```bash
-cat > samples.csv <<'EOF'
-sample_id,condition,replicate,fastq_1,fastq_2,strandedness,batch
-WT_rep1,WT,1,data/raw/SRR25474517.fastq.gz,,auto,
-WT_rep2,WT,2,data/raw/SRR25474516.fastq.gz,,auto,
-WT_rep3,WT,3,data/raw/SRR25474515.fastq.gz,,auto,
-APC_rep1,APC,1,data/raw/SRR25474514.fastq.gz,,auto,
-APC_rep2,APC,2,data/raw/SRR25474513.fastq.gz,,auto,
-APC_rep3,APC,3,data/raw/SRR25474512.fastq.gz,,auto,
-AKSP_rep1,AKSP,1,data/raw/SRR25474511.fastq.gz,,auto,
-AKSP_rep2,AKSP,2,data/raw/SRR25474510.fastq.gz,,auto,
-AKSP_rep3,AKSP,3,data/raw/SRR25474509.fastq.gz,,auto,
-EOF
-```
+| sample_id | condition | replicate | fastq_1 | fastq_2 | strandedness | batch |
+|---|---|---|---|---|---|---|
+| WT_rep1 | WT | 1 | data/raw/SRR25474517.fastq.gz | (empty) | auto | (empty) |
+| WT_rep2 | WT | 2 | data/raw/SRR25474516.fastq.gz | (empty) | auto | (empty) |
+| WT_rep3 | WT | 3 | data/raw/SRR25474515.fastq.gz | (empty) | auto | (empty) |
+| APC_rep1 | APC | 1 | data/raw/SRR25474514.fastq.gz | (empty) | auto | (empty) |
+| APC_rep2 | APC | 2 | data/raw/SRR25474513.fastq.gz | (empty) | auto | (empty) |
+| APC_rep3 | APC | 3 | data/raw/SRR25474512.fastq.gz | (empty) | auto | (empty) |
+| AKSP_rep1 | AKSP | 1 | data/raw/SRR25474511.fastq.gz | (empty) | auto | (empty) |
+| AKSP_rep2 | AKSP | 2 | data/raw/SRR25474510.fastq.gz | (empty) | auto | (empty) |
+| AKSP_rep3 | AKSP | 3 | data/raw/SRR25474509.fastq.gz | (empty) | auto | (empty) |
 
-Create `contrasts.csv`:
+- `fastq_2` and `batch` stay empty: the samples are single-end and there is no batch.
+- `strandedness` is `auto`, so Salmon detects it.
+- Column names must match the header exactly.
 
-```bash
-cat > contrasts.csv <<'EOF'
-name,treatment,reference
-APC_vs_WT,APC,WT
-AKSP_vs_WT,AKSP,WT
-AKSP_vs_APC,AKSP,APC
-EOF
-```
+Create `contrasts.csv` in the project folder. It has one row per comparison:
+
+| name | treatment | reference |
+|---|---|---|
+| APC_vs_WT | APC | WT |
+| AKSP_vs_WT | AKSP | WT |
+| AKSP_vs_APC | AKSP | APC |
+
+Log2FC is positive when a gene is higher in the treatment group.
 
 Check the sheets. Before the references exist, this reports them as missing; that is expected:
 
