@@ -181,9 +181,3 @@ Outputs to look at first:
 1. `bash scripts/status.sh` shows which samples are incomplete, the `--from` step to restart each one from, and the failed jobs that still matter.
 2. Read the error log, `logs/<job name>.<job id>.err`.
 3. Fix the cause, then restart with `--from` (only the affected samples, using `SAMPLE_FILTER` in `config.sh` if needed).
-
-## Notes for next time
-
-- The first `check_inputs.sh` run is expected to fail until `setup_resources.sh` has finished.
-- With `LSF_ACCOUNT` empty, every step runs on the login node. Do not do that for a real dataset.
-- Use a fresh clone for each new project, so the scripts and the run record match the commit you ran.

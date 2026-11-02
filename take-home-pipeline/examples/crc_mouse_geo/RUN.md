@@ -218,8 +218,3 @@ Outputs to look at first:
 1. `bash scripts/status.sh`: incomplete samples, the `--from` step, and the failed jobs that still matter.
 2. The error log: `logs/<job name>.<job id>.err`.
 3. Fix the cause and restart with `--from`.
-
-## Notes
-
-- Mouse samples here are single-end and reverse-stranded. Check the strandedness report before you interpret the results.
-- The contrasts were chosen by the person running the example, with WT as the reference for the first two. Pick your own.
