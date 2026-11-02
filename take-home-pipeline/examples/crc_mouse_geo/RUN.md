@@ -42,7 +42,7 @@ Requirements: Minerva with LSF, your `acc_*` account (the course account is `acc
 ## 1. Clone the pipeline from GitHub
 
 ```bash
-mkdir -p /sc/arion/scratch/$USER/pipeline_tests/mouse_geo && cd $_
+mkdir -p /sc/arion/projects/BiNGS_bulk/$USER/pipeline_tests/mouse_geo && cd $_
 git clone --depth 1 --filter=blob:none --sparse https://github.com/bings-core/bulk-rnaseq-course-2026.git
 cd bulk-rnaseq-course-2026
 git sparse-checkout set take-home-pipeline/v0.1

@@ -1,10 +1,9 @@
 # Example run: human RNA-seq, Differentiated vs Immature (NUP98-NSD1 patient samples)
 
 This is a worked example of the take-home pipeline (v0.1) on a real dataset, from a fresh clone to the HTML report. Every
-command below was run on Minerva on 2026-11-01, including the failure and the fix, so you can see what a real run looks
-like. The data is stored under the `elvinwagenblast` folder and owned by `poddan01`. Please ask the owner before reusing it.
+command below was run on Minerva on 2026-11-01. The data is stored under the `elvinwagenblast` folder and owned by `poddan01`. Please ask the owner before reusing it.
 
-Pipeline: `take-home-pipeline/v0.1` from the latest `main`. The two fixes this run needed (the strandedness race and the status helper) are in `main`, so a fresh clone already has them.
+Pipeline: `take-home-pipeline/v0.1` from the latest `main`.
 
 ## What you will run
 
@@ -23,7 +22,7 @@ Requirements: Minerva with LSF, your `acc_*` account (the course account is `acc
 ## 1. Clone the pipeline from GitHub
 
 ```bash
-mkdir -p /sc/arion/scratch/$USER/pipeline_tests/human_inhouse && cd $_
+mkdir -p /sc/arion/projects/BiNGS_bulk/$USER/pipeline_tests/human_inhouse && cd $_
 git clone --depth 1 --filter=blob:none --sparse https://github.com/bings-core/bulk-rnaseq-course-2026.git
 cd bulk-rnaseq-course-2026
 git sparse-checkout set take-home-pipeline/v0.1
@@ -115,22 +114,6 @@ bash scripts/submit_preprocess.sh
 ```
 
 This checks the inputs, writes `results/run_info.txt`, and submits one job per sample and then the MultiQC job.
-
-**What went wrong on this run, and how it was fixed.** All six sample jobs exited with code 2 after Salmon had finished. The
-cause was a race in step 1: the strandedness report was edited with `sed -i` before the file existed, and the first jobs to
-reach that line failed under `set -e`. The fix creates the file first (`touch`) and is in `scripts/01_preprocess.sh` in v0.1.
-If you cloned before that fix, update the clone (`git pull`) or copy the new `01_preprocess.sh`.
-
-The failed run also left the MultiQC job waiting on jobs that would never finish. `status.sh` reports this. Remove that
-job, then restart the samples from the step that matters:
-
-```bash
-bjobs -w | awk '$7=="tp_multiqc" && $3=="PEND"{print $1}' | xargs -r bkill
-bash scripts/submit_preprocess.sh --from salmon
-```
-
-The restart reran Salmon, STAR, featureCounts and Qualimap for all six samples (about 7 minutes each by LSF run time).
-Restarting from `salmon` is safe because the strandedness line is written in that step. Restarting from `star` would skip it.
 
 Check progress:
 
