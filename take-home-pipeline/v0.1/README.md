@@ -17,7 +17,7 @@ The pipeline follows Sessions 4 to 6 of the BiNGS Bulk RNA-seq course:
 Steps 2 to 4 are submitted together by `scripts/submit_analysis.sh`.
 
 For worked, step-by-step examples with real commands and outputs, see
-[`examples/nup98_nsd1_human/RUN.md`](../examples/nup98_nsd1_human/RUN.md) (human, one failure and fix) and
+[`examples/nup98_nsd1_human/RUN.md`](../examples/nup98_nsd1_human/RUN.md) (human, patient RNA-seq with two conditions) and
 [`examples/crc_mouse_geo/RUN.md`](../examples/crc_mouse_geo/RUN.md) (mouse, downloads from GEO, three contrasts).
 
 ## Requirements
