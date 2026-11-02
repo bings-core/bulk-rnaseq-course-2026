@@ -16,13 +16,14 @@ The pipeline follows Sessions 4 to 6 of the BiNGS Bulk RNA-seq course:
 
 Steps 2 to 4 are submitted together by `scripts/submit_analysis.sh`.
 
-For worked, step-by-step examples with real commands and outputs, see
-[`examples/nup98_nsd1_human/RUN.md`](../examples/nup98_nsd1_human/RUN.md) (human, patient RNA-seq with two conditions) and
-[`examples/crc_mouse_geo/RUN.md`](../examples/crc_mouse_geo/RUN.md) (mouse, downloads from GEO, three contrasts).
-More examples, one per test: [paired-end with a batch term](../examples/airway_pe_batch/RUN.md),
-[single-end options](../examples/human_se_variants/RUN.md) (multi-lane, strandedness, cutoffs, optional steps, sample subset),
-[mouse with a batch term and restarts from each step](../examples/mouse_se_variants/RUN.md),
-[mixed single-end and paired-end, and a killed job](../examples/mixed_se_pe/RUN.md),.
+Worked, step-by-step examples with real commands and outputs, from simplest to most complicated:
+
+1. [Mouse from GEO, single-end, three contrasts](../examples/01_crc_mouse_geo/RUN.md)
+2. [Human patient RNA-seq, single-end, two conditions](../examples/02_nup98_nsd1_human/RUN.md)
+3. [Mouse with a batch term, and restarts from each step](../examples/03_mouse_se_variants/RUN.md)
+4. [Human single-end options: multi-lane, strandedness, cutoffs, optional steps, sample subset](../examples/04_human_se_variants/RUN.md)
+5. [Human paired-end with a batch term (airway)](../examples/05_airway_pe_batch/RUN.md)
+6. [Mixed single-end and paired-end, and a killed job](../examples/06_mixed_se_pe/RUN.md)
 
 ## Requirements
 
