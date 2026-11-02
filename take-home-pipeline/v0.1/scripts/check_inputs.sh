@@ -19,9 +19,18 @@ if [ -z "$LSF_ACCOUNT" ]; then
 fi
 if [ "$MODE" = analysis ]; then
   [ -f "$R_CONTAINER" ] || err "R container not found: $R_CONTAINER (run scripts/setup_resources.sh)"
+  TXDB="$RESOURCE_DIR/$SPECIES/txdb/$([ "$SPECIES" = human ] && echo homo_sapiens_grch38_gencode_36.sqlite || echo mus_musculus_grcm38_gencode_M25.sqlite)"
+  [ -s "$TXDB" ] || err "TxDb not found: $TXDB (run scripts/setup_resources.sh and wait for setup_txdb)"
 else
   [ "$RUN_QUALIMAP" = yes ] && { [ -f "$QUALIMAP_IMAGE" ] || err "Qualimap container not found: $QUALIMAP_IMAGE (run scripts/setup_resources.sh)"; }
   [ -f "$MULTIQC_CONTAINER" ] || err "MultiQC container not found: $MULTIQC_CONTAINER (run scripts/setup_resources.sh)"
+  # The index folders appear while they are being built, so check that each build finished
+  REF="$RESOURCE_DIR/$SPECIES"
+  grep -q "DONE: Genome generation" "$REF/star/2.7.5b/index/Log.out" 2>/dev/null \
+    || err "STAR index for $SPECIES is not finished ($REF/star/2.7.5b/index/Log.out has no 'DONE: Genome generation'). Wait for setup_star to finish"
+  [ -s "$REF/salmon/1.2.1/index/info.json" ] \
+    || err "Salmon index for $SPECIES is missing or unfinished ($REF/salmon/1.2.1/index/info.json). Wait for setup_salmon to finish"
+  [ -s "$REF/gtf/annotation.gtf" ] || err "GTF missing: $REF/gtf/annotation.gtf (run scripts/setup_resources.sh)"
   species_refs 2>/dev/null || err "references for $SPECIES are missing or incomplete in $RESOURCE_DIR (run scripts/setup_resources.sh)"
 fi
 

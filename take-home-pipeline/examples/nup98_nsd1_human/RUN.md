@@ -4,7 +4,7 @@ This is a worked example of the take-home pipeline (v0.1) on a real dataset, fro
 command below was run on Minerva on 2026-11-01, including the failure and the fix, so you can see what a real run looks
 like. The data is stored under the `elvinwagenblast` folder and owned by `poddan01`. Please ask the owner before reusing it.
 
-Pipeline: `take-home-pipeline/v0.1` at commit `7606294` or later. Use the latest `main`.
+Pipeline: `take-home-pipeline/v0.1` from the latest `main`. The two fixes this run needed (the strandedness race and the status helper) are in `main`, so a fresh clone already has them.
 
 ## What you will run
 
@@ -84,8 +84,8 @@ name,treatment,reference
 Differentiated_vs_Immature,Differentiated,Immature
 ```
 
-Check the sheets (this also checks the references and containers, which do not exist yet, so the first check reports three
-missing items. That is expected):
+Check the sheets. This also checks the references and containers, which do not exist yet, so the check reports them as
+missing. That is expected before setup:
 
 ```bash
 bash scripts/check_inputs.sh preprocess
@@ -100,7 +100,8 @@ bash scripts/setup_resources.sh
 This submits seven LSF jobs. The references are ready when `setup_download`, `setup_star`, `setup_salmon` and `setup_txdb`
 are all `DONE`. Check with `bjobs`. The three containers (`setup_rcontainer`, `setup_qualimap`, `setup_multiqc`) finish first.
 
-When the references are ready, check again:
+The check also refuses to go on while the STAR or Salmon index is still being built, and says so. Wait for `setup_star`
+and `setup_salmon` to finish, then check again:
 
 ```bash
 bash scripts/check_inputs.sh preprocess

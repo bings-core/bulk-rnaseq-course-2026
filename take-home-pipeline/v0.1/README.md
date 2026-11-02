@@ -16,8 +16,9 @@ The pipeline follows Sessions 4 to 6 of the BiNGS Bulk RNA-seq course:
 
 Steps 2 to 4 are submitted together by `scripts/submit_analysis.sh`.
 
-For a worked, step-by-step example with real commands, outputs and a failure and fix, see
-[`examples/nup98_nsd1_human/RUN.md`](../examples/nup98_nsd1_human/RUN.md).
+For worked, step-by-step examples with real commands and outputs, see
+[`examples/nup98_nsd1_human/RUN.md`](../examples/nup98_nsd1_human/RUN.md) (human, one failure and fix) and
+[`examples/crc_mouse_geo/RUN.md`](../examples/crc_mouse_geo/RUN.md) (mouse, downloads from GEO, three contrasts).
 
 ## Requirements
 
@@ -91,6 +92,8 @@ bash scripts/setup_resources.sh
 ```
 
 With `LSF_ACCOUNT` set, this submits one job per part: the GENCODE download (each file is checked against GENCODE's MD5SUMS), the R container, the STAR index, the Salmon index, the TxDb, the Qualimap container and the MultiQC container. The builds start after the download. That is seven jobs. Check them with `bjobs`. The references are ready when `setup_download`, `setup_star`, `setup_salmon` and `setup_txdb` are all `DONE`; the three container jobs finish earlier. Without `LSF_ACCOUNT` the same parts run one after another in your shell.
+
+The input check (`check_inputs.sh`) refuses to submit until the STAR and Salmon indexes are finished, so wait for those jobs before you submit.
 
 The setup writes `resources/<species>/` and `containers/`. These are not part of the repository. In our test the STAR index took under an hour. Each container is checked against its SHA-256 after download; a file that does not match is downloaded again.
 
