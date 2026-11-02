@@ -61,10 +61,10 @@ done < <(awk -F, '
     if ($2 == "") print "E|" r s ": condition is empty"; else cnt[$2]++
     if ($3 == "") print "E|" r s ": replicate is empty"
     if ($4 == "") { print "E|" r s ": fastq_1 is empty"; next }
-    k1 = split($4, f1, ",")
+    k1 = split($4, f1, ";")
     for (i = 1; i <= k1; i++) if (system("test -s \"" f1[i] "\"") != 0) print "E|" r s ": fastq_1 not found or empty: " f1[i]
     if ($5 != "") {
-      k2 = split($5, f2, ",")
+      k2 = split($5, f2, ";")
       if (k2 != k1) print "E|" r s ": fastq_1 has " k1 " file(s) but fastq_2 has " k2 " (lanes must match)"
       for (i = 1; i <= k2; i++) if (system("test -s \"" f2[i] "\"") != 0) print "E|" r s ": fastq_2 not found or empty: " f2[i]
     }

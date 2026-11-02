@@ -16,14 +16,14 @@ mkdir -p "$RUNS_DIR"
 if [ "$1" = "--draft" ]; then
   { printf "gsm\tsrr\tlayout\tfile\n"; cat "$RUNS_DIR"/*.tsv 2>/dev/null; } > "$RAW/geo_runs.tsv"
   echo "sample_id,condition,replicate,fastq_1,fastq_2,strandedness,batch" > samples_draft.csv
-  awk -F'\t' 'NR>1 { g=$1; n[g]++; f[g,n[g]]=$4; lay[g]=$3 }
-       END { for (g in n) {
-               r1=""; r2=""; paired=(lay[g]=="PAIRED")
-               for (i=1;i<=n[g];i++) {
-                 if (paired && i%2==0) r2=r2 (r2==""?"":",") f[g,i]
-                 else r1=r1 (r1==""?"":",") f[g,i]
-               }
-               printf "%s,,,%s,%s,auto,\n", g, r1, r2 } }' "$RAW/geo_runs.tsv" | sort >> samples_draft.csv
+  # Paired runs: R1 is the file ending _1.fastq.gz and R2 the one ending _2.fastq.gz. Any other file of a paired run
+  # (ENA sometimes lists an unpaired SRR<id>.fastq.gz next to the pair) is left out. Single-end runs use their one file.
+  awk -F'\t' 'NR>1 { g=$1; seen[g]=1; lay[g]=$3
+               if ($3 == "PAIRED") {
+                 if ($4 ~ /_1\.fastq\.gz$/) r1[g]=r1[g] (r1[g]==""?"":";") $4
+                 else if ($4 ~ /_2\.fastq\.gz$/) r2[g]=r2[g] (r2[g]==""?"":";") $4
+               } else r1[g]=r1[g] (r1[g]==""?"":";") $4 }
+       END { for (g in seen) printf "%s,,,%s,%s,auto,\n", g, r1[g], r2[g] }' "$RAW/geo_runs.tsv" | sort >> samples_draft.csv
   echo "Wrote samples_draft.csv. Add condition and replicate for each sample, then save it as samples.csv."
   exit 0
 fi

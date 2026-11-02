@@ -59,9 +59,9 @@ while read -r sid r1 r2 strand; do
   # 2.0 Give the input reads the sample_id as their name, so FastQC/TrimGalore files (and MultiQC) show it.
   # Several lanes are concatenated into one file per read (gzip concatenation is valid).
   mkdir -p "$RESULTS_DIR/input"
-  link_reads() {   # link_reads SRC_LIST DEST  (comma-separated list = lanes)
+  link_reads() {   # link_reads SRC_LIST DEST  (semicolon-separated list = lanes)
     local dest="$2"
-    if [[ "$1" == *,* ]]; then cat ${1//,/ } > "$dest"; else ln -sf "$(readlink -f "$1")" "$dest"; fi
+    if [[ "$1" == *\;* ]]; then cat ${1//;/ } > "$dest"; else ln -sf "$(readlink -f "$1")" "$dest"; fi
   }
   if [ "$layout" = SE ]; then
     run_from trim && link_reads "$r1" "$RESULTS_DIR/input/${sid}.fastq.gz"; r1="$RESULTS_DIR/input/${sid}.fastq.gz"
@@ -70,7 +70,7 @@ while read -r sid r1 r2 strand; do
     run_from trim && link_reads "$r2" "$RESULTS_DIR/input/${sid}_R2.fastq.gz"; r2="$RESULTS_DIR/input/${sid}_R2.fastq.gz"
   fi
 
-  # 2a. FastQC on the raw reads (comma-separated lanes become a list)
+  # 2a. FastQC on the raw reads (semicolon-separated lanes become a list)
   if run_from fastqc; then
     run fastqc -t "$THREADS" -o "$P/fastqc_raw" "$r1" ${r2:+"$r2"} 2>/dev/null
   fi
@@ -109,11 +109,11 @@ while read -r sid r1 r2 strand; do
     *)      st=undetermined; fc=2 ;;
   esac
   if [ "$strand" != auto ]; then st="$strand"; case "$strand" in unstranded) fc=0;; forward) fc=1;; reverse) fc=2;; esac; fi
-  if run_from salmon; then   # one line per sample: replace an earlier line from a previous run
-    touch "$P/strandedness/strandedness_report.tsv"        # sed -i fails on a missing file; the first samples to get here hit that
-    sed -i "/^${sid}\t/d" "$P/strandedness/strandedness_report.tsv"
-    printf "%s\t%s\t%s\n" "$sid" "$inferred" "$st" >> "$P/strandedness/strandedness_report.tsv"
-  fi
+  # One line per sample, always written when the strandedness is used (also on a restart from a later step, so the
+  # report shows the strandedness that featureCounts used). Replaces the sample's earlier line.
+  touch "$P/strandedness/strandedness_report.tsv"        # sed -i fails on a missing file; the first samples to get here hit that
+  sed -i "/^${sid}\t/d" "$P/strandedness/strandedness_report.tsv"
+  printf "%s\t%s\t%s\n" "$sid" "$inferred" "$st" >> "$P/strandedness/strandedness_report.tsv"
 
   # 2e. STAR alignment (sorted BAM and gene counts), then 2f. samtools
   if [ "$layout" = SE ]; then fq="$t1"; else fq="$t1 $t2"; fi

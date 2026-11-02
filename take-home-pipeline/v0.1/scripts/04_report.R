@@ -9,6 +9,8 @@ results_dir <- env("RESULTS_DIR"); project <- env("PROJECT_NAME"); species <- en
 padj_cut <- as.numeric(env("PADJ_CUTOFF")); if (is.na(padj_cut)) padj_cut <- 0.05     # same cutoffs as step 2
 lfc_cut  <- as.numeric(env("LFC_CUTOFF"));  if (is.na(lfc_cut))  lfc_cut <- 1
 samples     <- read.csv(env("SAMPLES_CSV"), stringsAsFactors = FALSE)
+filt        <- strsplit(env("SAMPLE_FILTER"), " +")[[1]]                  # same SAMPLE_FILTER as step 2
+if (length(filt) && any(nzchar(filt))) samples <- samples[samples$sample_id %in% filt, ]
 contrasts   <- read.csv(env("CONTRASTS_CSV"), stringsAsFactors = FALSE)
 pre  <- file.path(results_dir, "preprocessed")
 proc <- file.path(results_dir, "processed")
@@ -86,14 +88,16 @@ read_rows <- lapply(seq_len(nrow(samples)), function(i) {
   raw      <- count_from(file.path(pre, "trim_galore_trimmed", paste0(sid, ".fastq.gz_trimming_report.txt")), "Total reads processed", ":")
   trimmed  <- count_from(file.path(pre, "trim_galore_trimmed", paste0(sid, ".fastq.gz_trimming_report.txt")), "Reads written", ":")
   star_u   <- count_from(file.path(pre, "star", paste0(sid, "_Log.final.out")), "Uniquely mapped reads number", "\\|")
-  assigned <- count_from(file.path(pre, "featurecounts", paste0(sid, ".featureCounts.txt.summary")), "^Assigned\t", "\t")
+  assigned <- if (env("RUN_FEATURECOUNTS") == "yes")    # not run: leave the column empty rather than show old numbers
+    count_from(file.path(pre, "featurecounts", paste0(sid, ".featureCounts.txt.summary")), "^Assigned\t", "\t") else NA_real_
   data.frame(sample = sid, raw_reads = raw, after_trimming = trimmed, uniquely_mapped = star_u,
              assigned_to_genes = assigned, pct_assigned = round(100 * assigned / raw, 1))
 })
 read_tab <- bind_rows(read_rows)
 read_fmt <- read_tab
-for (col in c("raw_reads", "after_trimming", "uniquely_mapped", "assigned_to_genes")) read_fmt[[col]] <- format(read_tab[[col]], big.mark = ",", trim = TRUE)
-read_fmt$pct_assigned <- paste0(read_tab$pct_assigned, "%")
+for (col in c("raw_reads", "after_trimming", "uniquely_mapped", "assigned_to_genes"))
+  read_fmt[[col]] <- ifelse(is.na(read_tab[[col]]), "", format(read_tab[[col]], big.mark = ",", trim = TRUE))
+read_fmt$pct_assigned <- ifelse(is.na(read_tab$pct_assigned), "", paste0(read_tab$pct_assigned, "%"))
 names(read_fmt) <- c("Sample", "Raw reads", "After trimming", "Uniquely mapped (STAR)", "Assigned to genes (featureCounts)", "Assigned, % of raw")
 
 # DE gene counts per contrast (padj < PADJ_CUTOFF and |log2FC| >= LFC_CUTOFF)

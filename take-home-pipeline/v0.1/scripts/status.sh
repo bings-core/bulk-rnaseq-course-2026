@@ -50,17 +50,32 @@ echo "$incomplete sample(s) not complete."
 # LSF jobs from submit_preprocess.sh
 if [ -n "$LSF_ACCOUNT" ] && command -v bjobs >/dev/null 2>&1; then
   jobs=$(bjobs -a -w 2>/dev/null | awk '$7 ~ /^tp_/ { print $1, $3, $7 }')
-# Only failures that still matter: a sample job whose sample is not complete now, or the MultiQC job while samples are incomplete.
-  failed=$(echo "$jobs" | awk -v ids=" $incomplete_jobs " -v n="$incomplete" \
-    '$2 == "EXIT" && ((index(ids, " " $3 " ") > 0) || ($3 == "tp_multiqc" && n > 0))')
-  waiting=$(echo "$jobs" | awk '$2 == "PEND" && $3 == "tp_multiqc" { print $1 }')
+# Failures that still matter: an exited job whose sample is not complete now (or the MultiQC job while samples are
+# incomplete), and that no later job of the same name has replaced (a restart supersedes the failed job).
+  failed=$(echo "$jobs" | awk -v ids=" $incomplete_jobs " -v n="$incomplete" '
+    { id[NR] = $1 + 0; st[NR] = $2; nm[NR] = $3 }
+    END { for (i = 1; i <= NR; i++) if (st[i] == "EXIT") {
+            later = 0
+            for (j = 1; j <= NR; j++) if (nm[j] == nm[i] && id[j] > id[i] && st[j] != "EXIT") later = 1
+            if (!later && (index(ids, " " nm[i] " ") > 0 || (nm[i] == "tp_multiqc" && n > 0)))
+              print id[i], st[i], nm[i]
+          } }')
+  # A pending MultiQC job is only stuck if it depends on one of the failed jobs
+  failed_ids=$(echo "$failed" | awk '{print $1}')
+  waiting=""
+  for m in $(echo "$jobs" | awk '$2 == "PEND" && $3 == "tp_multiqc" { print $1 }'); do
+    for d in $(bjobs -l "$m" 2>/dev/null | grep -o 'done([0-9]*)' | tr -dc '0-9\n'); do
+      echo "$failed_ids" | grep -qx "$d" && waiting="$waiting $m"
+    done
+  done
+  waiting=$(echo $waiting)
   if [ -n "$failed" ]; then
     echo "Failed LSF jobs (job id, status, name):"
     echo "$failed" | sed 's/^/  /'
     echo "Logs: logs/<name>.<jobid>.err"
   fi
-  if [ -n "$failed" ] && [ -n "$waiting" ]; then
-    echo "The MultiQC job ($waiting) waits for the failed jobs and will never start. Remove it with: bkill $waiting"
+  if [ -n "$waiting" ]; then
+    echo "The MultiQC job ($waiting) waits for a failed job and will never start. Remove it with: bkill $waiting"
   fi
   running=$(echo "$jobs" | awk '$2 == "RUN" || $2 == "PEND"' | wc -l)
   echo "Sample and MultiQC jobs still pending or running: $running"

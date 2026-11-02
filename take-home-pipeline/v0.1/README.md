@@ -77,7 +77,7 @@ Paths (`RESOURCE_DIR`, `RESULTS_DIR`, `SAMPLES_CSV`, `CONTRASTS_CSV`, the contai
 |---|---|
 | Single-end reads | Leave `fastq_2` empty for that sample |
 | Paired-end reads | Fill `fastq_2` with the R2 file. Single and paired samples can be mixed in one project |
-| Several lanes per sample | Put the files in `fastq_1` (and `fastq_2`) as a comma-separated list, in lane order. They are concatenated |
+| Several lanes per sample | Put the files in `fastq_1` (and `fastq_2`) as a semicolon-separated list (`;`, not a comma, which would split the CSV field), in lane order. They are concatenated |
 | Known strandedness | Set `strandedness` to `unstranded`, `forward` or `reverse`. The default `auto` detects it with Salmon |
 | A batch effect (for example, sequencing run) | Fill the `batch` column. DESeq2 then uses `~ batch + condition` |
 | Human or mouse | `SPECIES=human` or `SPECIES=mouse`. Other species are not supported in v0.1 |
