@@ -22,8 +22,7 @@ For worked, step-by-step examples with real commands and outputs, see
 More examples, one per test: [paired-end with a batch term](../examples/airway_pe_batch/RUN.md),
 [single-end options](../examples/human_se_variants/RUN.md) (multi-lane, strandedness, cutoffs, optional steps, sample subset),
 [mouse with a batch term and restarts from each step](../examples/mouse_se_variants/RUN.md),
-[mixed single-end and paired-end, and a killed job](../examples/mixed_se_pe/RUN.md), and
-[running without LSF and a checksum failure](../examples/robustness_checks/RUN.md).
+[mixed single-end and paired-end, and a killed job](../examples/mixed_se_pe/RUN.md),.
 
 ## Requirements
 
