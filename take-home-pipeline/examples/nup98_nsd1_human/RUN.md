@@ -36,16 +36,10 @@ If `mkdir` fails, you do not have write access to `BiNGS_bulk`. Ask the BiNGS te
 
 ## 2. Copy the FASTQ files into the project folder
 
-Check that you can read the source folder, then copy the six files:
+Copy the six FASTQ files from the source folder:
 
 ```bash
-ls /sc/arion/projects/BiNGS/bings_omics/data/bings/2026/elvinwagenblast/poddan01/nup98_nsd1_patient_rnaseq/raw/rna/homo_sapiens
-cp /sc/arion/projects/BiNGS/bings_omics/data/bings/2026/elvinwagenblast/poddan01/nup98_nsd1_patient_rnaseq/raw/rna/homo_sapiens/Differentiated_1/KQLGC3_7_R1T_1.fastq.gz R1T_1.fastq.gz
-cp /sc/arion/projects/BiNGS/bings_omics/data/bings/2026/elvinwagenblast/poddan01/nup98_nsd1_patient_rnaseq/raw/rna/homo_sapiens/Differentiated_2/KQLGC3_8_R1T_2.fastq.gz R1T_2.fastq.gz
-cp /sc/arion/projects/BiNGS/bings_omics/data/bings/2026/elvinwagenblast/poddan01/nup98_nsd1_patient_rnaseq/raw/rna/homo_sapiens/Differentiated_3/KQLGC3_9_R1T_3.fastq.gz R1T_3.fastq.gz
-cp /sc/arion/projects/BiNGS/bings_omics/data/bings/2026/elvinwagenblast/poddan01/nup98_nsd1_patient_rnaseq/raw/rna/homo_sapiens/Immature_1/KQLGC3_10_R2T_1.fastq.gz R2T_1.fastq.gz
-cp /sc/arion/projects/BiNGS/bings_omics/data/bings/2026/elvinwagenblast/poddan01/nup98_nsd1_patient_rnaseq/raw/rna/homo_sapiens/Immature_2/KQLGC3_11_R2T_2.fastq.gz R2T_2.fastq.gz
-cp /sc/arion/projects/BiNGS/bings_omics/data/bings/2026/elvinwagenblast/poddan01/nup98_nsd1_patient_rnaseq/raw/rna/homo_sapiens/Immature_3/KQLGC3_12_R2T_3.fastq.gz R2T_3.fastq.gz
+cp /sc/arion/projects/BiNGS/bings_omics/data/bings/2026/elvinwagenblast/poddan01/nup98_nsd1_patient_rnaseq/raw/rna/homo_sapiens/*.fastq.gz .
 ls -l *.fastq.gz
 ```
 
