@@ -106,25 +106,38 @@ cp samples.example.csv samples.csv
 cp contrasts.example.csv contrasts.csv
 ```
 
-`samples.csv`:
+`samples.csv` has one row per sample. The template looks like this (paired-end example):
 
-| Column | Meaning |
-|---|---|
-| `sample_id` | Unique name, no spaces |
-| `condition` | Group label used in the contrasts |
-| `replicate` | Replicate number within the condition |
-| `fastq_1` | R1 file, or the only file for single-end data. Comma-separated for several lanes |
-| `fastq_2` | R2 file. Leave empty for single-end data |
-| `strandedness` | `auto` (default), `unstranded`, `forward` or `reverse` |
-| `batch` | Optional. If any sample has a value, `batch` goes into the DESeq2 design |
+```csv
+sample_id,condition,replicate,fastq_1,fastq_2,strandedness,batch
+CTRL_1,CTRL,1,data/raw/CTRL_1_R1.fastq.gz,data/raw/CTRL_1_R2.fastq.gz,auto,
+CTRL_2,CTRL,2,data/raw/CTRL_2_R1.fastq.gz,data/raw/CTRL_2_R2.fastq.gz,auto,
+KO_1,KO,1,data/raw/KO_1_R1.fastq.gz,data/raw/KO_1_R2.fastq.gz,auto,
+KO_2,KO,2,data/raw/KO_2_R1.fastq.gz,data/raw/KO_2_R2.fastq.gz,auto,
+```
 
-`contrasts.csv`:
+Columns:
 
-| Column | Meaning |
-|---|---|
-| `name` | Label for the comparison, used in output file names |
-| `treatment` | Condition in the numerator |
-| `reference` | Condition in the denominator. log2FC = treatment vs reference |
+- `sample_id`: unique name, no spaces.
+- `condition`: group label used in the contrasts.
+- `replicate`: replicate number within the condition.
+- `fastq_1`: R1 file, or the only file for single-end data. Comma-separated for several lanes.
+- `fastq_2`: R2 file. Leave empty for single-end data.
+- `strandedness`: `auto` (default), `unstranded`, `forward` or `reverse`.
+- `batch`: optional. If any sample has a value, `batch` goes into the DESeq2 design.
+
+`contrasts.csv` has one row per comparison. The template looks like this:
+
+```csv
+name,treatment,reference
+KO_vs_CTRL,KO,CTRL
+```
+
+Columns:
+
+- `name`: label for the comparison, used in output file names.
+- `treatment`: condition in the numerator.
+- `reference`: condition in the denominator. log2FC = treatment vs reference.
 
 Your FASTQ paths in `samples.csv` can be relative to this folder (for example `data/raw/...`) or absolute.
 
