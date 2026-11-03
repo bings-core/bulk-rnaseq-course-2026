@@ -92,6 +92,41 @@ Paths (`RESOURCE_DIR`, `RESULTS_DIR`, `SAMPLES_CSV`, `CONTRASTS_CSV`, the contai
 
 ## 3. Set up the references and containers (once)
 
+### Before December 2026: copy them from the shared folder
+
+The references and containers were built with this pipeline and are in the shared test folders. Copy them into your
+project folder instead of building them. Choose your species.
+
+Human (`SPECIES=human`):
+
+```bash
+SHARED=/sc/arion/projects/BiNGS_bulk/shared/pipeline_tests/airway_pe_batch/bulk-rnaseq-course-2026/take-home-pipeline/v0.1
+cp -r $SHARED/resources .
+mkdir -p containers
+cp $SHARED/containers/*.sif containers/
+ls resources/human containers
+```
+
+Mouse (`SPECIES=mouse`):
+
+```bash
+SHARED=/sc/arion/projects/BiNGS_bulk/shared/pipeline_tests/mouse_geo/bulk-rnaseq-course-2026/take-home-pipeline/v0.1
+cp -r $SHARED/resources .
+mkdir -p containers
+cp $SHARED/containers/*.sif containers/
+ls resources/mouse containers
+```
+
+The copy takes a while because the references are large. Before you start step 1, `scripts/check_inputs.sh` checks
+that the STAR and Salmon indexes are complete.
+
+### From December 2026: set up the references and containers
+
+```bash
+bash scripts/setup_resources.sh
+```
+
+
 ```bash
 bash scripts/setup_resources.sh
 ```
