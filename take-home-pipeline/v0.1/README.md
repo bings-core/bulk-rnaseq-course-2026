@@ -352,7 +352,13 @@ Results go into `results/` of that project folder only, so projects do not overw
 
 ## 6. Run
 
-Run `bash scripts/check_inputs.sh preprocess`. Fix anything it reports before you submit.
+Step 0, before anything is submitted, check the sample sheet (IDs, FASTQ files, strandedness values, batch column), the references and the containers. It lists every problem and submits nothing if there is an error. It also warns about conditions with fewer than 2 replicates.
+
+```bash
+bash scripts/check_inputs.sh preprocess
+```
+
+Fix anything it reports before you run submit_preprocess.
 
 Step 1, one job per sample and then MultiQC:
 
@@ -360,12 +366,15 @@ Step 1, one job per sample and then MultiQC:
 bash scripts/submit_preprocess.sh
 ```
 
-Before anything is submitted, `scripts/check_inputs.sh` checks the sample sheet (IDs, FASTQ files, strandedness values, batch column), the references and the containers. It lists every problem and submits nothing if there is an error. It also warns about conditions with fewer than 2 replicates.
-
-Check progress with `bash scripts/status.sh`. It shows which steps each sample has finished, the `--from` step to restart from, and any failed jobs. Or use `bjobs`. When every sample job is `DONE` and MultiQC is `DONE`, run steps 2 to 4:
+Check progress with `bash scripts/status.sh`. You can run it over and over again until you see everything is done. It shows which steps each sample has finished, the `--from` step to restart from, and any failed jobs. Or use `bjobs`. 
 
 ```bash
 bash scripts/status.sh
+```
+
+When every sample job is `DONE` and MultiQC is `DONE`, run steps 2 to 4:
+
+```bash
 bash scripts/submit_analysis.sh
 ```
 
