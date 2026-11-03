@@ -74,13 +74,21 @@ for gsm in $gsms; do
       if [ -s "$f" ] && [ "$(md5sum "$f" | cut -d' ' -f1)" = "$want_md5" ]; then
         echo "  have $f"
       else
-        # resume until the MD5 matches (curl -C - continues a partial file)
-        for attempt in $(seq 1 200); do
-          curl -s -m 0 -C - --retry 3 --retry-delay 20 -o "$f" "https://$ftp"
-          [ "$(md5sum "$f" | cut -d' ' -f1)" = "$want_md5" ] && break
-          echo "  attempt $attempt: $(stat -c %s "$f") bytes so far, retrying" >&2; sleep 15
+        # Resume an interrupted transfer (curl -C -). A transfer that finished with the wrong MD5 cannot be resumed
+        # (resuming a complete file only re-checks it), so it is deleted and downloaded again from the start.
+        fetched=0
+        for attempt in $(seq 1 20); do
+          curl -s -m 0 -C - --retry 3 --retry-delay 20 -o "$f" "https://$ftp"; rc=$?
+          if [ "$(md5sum "$f" 2>/dev/null | cut -d' ' -f1)" = "$want_md5" ]; then fetched=1; break; fi
+          if [ $rc -eq 0 ] || [ $rc -eq 33 ]; then   # 0: transfer finished; 33: server says the range is already complete
+            echo "  $f finished with the wrong MD5 (attempt $attempt); deleting it and downloading again" >&2
+            rm -f "$f"
+          else
+            echo "  attempt $attempt: $(stat -c %s "$f" 2>/dev/null || echo 0) bytes so far (curl exit $rc), resuming" >&2
+          fi
+          sleep 15
         done
-        [ "$(md5sum "$f" | cut -d' ' -f1)" = "$want_md5" ] || { echo "MD5 mismatch after retries: $f" >&2; continue; }
+        if [ $fetched -ne 1 ]; then echo "ERROR: could not download $f with the MD5 from ENA ($want_md5) after 20 attempts" >&2; exit 1; fi
       fi
       printf "%s\t%s\t%s\t%s\n" "$gsm" "$srr" "$layout" "$f" >> "$out"
     done
