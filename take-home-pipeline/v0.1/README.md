@@ -49,13 +49,6 @@ cd take-home-pipeline/v0.1
 
 Every path in the pipeline is relative to this folder. Run all commands from the folder that holds `config.sh`.
 
-For a second dataset, copy this folder to a new project folder and work there, so each project keeps its own `config.sh`, sheets, data, references and results:
-
-```bash
-cp -r /sc/arion/projects/<your_group>/<you>/rnaseq_project/bulk-rnaseq-course-2026/take-home-pipeline/v0.1 /sc/arion/projects/<your_group>/<you>/rnaseq_project_2
-cd /sc/arion/projects/<your_group>/<you>/rnaseq_project_2
-```
-
 ## 2. Configure
 
 ```bash
