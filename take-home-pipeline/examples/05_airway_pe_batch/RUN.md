@@ -70,7 +70,25 @@ Open `config.sh` in a text editor and set these three values. Leave everything e
 | `LSF_ACCOUNT` | `acc_BiNGS_bulk` |
 | `PROJECT_NAME` | `airway_pe_batch` |
 
-## 3. Download the FASTQs from ENA
+## 3. Get the FASTQs
+
+### Before December 2026: copy them from the shared folder
+
+Copy the sixteen paired-end FASTQ files (`_1` and `_2` for each of the eight runs) and the run records from the shared test
+folder into `data/raw/`:
+
+```bash
+SHARED=/sc/arion/projects/BiNGS_bulk/shared/pipeline_tests/airway_pe_batch/bulk-rnaseq-course-2026/take-home-pipeline/v0.1
+mkdir -p data/raw
+cp $SHARED/data/raw/*_[12].fastq.gz data/raw/
+cp -r $SHARED/data/raw/runs data/raw/
+ls data/raw/*_[12].fastq.gz | wc -l    # expected: 16
+```
+
+The four unpaired files that ENA lists for some runs (for example `SRR1039513.fastq.gz`) are not copied, because no sample
+uses them. The copy is about 24 GB and takes a few minutes. Then go on to step 4.
+
+### From December 2026: download from ENA
 
 ```bash
 bash scripts/submit_fetch.sh GSM1275862,GSM1275863,GSM1275866,GSM1275867,GSM1275870,GSM1275871,GSM1275874,GSM1275875
@@ -127,7 +145,26 @@ Check the sheets. Before the references exist, this reports them as missing; tha
 bash scripts/check_inputs.sh preprocess
 ```
 
-## 5. Set up the references and containers (once, about 1 hour)
+## 5. Set up the references and containers
+
+### Before December 2026: copy them from the shared folder
+
+Copy the human references and the three containers from the shared test folder. The references were built with this
+pipeline, so you do not need to build them:
+
+```bash
+SHARED=/sc/arion/projects/BiNGS_bulk/shared/pipeline_tests/airway_pe_batch/bulk-rnaseq-course-2026/take-home-pipeline/v0.1
+cp -r $SHARED/resources .
+mkdir -p containers
+cp $SHARED/containers/*.sif containers/
+ls resources/human containers
+bash scripts/check_inputs.sh preprocess
+# Inputs OK for preprocess: 8 sample(s).
+```
+
+The copy is about 43 GB and takes a while. `check_inputs.sh` confirms that the STAR and Salmon indexes are complete.
+
+### From December 2026: set up the references and containers
 
 ```bash
 bash scripts/setup_resources.sh

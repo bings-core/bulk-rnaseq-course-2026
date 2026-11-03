@@ -82,7 +82,23 @@ Open `config.sh` in a text editor and set these three values. Leave everything e
 | `LSF_ACCOUNT` | `acc_BiNGS_bulk` |
 | `PROJECT_NAME` | `crc_mouse_geo` |
 
-## 3. Download the FASTQs from GEO
+## 3. Get the FASTQs
+
+### Before December 2026: copy them from the shared folder
+
+Copy the nine FASTQ files and their run records from the shared test folder into `data/raw/`:
+
+```bash
+SHARED=/sc/arion/projects/BiNGS_bulk/shared/pipeline_tests/mouse_geo/bulk-rnaseq-course-2026/take-home-pipeline/v0.1
+mkdir -p data/raw
+cp $SHARED/data/raw/*.fastq.gz data/raw/
+cp -r $SHARED/data/raw/runs data/raw/
+ls data/raw/*.fastq.gz | wc -l    # expected: 9
+```
+
+The copy is about 15 GB and takes a few minutes. Then go on to step 4.
+
+### From December 2026: download from GEO
 
 ```bash
 bash scripts/submit_fetch.sh GSM7670963,GSM7670964,GSM7670965,GSM7670966,GSM7670967,GSM7670968,GSM7670969,GSM7670970,GSM7670971
@@ -153,7 +169,26 @@ Check the sheets. Before the references exist, this reports them as missing; tha
 bash scripts/check_inputs.sh preprocess
 ```
 
-## 5. Set up the references and containers (once, about 1 hour)
+## 5. Set up the references and containers
+
+### Before December 2026: copy them from the shared folder
+
+Copy the mouse references and the three containers from the shared test folder. The references were built with this
+pipeline, so you do not need to build them:
+
+```bash
+SHARED=/sc/arion/projects/BiNGS_bulk/shared/pipeline_tests/mouse_geo/bulk-rnaseq-course-2026/take-home-pipeline/v0.1
+cp -r $SHARED/resources .
+mkdir -p containers
+cp $SHARED/containers/*.sif containers/
+ls resources/mouse containers
+bash scripts/check_inputs.sh preprocess
+# Inputs OK for preprocess: 9 sample(s).
+```
+
+The copy is about 40 GB and takes a while. `check_inputs.sh` confirms that the STAR and Salmon indexes are complete.
+
+### From December 2026: set up the references and containers
 
 ```bash
 bash scripts/setup_resources.sh
