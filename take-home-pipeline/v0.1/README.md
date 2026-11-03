@@ -126,11 +126,6 @@ that the STAR and Salmon indexes are complete.
 bash scripts/setup_resources.sh
 ```
 
-
-```bash
-bash scripts/setup_resources.sh
-```
-
 With `LSF_ACCOUNT` set, this submits one job per part: the GENCODE download (each file is checked against GENCODE's MD5SUMS), the R container, the STAR index, the Salmon index, the TxDb, the Qualimap container and the MultiQC container. The builds start after the download. That is seven jobs. Check them with `bjobs`. The references are ready when `setup_download`, `setup_star`, `setup_salmon` and `setup_txdb` are all `DONE`; the three container jobs finish earlier. Without `LSF_ACCOUNT` the same parts run one after another in your shell.
 
 The input check (`check_inputs.sh`) refuses to submit until the STAR and Salmon indexes are finished, so wait for those jobs before you submit.
