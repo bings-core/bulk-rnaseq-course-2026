@@ -365,6 +365,7 @@ Before anything is submitted, `scripts/check_inputs.sh` checks the sample sheet 
 Check progress with `bash scripts/status.sh`. It shows which steps each sample has finished, the `--from` step to restart from, and any failed jobs. Or use `bjobs`. When every sample job is `DONE` and MultiQC is `DONE`, run steps 2 to 4:
 
 ```bash
+bash scripts/status.sh
 bash scripts/submit_analysis.sh
 ```
 
