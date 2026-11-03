@@ -347,11 +347,12 @@ To look at a subset first, set `SAMPLE_FILTER="Ctrl_1 Tx_1"` in `config.sh`. Rem
 3. Copy the FASTQs into `data/raw/` (section 3).
 4. Write `samples.csv` and `contrasts.csv` (section 5).
 5. Set `SPECIES`, `LSF_ACCOUNT` and `PROJECT_NAME` in `config.sh`, and any cutoffs you want.
-6. Run `bash scripts/check_inputs.sh preprocess`. Fix anything it reports before you submit.
 
 Results go into `results/` of that project folder only, so projects do not overwrite each other.
 
 ## 6. Run
+
+Run `bash scripts/check_inputs.sh preprocess`. Fix anything it reports before you submit.
 
 Step 1, one job per sample and then MultiQC:
 
