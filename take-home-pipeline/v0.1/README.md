@@ -137,12 +137,6 @@ Copy them in, keeping their names:
 cp /sc/arion/projects/<your_group>/<you>/fastq/*.fastq.gz data/raw/
 ```
 
-To avoid copying large files that are already on the same file system, link them instead:
-
-```bash
-ln -s /sc/arion/projects/<your_group>/<you>/fastq/*.fastq.gz data/raw/
-```
-
 Check the files before you start. Each one must be gzip-compressed (`gzip -t data/raw/<file>.fastq.gz`). Paired-end files need matching R1 and R2 names in the sample sheet.
 
 ### c. Download public GEO FASTQs
