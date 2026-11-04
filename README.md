@@ -205,7 +205,7 @@ built for.
 | 06 | Wed · Oct 14 | 4:00-5:30 PM | James 12   | Functional enrichment analysis | [PPT](https://mtsinai-my.sharepoint.com/:p:/g/personal/deniz_demircioglu_mssm_edu/IQACy40ucXuFQrdLlxqSLh8zAbfwdczGnNjjeytiHA5nj6s?e=iafvZK) · [Script](https://mtsinai-my.sharepoint.com/:u:/g/personal/deniz_demircioglu_mssm_edu/IQA7KmAtPX5ZTKaK5jkosC8QAZZus-lwZZOqSPHHqmRmoOY?e=hsXxGq) |
 | 07 | Wed · Oct 21 | 4:00-5:30 PM | James 12   | Interpreting results · public datasets · single-cell intro |  [PPT](https://mtsinai-my.sharepoint.com/:p:/g/personal/deniz_demircioglu_mssm_edu/IQDDnu-J7MHLT7TNTtPDZnj4AXFTs7CYQo-EqjNwyv4OUhs?e=dZ1Zn5) |
 | 08 | Wed · Oct 28 | 4:00-5:30 PM | Hess 5-101 | Integration: ATAC-seq / ChIP-seq & epigenetics | [PPT](https://mtsinai-my.sharepoint.com/:p:/g/personal/deniz_demircioglu_mssm_edu/IQCjnPlJS1vZT6MEj99gVqwuAdT8GFCsMSrgFd4ps1XCPgo?e=ZE1r7h) |
-| 09 | Wed · Nov 4  | 4:00-5:30 PM | Hess 5-101 | Bring your own data · full pipeline |  |
+| 09 | Wed · Nov 4  | 4:00-5:30 PM | Hess 5-101 | Bring your own data · full pipeline | [PPT](https://mtsinai-my.sharepoint.com/:p:/g/personal/deniz_demircioglu_mssm_edu/IQC7E0qx2ieYQau5kcvfTmnBAYg_otAQwnTbWZ-fkfRDAIk?e=FkvX6z) |
 | 10 | Wed · Nov 11 | 4:00-5:30 PM | Hess 8-101 | Bring your own data · full pipeline |  |
 
 Slides (and the R script for hands-on sessions) are linked in the **Material** column and are posted after each session. They open in Microsoft 365 with your Sinai account.
