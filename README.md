@@ -253,8 +253,8 @@ Slides (and the R script for hands-on sessions) are linked in the **Material** c
 
 ### Sessions 9 & 10 — Bring your own data · full pipeline
 - **Style:** Hands-on
-- **Content:** Two open sessions where participants run the full production BiNGS bulk RNA-seq pipeline on data they bring themselves. TAs and instructors work through it alongside each participant end-to-end: sample-metadata setup, preprocessing, DEG analysis, functional enrichment, and (where relevant) epigenetic integration. Goal: leave the course with a reproducible analysis of your own data, not just the course dataset.
-- **Tools:** the full BiNGS bulk RNA-seq pipeline (all tools from Sessions 4–8)
+- **Content:** Two open sessions where participants run the full production BiNGS bulk RNA-seq pipeline on data they bring themselves. TAs and instructors work through it alongside each participant end-to-end: sample-metadata setup, preprocessing, DEG analysis, and functional enrichment. Goal: leave the course with a reproducible analysis of your own data, not just the course dataset.
+- **Tools:** the full BiNGS bulk RNA-seq pipeline (all tools from Sessions 4–6)
 
 ## Working on the course
 
