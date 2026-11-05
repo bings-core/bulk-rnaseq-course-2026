@@ -1,0 +1,7 @@
+config.sh
+resources/
+containers/
+results/
+logs/
+data/
+rnaseq_report_*.html
