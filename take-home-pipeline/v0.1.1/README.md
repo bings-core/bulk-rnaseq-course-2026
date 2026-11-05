@@ -198,7 +198,7 @@ Columns:
 
 ### Rat test dataset
 
-Each dataset below needs only the `config.sh` lines shown, the two sheets, and the data from section 3. The references from section 4 are the same for every dataset of one species.
+The rat test dataset needs only the `config.sh` lines shown, the two sheets, and the data from section 3. The references from section 4 are the same for every dataset of one species.
 
 **Rat test dataset: paired-end, six samples (GEO GSE140162).** Primary rat dorsal root ganglion neurons, 5 mM lidocaine or no treatment for 24 hours, three biological replicates per group. Copy the data from section 3a and the references from section 4 (rat). The shared test copy is at `/sc/arion/projects/BiNGS_bulk/shared/pipeline_tests/rat_geo`. This is the dataset used for the tested run in section 6.
 
