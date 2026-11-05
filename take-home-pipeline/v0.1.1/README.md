@@ -18,7 +18,7 @@ The pipeline follows Sessions 4 to 6 of the BiNGS Bulk RNA-seq course:
 
 Steps 2 to 4 are submitted together by `scripts/submit_analysis.sh`.
 
-The pipeline is one folder. To analyse a new dataset you do not edit the scripts. You copy the data and the references in, fill in two sample sheets and set a few lines of `config.sh`. Section 5 shows this for three datasets.
+The pipeline is one folder. To analyse a new dataset you do not edit the scripts. You copy the data and the references in, fill in two sample sheets and set a few lines of `config.sh`. Section 5 shows this for the rat dataset and a template for your own data.
 
 Worked, step-by-step examples with real commands and outputs, from simplest to most complicated:
 
@@ -98,33 +98,11 @@ The FASTQs go into `data/raw/` of your project folder. Each sample's `fastq_1` a
 mkdir -p data/raw
 ```
 
-Choose one of the four sources.
+Choose one of the sources.
 
-### a. Copy the shared test datasets
+### a. Copy the shared test dataset (rat)
 
-Two datasets are already on the shared project folder. Copy them rather than downloading them again.
-
-Mouse colorectal organoids, GEO GSE239754, nine single-end samples:
-
-```bash
-SHARED=/sc/arion/projects/BiNGS_bulk/shared/pipeline_tests/mouse_geo/bulk-rnaseq-course-2026/take-home-pipeline/v0.1
-cp $SHARED/data/raw/*.fastq.gz data/raw/
-cp -r $SHARED/data/raw/runs data/raw/
-ls data/raw/*.fastq.gz | wc -l    # expected: 9
-```
-
-Human airway smooth muscle cells, GEO GSE52778, eight paired-end samples (16 files):
-
-```bash
-SHARED=/sc/arion/projects/BiNGS_bulk/shared/pipeline_tests/airway_pe_batch/bulk-rnaseq-course-2026/take-home-pipeline/v0.1
-cp $SHARED/data/raw/*_[12].fastq.gz data/raw/
-cp -r $SHARED/data/raw/runs data/raw/
-ls data/raw/*_[12].fastq.gz | wc -l    # expected: 16
-```
-
-The `*_[12].fastq.gz` pattern copies only the R1 and R2 files. The shared folder also has an unpaired `SRR<id>.fastq.gz` next to some pairs, which this pattern skips.
-
-Rat, GEO GSE140162, six paired-end samples (3 control, 3 lidocaine):
+Rat, GEO GSE140162, six paired-end samples (3 control, 3 lidocaine), from the shared test folder:
 
 ```bash
 SHARED=/sc/arion/projects/BiNGS_bulk/shared/pipeline_tests/rat_geo/bulk-rnaseq-course-2026/take-home-pipeline/v0.1.1
@@ -163,29 +141,7 @@ The references (the annotation, the STAR and Salmon indexes and the TxDb) and th
 
 ### Before December 2026: copy them from the shared folder
 
-The references and containers were built with this pipeline and are in the shared test folders. Copy them into your project folder instead of building them. Choose your species.
-
-Human (`SPECIES=human`):
-
-```bash
-SHARED=/sc/arion/projects/BiNGS_bulk/shared/pipeline_tests/airway_pe_batch/bulk-rnaseq-course-2026/take-home-pipeline/v0.1
-cp -r $SHARED/resources .
-mkdir -p containers
-cp $SHARED/containers/*.sif containers/
-ls resources/human containers
-```
-
-Mouse (`SPECIES=mouse`):
-
-```bash
-SHARED=/sc/arion/projects/BiNGS_bulk/shared/pipeline_tests/mouse_geo/bulk-rnaseq-course-2026/take-home-pipeline/v0.1
-cp -r $SHARED/resources .
-mkdir -p containers
-cp $SHARED/containers/*.sif containers/
-ls resources/mouse containers
-```
-
-Rat (`SPECIES=rat`):
+Rat (`SPECIES=rat`): the references and containers are in the shared test folder. Copy them into your project folder instead of building them:
 
 ```bash
 SHARED=/sc/arion/projects/BiNGS_bulk/shared/pipeline_tests/rat_geo/bulk-rnaseq-course-2026/take-home-pipeline/v0.1.1
@@ -253,74 +209,9 @@ Columns:
 - `treatment`: condition in the numerator.
 - `reference`: condition in the denominator. log2FC = treatment vs reference, so a positive log2FC is higher in the treatment.
 
-### Three datasets, set up the same way
+### Dataset setups
 
 Each dataset below needs only the `config.sh` lines shown, the two sheets, and the data from section 3. The references from section 4 are the same for every dataset of one species.
-
-**Dataset A: mouse, single-end, nine samples (GEO GSE239754).** Three groups, three contrasts. Copy the data from section 3a (mouse) and the references from section 4 (mouse).
-
-`config.sh`:
-
-```bash
-SPECIES=mouse
-LSF_ACCOUNT=acc_BiNGS_bulk
-PROJECT_NAME=crc_mouse_geo
-```
-
-`samples.csv`:
-
-```csv
-sample_id,condition,replicate,fastq_1,fastq_2,strandedness,batch
-WT_rep1,WT,1,data/raw/SRR25474517.fastq.gz,,auto,
-WT_rep2,WT,2,data/raw/SRR25474516.fastq.gz,,auto,
-WT_rep3,WT,3,data/raw/SRR25474515.fastq.gz,,auto,
-APC_rep1,APC,1,data/raw/SRR25474514.fastq.gz,,auto,
-APC_rep2,APC,2,data/raw/SRR25474513.fastq.gz,,auto,
-APC_rep3,APC,3,data/raw/SRR25474512.fastq.gz,,auto,
-AKSP_rep1,AKSP,1,data/raw/SRR25474511.fastq.gz,,auto,
-AKSP_rep2,AKSP,2,data/raw/SRR25474510.fastq.gz,,auto,
-AKSP_rep3,AKSP,3,data/raw/SRR25474509.fastq.gz,,auto,
-```
-
-`contrasts.csv`:
-
-```csv
-name,treatment,reference
-APC_vs_WT,APC,WT
-AKSP_vs_WT,AKSP,WT
-AKSP_vs_APC,AKSP,APC
-```
-
-**Dataset B: human, paired-end, eight samples with a batch (GEO GSE52778).** Untreated and dexamethasone-treated cells from four donors. The donor goes into `batch`, so DESeq2 corrects for it. Copy the data from section 3a (airway) and the references from section 4 (human).
-
-`config.sh`:
-
-```bash
-SPECIES=human
-LSF_ACCOUNT=acc_BiNGS_bulk
-PROJECT_NAME=airway_dex
-```
-
-`samples.csv`:
-
-```csv
-sample_id,condition,replicate,fastq_1,fastq_2,strandedness,batch
-N61311_untreated,untreated,1,data/raw/SRR1039508_1.fastq.gz,data/raw/SRR1039508_2.fastq.gz,auto,N61311
-N61311_Dex,Dex,1,data/raw/SRR1039509_1.fastq.gz,data/raw/SRR1039509_2.fastq.gz,auto,N61311
-N052611_untreated,untreated,2,data/raw/SRR1039512_1.fastq.gz,data/raw/SRR1039512_2.fastq.gz,auto,N052611
-N052611_Dex,Dex,2,data/raw/SRR1039513_1.fastq.gz,data/raw/SRR1039513_2.fastq.gz,auto,N052611
-N080611_untreated,untreated,3,data/raw/SRR1039516_1.fastq.gz,data/raw/SRR1039516_2.fastq.gz,auto,N080611
-N080611_Dex,Dex,3,data/raw/SRR1039517_1.fastq.gz,data/raw/SRR1039517_2.fastq.gz,auto,N080611
-N061011_untreated,untreated,4,data/raw/SRR1039520_1.fastq.gz,data/raw/SRR1039520_2.fastq.gz,auto,N061011
-N061011_Dex,Dex,4,data/raw/SRR1039521_1.fastq.gz,data/raw/SRR1039521_2.fastq.gz,auto,N061011
-```
-
-`contrasts.csv`:
-
-```csv
-name,treatment,reference
-Dex_vs_untreated,Dex,untreated
-```
 
 **Dataset C: your own data.** A starting point for a project with paired-end samples, one sample on two lanes, and one sample with known strandedness. Replace the names with yours and keep the same columns.
 
