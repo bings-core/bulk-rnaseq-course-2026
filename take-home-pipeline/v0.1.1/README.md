@@ -45,8 +45,8 @@ Clone only this folder into your project area:
 mkdir -p /sc/arion/projects/<your_group>/<you>/rnaseq_project && cd $_
 git clone --depth 1 --filter=blob:none --sparse https://github.com/bings-core/bulk-rnaseq-course-2026.git
 cd bulk-rnaseq-course-2026
-git sparse-checkout set take-home-pipeline/v0.1
-cd take-home-pipeline/v0.1
+git sparse-checkout set take-home-pipeline/v0.1.1
+cd take-home-pipeline/v0.1.1
 ```
 
 Every path in the pipeline is relative to this folder. Run all commands from the folder that holds `config.sh`.
