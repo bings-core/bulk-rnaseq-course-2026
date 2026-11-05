@@ -1,6 +1,8 @@
 # Take-home bulk RNA-seq pipeline (v0.1.1)
 
 From raw FASTQ to differential expression, enrichment and one HTML report, on Minerva (LSF).
+
+**What is new in v0.1.1:** rat is supported alongside human and mouse (`SPECIES=rat`). Rat references come from NCBI RefSeq mRatBN7.2 (the same assembly as UCSC rn7), not GENCODE. Section 5 has a rat dataset, and section 6 records the run this version was tested with.
 Developed by Gulay B. Ulukaya from BiNGS. **If outputs of this pipeline are used in presentations or publications, please give credit to BiNGS.**
 
 The pipeline follows Sessions 4 to 6 of the BiNGS Bulk RNA-seq course:
@@ -122,6 +124,15 @@ ls data/raw/*_[12].fastq.gz | wc -l    # expected: 16
 
 The `*_[12].fastq.gz` pattern copies only the R1 and R2 files. The shared folder also has an unpaired `SRR<id>.fastq.gz` next to some pairs, which this pattern skips.
 
+Rat, GEO GSE140162, six paired-end samples (3 control, 3 lidocaine):
+
+```bash
+SHARED=/sc/arion/projects/BiNGS_bulk/shared/pipeline_tests/rat_geo/bulk-rnaseq-course-2026/take-home-pipeline/v0.1.1
+cp $SHARED/data/raw/*_[12].fastq.gz data/raw/
+cp -r $SHARED/data/raw/runs data/raw/
+ls data/raw/*_[12].fastq.gz | wc -l    # expected: 12
+```
+
 ### b. Copy your own FASTQs
 
 Copy them in, keeping their names:
@@ -174,7 +185,17 @@ cp $SHARED/containers/*.sif containers/
 ls resources/mouse containers
 ```
 
-Rat (`SPECIES=rat`) has no shared copy. Set it up with the command below. The download comes from NCBI.
+Rat (`SPECIES=rat`):
+
+```bash
+SHARED=/sc/arion/projects/BiNGS_bulk/shared/pipeline_tests/rat_geo/bulk-rnaseq-course-2026/take-home-pipeline/v0.1.1
+cp -r $SHARED/resources .
+mkdir -p containers
+cp $SHARED/containers/*.sif containers/
+ls resources/rat containers
+```
+
+If you do not use the shared copy, set up the rat references with `setup_resources.sh` (below). The download comes from NCBI, not GENCODE.
 
 The copy takes a while because the references are large. Instead of copying, you can link the folder into several projects with `ln -s $SHARED/resources resources`. Before you start step 1, `scripts/check_inputs.sh` checks that the STAR and Salmon indexes are complete.
 
@@ -335,6 +356,37 @@ Things to check in this example: `Tx_1` has two lanes, so both R1 files and both
 
 To look at a subset first, set `SAMPLE_FILTER="Ctrl_1 Tx_1"` in `config.sh`. Remove the filter when you are ready for all samples.
 
+**Dataset D: rat, paired-end, six samples (GEO GSE140162).** Primary rat dorsal root ganglion neurons, 5 mM lidocaine or no treatment for 24 hours, three biological replicates per group. Copy the data from section 3a (rat) and the references from section 4 (rat). This is the dataset used for the tested run in section 6.
+
+`config.sh`:
+
+```bash
+SPECIES=rat
+LSF_ACCOUNT=acc_BiNGS_bulk
+PROJECT_NAME=rat_lidocaine_drg
+```
+
+`samples.csv`:
+
+```csv
+sample_id,condition,replicate,fastq_1,fastq_2,strandedness,batch
+Ctr_1,Control,1,data/raw/SRR10423386_1.fastq.gz,data/raw/SRR10423386_2.fastq.gz,auto,
+Ctr_2,Control,2,data/raw/SRR10423387_1.fastq.gz,data/raw/SRR10423387_2.fastq.gz,auto,
+Ctr_3,Control,3,data/raw/SRR10423388_1.fastq.gz,data/raw/SRR10423388_2.fastq.gz,auto,
+Lido_1,Lidocaine,1,data/raw/SRR10423389_1.fastq.gz,data/raw/SRR10423389_2.fastq.gz,auto,
+Lido_2,Lidocaine,2,data/raw/SRR10423390_1.fastq.gz,data/raw/SRR10423390_2.fastq.gz,auto,
+Lido_3,Lidocaine,3,data/raw/SRR10423391_1.fastq.gz,data/raw/SRR10423391_2.fastq.gz,auto,
+```
+
+`contrasts.csv`:
+
+```csv
+name,treatment,reference
+Lidocaine_vs_Control,Lidocaine,Control
+```
+
+The GEO sample names map to runs as follows: Ctr_1 = GSM4155465 (SRR10423386), Ctr_2 = GSM4155466 (SRR10423387), Ctr_3 = GSM4155467 (SRR10423388), Lido_1 = GSM4155468 (SRR10423389), Lido_2 = GSM4155469 (SRR10423390), Lido_3 = GSM4155470 (SRR10423391).
+
 ### Reusing a project for a new dataset
 
 1. Copy the pipeline folder to a new project folder (section 1).
@@ -374,6 +426,19 @@ bash scripts/submit_analysis.sh
 ```
 
 The report is ready when the `de_report` job is `DONE`. `submit_analysis.sh` checks the contrasts and the Salmon outputs first.
+
+### Tested run of v0.1.1 (rat, dataset D)
+
+This run used v0.1.1 with no changes to its scripts. Only `config.sh` and the two sheets were filled in. The rat references were set up from NCBI and the six FASTQs were fetched with `submit_fetch.sh`. In order:
+
+1. `submit_fetch.sh` for the six GSMs (each file matched the ENA byte size).
+2. `setup_resources.sh` for rat (download and MD5 check against NCBI's `md5checksums.txt`, STAR index, Salmon index, TxDb, containers).
+3. `check_inputs.sh preprocess` and `submit_preprocess.sh` (all six samples, then MultiQC).
+4. `check_inputs.sh analysis` and `submit_analysis.sh` (DE, enrichment, report).
+
+Results: all six samples finished every step and MultiQC is `DONE`. Strandedness was detected as `reverse` for every sample. featureCounts assigned 23 to 31 million reads per sample. DESeq2 with the default cutoffs found 669 up and 1,482 down genes for Lidocaine vs Control. The report `results/report/rnaseq_report.html` contains the three sections and eight figures.
+
+Not tested in this run: single-end rat data, a batch column, and mixed single- and paired-end projects for rat. The STAR index for rat was built in this run with the same settings as human and mouse, and it finished.
 
 ### If a job fails
 
