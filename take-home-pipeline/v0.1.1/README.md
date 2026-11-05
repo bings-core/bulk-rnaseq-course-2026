@@ -18,16 +18,7 @@ The pipeline follows Sessions 4 to 6 of the BiNGS Bulk RNA-seq course:
 
 Steps 2 to 4 are submitted together by `scripts/submit_analysis.sh`.
 
-The pipeline is one folder. To analyse a new dataset you do not edit the scripts. You copy the data and the references in, fill in two sample sheets and set a few lines of `config.sh`. Section 5 shows this for the rat dataset and a template for your own data.
-
-Worked, step-by-step examples with real commands and outputs, from simplest to most complicated:
-
-1. [Mouse from GEO, single-end, three contrasts](../examples/01_crc_mouse_geo/RUN.md)
-2. [Human patient RNA-seq, single-end, two conditions](../examples/02_nup98_nsd1_human/RUN.md)
-3. [Mouse with a batch term, and restarts from each step](../examples/03_crc_mouse_geo_variants/RUN.md)
-4. [Human single-end options: multi-lane, strandedness, cutoffs, optional steps, sample subset](../examples/04_nup98_nsd1_human_variants/RUN.md)
-5. [Human paired-end with a batch term (airway)](../examples/05_airway_pe_batch/RUN.md)
-6. [Mixed single-end and paired-end, and a killed job](../examples/06_mixed_se_pe/RUN.md)
+The pipeline is one folder. To analyse a new dataset you do not edit the scripts. You copy the data and the references in, fill in two sample sheets and set a few lines of `config.sh`. Section 5 shows the sheets for the rat test dataset.
 
 ## Requirements
 
@@ -131,10 +122,6 @@ bash scripts/submit_fetch.sh GSM7670963,GSM7670964,GSM7670965
 
 Wait for the `fetch_` jobs to finish (`bjobs`). The draft has the file names but no condition or replicate. Write `samples.csv` yourself (section 5), using the GEO sample titles for the groups.
 
-### d. Lanes and mixed layouts
-
-If one sample was sequenced on several lanes, copy every lane's file in and list them in lane order. Section 5 shows the sheet.
-
 ## 4. Set up the references and containers (once per species)
 
 The references (the annotation, the STAR and Salmon indexes and the TxDb) and the containers are the same for every project of a species. Build them once, or copy them from the shared folder.
@@ -209,45 +196,11 @@ Columns:
 - `treatment`: condition in the numerator.
 - `reference`: condition in the denominator. log2FC = treatment vs reference, so a positive log2FC is higher in the treatment.
 
-### Dataset setups
+### Rat test dataset
 
 Each dataset below needs only the `config.sh` lines shown, the two sheets, and the data from section 3. The references from section 4 are the same for every dataset of one species.
 
-**Dataset C: your own data.** A starting point for a project with paired-end samples, one sample on two lanes, and one sample with known strandedness. Replace the names with yours and keep the same columns.
-
-`config.sh`:
-
-```bash
-SPECIES=human                 # or mouse
-LSF_ACCOUNT=acc_<your_account>
-PROJECT_NAME=my_project
-PADJ_CUTOFF=0.05
-LFC_CUTOFF=1
-MSIGDB_COLLECTIONS=H,C2:CP:KEGG
-```
-
-`samples.csv`:
-
-```csv
-sample_id,condition,replicate,fastq_1,fastq_2,strandedness,batch
-Ctrl_1,Control,1,data/raw/Ctrl_1_R1.fastq.gz,data/raw/Ctrl_1_R2.fastq.gz,auto,run1
-Ctrl_2,Control,2,data/raw/Ctrl_2_R1.fastq.gz,data/raw/Ctrl_2_R2.fastq.gz,auto,run2
-Tx_1,Treated,1,data/raw/Tx_1_L001_R1.fastq.gz;data/raw/Tx_1_L002_R1.fastq.gz,data/raw/Tx_1_L001_R2.fastq.gz;data/raw/Tx_1_L002_R2.fastq.gz,auto,run1
-Tx_2,Treated,2,data/raw/Tx_2_R1.fastq.gz,data/raw/Tx_2_R2.fastq.gz,reverse,run2
-```
-
-`contrasts.csv`:
-
-```csv
-name,treatment,reference
-Treated_vs_Control,Treated,Control
-```
-
-Things to check in this example: `Tx_1` has two lanes, so both R1 files and both R2 files are listed in lane order, separated by `;`. `Tx_2` has its strandedness set to `reverse`, so the pipeline does not detect it. Every sample has a `batch` value, so DESeq2 uses `~ batch + condition`.
-
-To look at a subset first, set `SAMPLE_FILTER="Ctrl_1 Tx_1"` in `config.sh`. Remove the filter when you are ready for all samples.
-
-**Dataset D: rat, paired-end, six samples (GEO GSE140162).** Primary rat dorsal root ganglion neurons, 5 mM lidocaine or no treatment for 24 hours, three biological replicates per group. Copy the data from section 3a (rat) and the references from section 4 (rat). This is the dataset used for the tested run in section 6.
+**Rat test dataset: paired-end, six samples (GEO GSE140162).** Primary rat dorsal root ganglion neurons, 5 mM lidocaine or no treatment for 24 hours, three biological replicates per group. Copy the data from section 3a and the references from section 4 (rat). The shared test copy is at `/sc/arion/projects/BiNGS_bulk/shared/pipeline_tests/rat_geo`. This is the dataset used for the tested run in section 6.
 
 `config.sh`:
 
@@ -277,16 +230,6 @@ Lidocaine_vs_Control,Lidocaine,Control
 ```
 
 The GEO sample names map to runs as follows: Ctr_1 = GSM4155465 (SRR10423386), Ctr_2 = GSM4155466 (SRR10423387), Ctr_3 = GSM4155467 (SRR10423388), Lido_1 = GSM4155468 (SRR10423389), Lido_2 = GSM4155469 (SRR10423390), Lido_3 = GSM4155470 (SRR10423391).
-
-### Reusing a project for a new dataset
-
-1. Copy the pipeline folder to a new project folder (section 1).
-2. Set up its `resources/` and `containers/` (section 4), or link them from an existing project.
-3. Copy the FASTQs into `data/raw/` (section 3).
-4. Write `samples.csv` and `contrasts.csv` (section 5).
-5. Set `SPECIES`, `LSF_ACCOUNT` and `PROJECT_NAME` in `config.sh`, and any cutoffs you want.
-
-Results go into `results/` of that project folder only, so projects do not overwrite each other.
 
 ## 6. Run
 
@@ -318,7 +261,7 @@ bash scripts/submit_analysis.sh
 
 The report is ready when the `de_report` job is `DONE`. `submit_analysis.sh` checks the contrasts and the Salmon outputs first.
 
-### Tested run of v0.1.1 (rat, dataset D)
+### Tested run of v0.1.1 (rat test dataset)
 
 This run used v0.1.1 with no changes to its scripts. Only `config.sh` and the two sheets were filled in. The rat references were set up from NCBI and the six FASTQs were fetched with `submit_fetch.sh`. In order:
 
